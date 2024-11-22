@@ -1,4 +1,4 @@
-package com.pelayora.tarea3dwes;
+package com.pelayora.tarea3dwes.principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
