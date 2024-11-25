@@ -1,6 +1,5 @@
 package com.pelayora.tarea3dwes.principal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
 public class Principal implements CommandLineRunner {
