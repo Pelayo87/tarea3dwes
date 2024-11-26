@@ -3,9 +3,9 @@ package com.pelayora.tarea3dwes.principal;
 import org.springframework.boot.CommandLineRunner;
 
 public class Principal implements CommandLineRunner {
-
-//	@Autowired
-	
+//
+//@Autowired
+//ServicioPlanta S_planta;
 	
 	@Override
 	public void run(String... args) throws Exception {

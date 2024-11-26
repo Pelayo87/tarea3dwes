@@ -11,14 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "mensajes")
 public class Mensaje {
 	
@@ -39,4 +33,59 @@ public class Mensaje {
 	@ManyToOne
 	@MapsId("id_persona")
 	private long id_persona;
+
+	public Mensaje() {
+		super();
+	}
+
+	public Mensaje(long id, Date fechahora, String mensaje, long id_ejemplar, long id_persona) {
+		super();
+		this.id = id;
+		this.fechahora = fechahora;
+		this.mensaje = mensaje;
+		this.id_ejemplar = id_ejemplar;
+		this.id_persona = id_persona;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Date getFechahora() {
+		return fechahora;
+	}
+
+	public void setFechahora(Date fechahora) {
+		this.fechahora = fechahora;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public long getId_ejemplar() {
+		return id_ejemplar;
+	}
+
+	public void setId_ejemplar(long id_ejemplar) {
+		this.id_ejemplar = id_ejemplar;
+	}
+
+	public long getId_persona() {
+		return id_persona;
+	}
+
+	public void setId_persona(long id_persona) {
+		this.id_persona = id_persona;
+	}
+	
+	
 }
