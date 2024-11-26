@@ -8,8 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,24 +27,24 @@ public class Mensaje {
     private String mensaje;
 	
 	@ManyToOne
-	@MapsId("id_ejemplar")
-	private long id_ejemplar;
-	
+	@JoinColumn(name = "id_ejemplar")
+	private Ejemplar ejemplar;
+
 	@ManyToOne
-	@MapsId("id_persona")
-	private long id_persona;
+	@JoinColumn(name = "id_persona")
+	private Persona persona;
 
 	public Mensaje() {
 		super();
 	}
 
-	public Mensaje(long id, Date fechahora, String mensaje, long id_ejemplar, long id_persona) {
+	public Mensaje(long id, Date fechahora, String mensaje, Ejemplar ejemplar, Persona persona) {
 		super();
 		this.id = id;
 		this.fechahora = fechahora;
 		this.mensaje = mensaje;
-		this.id_ejemplar = id_ejemplar;
-		this.id_persona = id_persona;
+		this.ejemplar = ejemplar;
+		this.persona = persona;
 	}
 
 	public long getId() {
@@ -71,21 +71,19 @@ public class Mensaje {
 		this.mensaje = mensaje;
 	}
 
-	public long getId_ejemplar() {
-		return id_ejemplar;
+	public Ejemplar getEjemplar() {
+		return ejemplar;
 	}
 
-	public void setId_ejemplar(long id_ejemplar) {
-		this.id_ejemplar = id_ejemplar;
+	public void setEjemplar(Ejemplar ejemplar) {
+		this.ejemplar = ejemplar;
 	}
 
-	public long getId_persona() {
-		return id_persona;
+	public Persona getPersona() {
+		return persona;
 	}
 
-	public void setId_persona(long id_persona) {
-		this.id_persona = id_persona;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
-	
-	
 }

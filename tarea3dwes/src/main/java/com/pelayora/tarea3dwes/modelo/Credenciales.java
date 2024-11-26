@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -24,19 +24,20 @@ public class Credenciales {
 	private String password;
 	
 	@OneToOne
-	@MapsId("id_persona")
-	private long id_persona;
+	@JoinColumn(name = "id_persona")
+	private Persona persona;
+
 
 	public Credenciales() {
 		super();
-	}
+	}	
 
-	public Credenciales(long id, String usuario, String password, long id_persona) {
+	public Credenciales(long id, String usuario, String password, Persona persona) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
 		this.password = password;
-		this.id_persona = id_persona;
+		this.persona = persona;
 	}
 
 	public long getId() {
@@ -63,11 +64,11 @@ public class Credenciales {
 		this.password = password;
 	}
 
-	public long getId_persona() {
-		return id_persona;
+	public Persona getPersona() {
+		return persona;
 	}
 
-	public void setId_persona(long id_persona) {
-		this.id_persona = id_persona;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 }
