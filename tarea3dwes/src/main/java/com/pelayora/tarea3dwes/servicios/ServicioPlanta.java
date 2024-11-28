@@ -1,13 +1,18 @@
 package com.pelayora.tarea3dwes.servicios;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
-import com.pelayora.tarea3dwes.repositorios.PlantaRepository;
+import com.pelayora.tarea3dwes.modelo.Planta;
 
 @Service
-public class ServicioPlanta {
-	
-	@Autowired
-	PlantaRepository planta_R;
+public interface ServicioPlanta {
+	Planta guardarPlanta(Planta planta);
 
+    Optional<Planta> obtenerPlantaPorId(Long id);
+
+    List<Planta> obtenerTodasLasPlantas();
+
+    void eliminarPlanta(Long id);
 }

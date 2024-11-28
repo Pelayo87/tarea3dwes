@@ -1,12 +1,19 @@
 package com.pelayora.tarea3dwes.servicios;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
-import com.pelayora.tarea3dwes.repositorios.EjemplarRepository;
+import com.pelayora.tarea3dwes.modelo.Ejemplar;
 
 @Service
-public class ServicioEjemplar {
+public interface ServicioEjemplar {
+	
+	Ejemplar guardarEjemplar(Ejemplar ejemplar);
 
-	@Autowired
-	EjemplarRepository ejemplar_R;
+    Optional<Ejemplar> obtenerEjemplarPorId(Long id);
+
+    List<Ejemplar> obtenerTodosLosEjemplares();
+
+    void eliminarEjemplar(Long id);
+	
 }
