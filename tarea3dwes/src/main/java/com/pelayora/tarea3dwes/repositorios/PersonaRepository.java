@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.pelayora.tarea3dwes.modelo.Persona;
 
 @Repository
-public interface PersonaRepository extends JpaRepository<Persona, Integer> {
+public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
 }

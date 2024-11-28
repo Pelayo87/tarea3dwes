@@ -9,11 +9,7 @@ import com.pelayora.tarea3dwes.modelo.Ejemplar;
 public interface ServicioEjemplar {
 	
 	Ejemplar guardarEjemplar(Ejemplar ejemplar);
-
     Optional<Ejemplar> obtenerEjemplarPorId(Long id);
-
     List<Ejemplar> obtenerTodosLosEjemplares();
-
-    void eliminarEjemplar(Long id);
-	
+    void eliminarEjemplar(Long id);	
 }

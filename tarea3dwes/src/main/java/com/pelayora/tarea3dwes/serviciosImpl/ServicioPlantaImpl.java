@@ -7,35 +7,31 @@ import org.springframework.stereotype.Service;
 
 import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.repositorios.PlantaRepository;
+import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
 @Service
-public class ServicioPlantaImpl {
-	private final PlantaRepository plantaRepository;
-
-    @Autowired
-    public PlantaServiceImpl(PlantaRepository plantaRepository) {
-        // Constructor initialization of the final field
-        this.plantaRepository = plantaRepository;
-    }
+public class ServicioPlantaImpl implements ServicioPlanta{
+	@Autowired
+	private PlantaRepository planta_R;
 
     @Override
     public Planta guardarPlanta(Planta planta) {
-        return plantaRepository.save(planta);
+        return planta_R.save(planta);
     }
 
     @Override
     public Optional<Planta> obtenerPlantaPorId(Long id) {
-        return plantaRepository.findById(id);
+        return planta_R.findById(id);
     }
 
     @Override
     public List<Planta> obtenerTodasLasPlantas() {
-        return plantaRepository.findAll();
+        return planta_R.findAll();
     }
 
     @Override
     public void eliminarPlanta(Long id) {
-        plantaRepository.deleteById(id);
+        planta_R.deleteById(id);
     }
 
 }

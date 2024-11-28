@@ -1,6 +1,5 @@
 package com.pelayora.tarea3dwes.modelo;
 
-
 import java.util.Date;
 
 import jakarta.persistence.Column;

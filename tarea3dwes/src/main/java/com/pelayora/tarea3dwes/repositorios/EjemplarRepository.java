@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
 
 @Repository
-public interface EjemplarRepository extends JpaRepository<Ejemplar, Integer> {
+public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 
 }

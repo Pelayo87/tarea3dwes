@@ -13,7 +13,7 @@ public class Persona {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	@Column(name = "nombre", length = 50)
 	private String nombre;
@@ -25,19 +25,11 @@ public class Persona {
 		super();
 	}
 
-	public Persona(int id, String nombre, String email) {
+	public Persona(Long id, String nombre, String email) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.email = email;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getNombre() {
@@ -54,5 +46,13 @@ public class Persona {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

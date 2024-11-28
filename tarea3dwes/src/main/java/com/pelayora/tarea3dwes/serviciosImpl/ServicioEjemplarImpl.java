@@ -7,34 +7,31 @@ import org.springframework.stereotype.Service;
 
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.repositorios.EjemplarRepository;
+import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 
 @Service
-public class ServicioEjemplarImpl {
-	private final EjemplarRepository ejemplarRepository;
-
-    @Autowired
-    public EjemplarServiceImpl(EjemplarRepository ejemplarRepository) {
-        this.ejemplarRepository = ejemplarRepository;
-    }
+public class ServicioEjemplarImpl implements ServicioEjemplar{
+	@Autowired
+	private EjemplarRepository ejemplar_R;
 
     @Override
     public Ejemplar guardarEjemplar(Ejemplar ejemplar) {
-        return ejemplarRepository.save(ejemplar);
+        return ejemplar_R.save(ejemplar);
     }
 
     @Override
     public Optional<Ejemplar> obtenerEjemplarPorId(Long id) {
-        return ejemplarRepository.findById(id);
+        return ejemplar_R.findById(id);
     }
 
     @Override
     public List<Ejemplar> obtenerTodosLosEjemplares() {
-        return ejemplarRepository.findAll();
+        return ejemplar_R.findAll();
     }
 
     @Override
     public void eliminarEjemplar(Long id) {
-        ejemplarRepository.deleteById(id);
+    	ejemplar_R.deleteById(id);
     }
 
 }
