@@ -15,10 +15,10 @@ public class Persona {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "nombre", nullable = false, length = 50)
+	@Column(name = "nombre", length = 50)
 	private String nombre;
 	
-	@Column(name = "email", nullable = false, length = 50)
+	@Column(name = "email", length = 50)
     private String email;
 
 	public Persona() {

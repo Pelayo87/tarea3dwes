@@ -17,10 +17,10 @@ public class Credenciales {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "usuario", nullable = false, length = 50)
+	@Column(name = "usuario", length = 50)
 	private String usuario;
 	
-	@Column(name = "password", nullable = false, length = 50)
+	@Column(name = "password", length = 50)
 	private String password;
 	
 	@OneToOne

@@ -20,10 +20,10 @@ public class Planta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
-	@Column(name = "nombrecomun", nullable = false, length = 50)
+	@Column(name = "nombrecomun", length = 50)
 	private String nombrecomun;
 	
-	@Column(name = "nombrecientifico", nullable = false, length = 50)
+	@Column(name = "nombrecientifico", length = 50)
     private String nombrecientifico;
 	
 	@OneToMany(cascade=CascadeType.ALL)

@@ -20,10 +20,10 @@ public class Mensaje {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "fechahora", nullable = false)
+	@Column(name = "fechahora")
     private Date fechahora;
     
-	@Column(name = "mensaje", nullable = false, length = 150)
+	@Column(name = "mensaje",length = 150)
     private String mensaje;
 	
 	@ManyToOne

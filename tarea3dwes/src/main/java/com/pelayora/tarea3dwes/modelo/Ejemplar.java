@@ -21,7 +21,7 @@ public class Ejemplar {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "nombrecomun", nullable = false, length = 50)
+	@Column(name = "nombrecomun", length = 50)
 	private String nombre;
 	
 	@ManyToOne
