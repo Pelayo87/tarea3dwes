@@ -18,7 +18,7 @@ public class Planta {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long codigo;
+	private String codigo;
 	
 	@Column(name = "nombrecomun", length = 50)
 	private String nombrecomun;
@@ -32,14 +32,29 @@ public class Planta {
 	
 	public Planta() {
 		super();
+	}	
+
+	public Planta(String codigo, String nombrecomun, String nombrecientifico) {
+		super();
+		this.codigo = codigo;
+		this.nombrecomun = nombrecomun;
+		this.nombrecientifico = nombrecientifico;
 	}
 
-	public Planta(Long codigo, String nombrecomun, String nombrecientifico, List<Ejemplar> ejemplares) {
+	public Planta(String codigo, String nombrecomun, String nombrecientifico, List<Ejemplar> ejemplares) {
 		super();
 		this.codigo = codigo;
 		this.nombrecomun = nombrecomun;
 		this.nombrecientifico = nombrecientifico;
 		this.ejemplares = ejemplares;
+	}
+	
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNombrecomun() {
@@ -64,13 +79,5 @@ public class Planta {
 
 	public void setEjemplares(List<Ejemplar> ejemplares) {
 		this.ejemplares = ejemplares;
-	}
-
-	public Long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
 	}
 }

@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 //import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 //import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
+import com.pelayora.tarea3dwes.fachada.InvernaderoFachadaPrincipal;
+
 public class Principal implements CommandLineRunner {
 	
 //	@Autowired
@@ -27,14 +29,12 @@ public class Principal implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("INICIO");
 		
-		System.out.println("------------------------");
-		
-		
-		System.out.println("FIN");
-		
-		System.exit(0);
+        InvernaderoFachadaPrincipal facade = new InvernaderoFachadaPrincipal();
+        
+        System.out.println("--Bienvenido al sistema del invernadero (DWES)--");
+        
+        facade.iniciosesion();
 	}
 
 }
