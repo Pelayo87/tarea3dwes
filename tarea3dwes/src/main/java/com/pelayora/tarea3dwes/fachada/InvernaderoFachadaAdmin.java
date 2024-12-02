@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.pelayora.tarea3dwes.modelo.*;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
-import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
-import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 import com.pelayora.tarea3dwes.util.InvernaderoServiciosFactory;
@@ -21,23 +19,17 @@ public class InvernaderoFachadaAdmin {
 	Scanner sc = new Scanner(System.in);
 	String nombreusuario;
 	Persona usuarioActual;
-
+	
 	InvernaderoServiciosFactory factoryServicios = InvernaderoServiciosFactory.getServicios();
 
-	@Autowired
-    private ServicioEjemplar S_ejemplar;
+    @Autowired
+    private ServicioPlanta S_planta = factoryServicios.getServiciosPlanta();
 
     @Autowired
-    private ServicioPlanta S_planta;
+    private ServicioCredenciales S_credenciales = factoryServicios.getServiciosCredenciales();
 
     @Autowired
-    private ServicioMensaje S_mensaje;
-
-    @Autowired
-    private ServicioCredenciales S_credenciales;
-
-    @Autowired
-    private ServicioPersona S_persona;
+    private ServicioPersona S_persona = factoryServicios.getServiciosPersona();
 
 	public InvernaderoFachadaAdmin(InvernaderoFachadaPrincipal facade) {
         this.facade = facade;
@@ -98,7 +90,7 @@ public class InvernaderoFachadaAdmin {
 				break;
 			}
 			case 2: {
-//				S_planta.modificar(null);
+				S_planta.modificarPlanta(null);
 				break;
 			}
 			case 3: {

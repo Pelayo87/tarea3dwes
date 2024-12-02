@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.repositorios.PlantaRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
@@ -18,6 +16,16 @@ import jakarta.annotation.PostConstruct;
 public class ServicioPlantaImpl implements ServicioPlanta {
 	@Autowired
 	private PlantaRepository planta_R;
+	
+	  @PostConstruct
+	    public void init() {
+	        // Verificar si planta_R es null
+	        if (planta_R == null) {
+	            System.err.println("planta_R no fue inyectado correctamente");
+	        } else {
+	            System.out.println("planta_R inyectado correctamente");
+	        }
+	    }
 
 	private static final Pattern LETTERS_ONLY_PATTERN = Pattern.compile("^[a-zA-Z]+$");
 	Scanner sc = new Scanner(System.in);
@@ -107,7 +115,7 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 			boolean nombreComunCorrecto = false;
 			do {
 				System.out.println(
-						"Dame el nuevo nombre común de la planta (actual: " + plantaExistente.getNombrecomun() + "):");
+						"Dame el nuevo nombre común de la planta (actual: " + plantaExistente.getNombreComun() + "):");
 				nombrecomun = sc.nextLine().trim().toUpperCase();
 				if (nombrecomun == null || nombrecomun.trim().isEmpty()) {
 					System.err.println("El nombre común no puede ser nulo o vacío.");
@@ -117,13 +125,13 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 					nombreComunCorrecto = true;
 				}
 			} while (!nombreComunCorrecto);
-			plantaExistente.setNombrecomun(nombrecomun);
+			plantaExistente.setNombreComun(nombrecomun);
 
 			// Validación del nombre científico
 			boolean nombreCientificoCorrecto = false;
 			do {
 				System.out.println("Dame el nuevo nombre científico de la planta (actual: "
-						+ plantaExistente.getNombrecientifico() + "):");
+						+ plantaExistente.getNombreCientifico() + "):");
 				nombrecientifico = sc.nextLine().trim().toUpperCase();
 				if (nombrecientifico == null || nombrecientifico.trim().isEmpty()) {
 					System.err.println("El nombre científico no puede ser nulo o vacío.");
@@ -133,7 +141,7 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 					nombreCientificoCorrecto = true;
 				}
 			} while (!nombreCientificoCorrecto);
-			plantaExistente.setNombrecientifico(nombrecientifico);
+			plantaExistente.setNombreCientifico(nombrecientifico);
 
 			// Guardar los cambios
 			planta_R.save(plantaExistente);
@@ -152,7 +160,7 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 
 	@Override
 	public List<Planta> listarPlantas() {
-		return (List<Planta>) planta_R.findAll();
+		return planta_R.findAll();
 	}
 
 	@Override

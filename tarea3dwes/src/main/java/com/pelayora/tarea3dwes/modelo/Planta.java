@@ -15,75 +15,86 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "plantas")
 public class Planta {
-	
+
 	@Id
-	@Column(name="codigo")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "codigo", unique = true)
 	private String codigo;
-	
+
 	@Column(name = "nombrecomun", length = 50)
-	private String nombrecomun;
-	
+	private String nombreComun;
+
 	@Column(name = "nombrecientifico", length = 50)
-    private String nombrecientifico;
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="id_planta")
+	private String nombreCientifico;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_planta")
 	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
-	
+
 	public Planta() {
 		super();
 	}	
 
-	public Planta(String codigo, String nombrecomun, String nombrecientifico) {
+	public Planta(String codigo, String nombreComun, String nombreCientifico) {
 		super();
 		this.codigo = codigo;
-		this.nombrecomun = nombrecomun;
-		this.nombrecientifico = nombrecientifico;
+		this.nombreComun = nombreComun;
+		this.nombreCientifico = nombreCientifico;
 	}
 
-	public Planta(String codigo, String nombrecomun, String nombrecientifico, List<Ejemplar> ejemplares) {
-		super();
-		this.codigo = codigo;
-		this.nombrecomun = nombrecomun;
-		this.nombrecientifico = nombrecientifico;
-		this.ejemplares = ejemplares;
-	}
-	
-	public String getCodigo() {
-		return codigo;
-	}
+	public Planta(String codigo, String nombreComun, String nombreCientifico, Long id, List<Ejemplar> ejemplares) {
+        this.codigo = codigo;
+        this.nombreComun = nombreComun;
+        this.nombreCientifico = nombreCientifico;
+        this.id = id;
+        this.ejemplares = ejemplares;
+    }
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
+    public String getCodigo() {
+        return codigo;
+    }
 
-	public String getNombrecomun() {
-		return nombrecomun;
-	}
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
-	public void setNombrecomun(String nombrecomun) {
-		this.nombrecomun = nombrecomun;
-	}
+    public List<Ejemplar> getEjemplares() {
+        return ejemplares;
+    }
 
-	public String getNombrecientifico() {
-		return nombrecientifico;
-	}
+    public void setEjemplares(List<Ejemplar> ejemplares) {
+        this.ejemplares = ejemplares;
+    }
 
-	public void setNombrecientifico(String nombrecientifico) {
-		this.nombrecientifico = nombrecientifico;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public List<Ejemplar> getEjemplares() {
-		return ejemplares;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEjemplares(List<Ejemplar> ejemplares) {
-		this.ejemplares = ejemplares;
-	}
+    public String getNombreCientifico() {
+        return nombreCientifico;
+    }
+
+    public void setNombreCientifico(String nombreCientifico) {
+        this.nombreCientifico = nombreCientifico;
+    }
+
+    public String getNombreComun() {
+        return nombreComun;
+    }
+
+    public void setNombreComun(String nombreComun) {
+        this.nombreComun = nombreComun;
+    }
 
 	@Override
 	public String toString() {
-		return "Planta [codigo=" + codigo + ", nombrecomun=" + nombrecomun + ", nombrecientifico=" + nombrecientifico
+		return "Planta [codigo=" + codigo + ", nombrecomun=" + nombreComun + ", nombrecientifico=" + nombreCientifico
 				+ ", ejemplares=" + ejemplares + "]";
 	}
 }

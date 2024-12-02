@@ -5,15 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.pelayora.tarea3dwes.modelo.*;
-import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
-import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
-import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
-import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 import com.pelayora.tarea3dwes.util.InvernaderoServiciosFactory;
 import com.pelayora.tarea3dwes.util.*;
@@ -26,21 +20,9 @@ public class InvernaderoFachadaInvitado {
     Persona usuarioActual;    
     
     InvernaderoServiciosFactory factoryServicios = InvernaderoServiciosFactory.getServicios();
-    
-    @Autowired
-    private ServicioEjemplar S_ejemplar;
 
     @Autowired
-    private ServicioPlanta S_planta;
-
-    @Autowired
-    private ServicioMensaje S_mensaje;
-
-    @Autowired
-    private ServicioCredenciales S_credenciales;
-
-    @Autowired
-    private ServicioPersona S_persona;
+    private ServicioPlanta S_planta = factoryServicios.getServiciosPlanta();
     
     public InvernaderoFachadaInvitado(InvernaderoFachadaPrincipal facade) {
         this.facade = facade;
@@ -84,7 +66,7 @@ public class InvernaderoFachadaInvitado {
         Collections.sort(Listaplantas, new Comparator<Planta>() {
             @Override
             public int compare(Planta p1, Planta p2) {
-                return p1.getNombrecomun().compareToIgnoreCase(p2.getNombrecomun());
+                return p1.getNombreComun().compareToIgnoreCase(p2.getNombreComun());
             }
         });
 

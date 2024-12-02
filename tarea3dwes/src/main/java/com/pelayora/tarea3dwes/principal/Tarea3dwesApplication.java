@@ -7,11 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.pelayora.tarea3dwes")
+@EntityScan(basePackages = "com.pelayora.tarea3dwes.modelo")
+@EnableJpaRepositories(basePackages = "com.pelayora.tarea3dwes.repositorios")
 public class Tarea3dwesApplication {	
 	
 	@Bean
-	public Principal applicationStartupRunner() {
+	public Principal applicationStartupRunner(){
 		return new Principal();
 	}
 

@@ -5,22 +5,15 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.pelayora.tarea3dwes.modelo.*;
-import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
-import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
-import com.pelayora.tarea3dwes.serviciosImpl.ServicioMensajeImpl;
 import com.pelayora.tarea3dwes.util.InvernaderoServiciosFactory;
 import com.pelayora.tarea3dwes.util.Utilidades;
 
@@ -36,23 +29,17 @@ public class InvernaderoFachadaPersonal {
 	DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 	String fechaFormateada = formatoFecha.format(fechaActual);
-
+	
 	InvernaderoServiciosFactory factoryServicios = InvernaderoServiciosFactory.getServicios();
 
 	@Autowired
-    private ServicioEjemplar S_ejemplar;
+    private ServicioEjemplar S_ejemplar = factoryServicios.getServiciosEjemplar();
 
     @Autowired
-    private ServicioPlanta S_planta;
+    private ServicioMensaje S_mensaje = factoryServicios.getServiciosMensaje();
 
     @Autowired
-    private ServicioMensaje S_mensaje;
-
-    @Autowired
-    private ServicioCredenciales S_credenciales;
-
-    @Autowired
-    private ServicioPersona S_persona;
+    private ServicioPersona S_persona = factoryServicios.getServiciosPersona();
 
 	public InvernaderoFachadaPersonal(InvernaderoFachadaPrincipal facade) {
 		this.facade = facade;
