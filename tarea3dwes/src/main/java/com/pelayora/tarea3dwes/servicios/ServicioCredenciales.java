@@ -15,6 +15,6 @@ public interface ServicioCredenciales {
     Optional<Credenciales> buscarPorUsuario(String usuario);
     Credenciales guardarCredenciales(Credenciales credenciales);
     void eliminarCredenciales(long id);
-
+    boolean autenticar(Credenciales credenciales);
 }
 

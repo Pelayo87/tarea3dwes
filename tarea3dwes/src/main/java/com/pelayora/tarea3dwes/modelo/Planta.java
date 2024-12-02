@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 public class Planta {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="codigo")
 	private String codigo;
 	
 	@Column(name = "nombrecomun", length = 50)
@@ -27,7 +27,7 @@ public class Planta {
     private String nombrecientifico;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="idplanta")
+	@JoinColumn(name="id_planta")
 	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
 	
 	public Planta() {
@@ -79,5 +79,11 @@ public class Planta {
 
 	public void setEjemplares(List<Ejemplar> ejemplares) {
 		this.ejemplares = ejemplares;
+	}
+
+	@Override
+	public String toString() {
+		return "Planta [codigo=" + codigo + ", nombrecomun=" + nombrecomun + ", nombrecientifico=" + nombrecientifico
+				+ ", ejemplares=" + ejemplares + "]";
 	}
 }

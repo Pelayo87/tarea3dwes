@@ -31,6 +31,12 @@ public class Credenciales {
 	public Credenciales() {
 		super();
 	}	
+	
+	public Credenciales(String usuario, String password) {
+		super();
+		this.usuario = usuario;
+		this.password = password;
+	}
 
 	public Credenciales(long id, String usuario, String password, Persona persona) {
 		super();
@@ -70,5 +76,11 @@ public class Credenciales {
 
 	public void setPersona(Persona persona) {
 		this.persona = persona;
+	}
+
+	@Override
+	public String toString() {
+		return "Credenciales [id=" + id + ", usuario=" + usuario + ", password=" + password + ", persona=" + persona
+				+ "]";
 	}
 }

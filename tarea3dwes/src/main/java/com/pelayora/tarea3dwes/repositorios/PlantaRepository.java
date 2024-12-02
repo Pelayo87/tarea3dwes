@@ -6,5 +6,5 @@ import com.pelayora.tarea3dwes.modelo.Planta;
 
 @Repository
 public interface PlantaRepository extends JpaRepository<Planta, String> {
-
+	
 }

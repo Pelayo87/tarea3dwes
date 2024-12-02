@@ -12,6 +12,8 @@ import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.repositorios.PlantaRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class ServicioPlantaImpl implements ServicioPlanta {
 	@Autowired
@@ -144,13 +146,13 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 	}
 
 	@Override
-	public Optional<Planta> obtenerPlantaPorId(String codigo) {
+	public Optional<Planta> buscarPlantaPorId(String codigo) {
 		return planta_R.findById(codigo);
 	}
 
 	@Override
-	public List<Planta> obtenerTodasLasPlantas() {
-		return planta_R.findAll();
+	public List<Planta> listarPlantas() {
+		return (List<Planta>) planta_R.findAll();
 	}
 
 	@Override

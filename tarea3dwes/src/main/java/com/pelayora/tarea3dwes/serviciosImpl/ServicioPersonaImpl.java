@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.pelayora.tarea3dwes.modelo.Persona;
 import com.pelayora.tarea3dwes.repositorios.PersonaRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 
+@Service
 public class ServicioPersonaImpl implements ServicioPersona {
 	@Autowired
 	private PersonaRepository persona_R;

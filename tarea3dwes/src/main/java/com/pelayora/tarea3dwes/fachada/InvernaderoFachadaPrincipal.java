@@ -3,16 +3,20 @@ package com.pelayora.tarea3dwes.fachada;
 import java.util.Optional;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.pelayora.tarea3dwes.modelo.Credenciales;
+import com.pelayora.tarea3dwes.modelo.Persona;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
-import com.pelayora.tarea3dwes.serviciosImpl.ServicioCredencialesImpl;
 import com.pelayora.tarea3dwes.util.InvernaderoServiciosFactory;
 import com.pelayora.tarea3dwes.util.Utilidades;
 
+@Component
 public class InvernaderoFachadaPrincipal {
     private InvernaderoFachadaAdmin facadeAdmin;
     private InvernaderoFachadaPersonal facadePersonal;
@@ -23,11 +27,21 @@ public class InvernaderoFachadaPrincipal {
     
     InvernaderoServiciosFactory factoryServicios = InvernaderoServiciosFactory.getServicios();
 
-    ServicioEjemplar S_ejemplar = factoryServicios.getServiciosEjemplar();
-    ServicioPlanta S_planta = factoryServicios.getServiciosPlanta();
-    ServicioMensaje S_mensaje = factoryServicios.getServiciosMensaje();
-    ServicioCredenciales S_credenciales = factoryServicios.getServiciosCredenciales();
-    ServicioPersona S_persona = factoryServicios.getServiciosPersona();
+    @Autowired
+    private ServicioEjemplar S_ejemplar;
+
+    @Autowired
+    private ServicioPlanta S_planta;
+
+    @Autowired
+    private ServicioMensaje S_mensaje;
+
+    @Autowired
+    private ServicioCredenciales S_credenciales;
+
+    @Autowired
+    private ServicioPersona S_persona;
+
 
     public InvernaderoFachadaPrincipal() {
     	this.facadeAdmin = new InvernaderoFachadaAdmin(this);
@@ -58,33 +72,32 @@ public class InvernaderoFachadaPrincipal {
 		}
 		}
 	}
-    
-    public void login() {
-//        System.out.println("Nombre de usuario:");
-//        nombreusuario = sc.nextLine().trim();
-//        System.out.println("Contraseña (password):");
-//        String contrasena = sc.nextLine().trim();
-//        
-//        Credenciales credencialesIngresadas = new Credenciales(nombreusuario, contrasena);
-//        ServicioCredencialesImpl servicioCredenciales = new ServicioCredencialesImpl();
-//        boolean autenticado = servicioCredenciales.autenticar(credencialesIngresadas);
-//        
-//        
-//        if (autenticado) {
-//            Optional<Credenciales> credencialesAutenticadas = servicioCredenciales.buscarPorUsuario(nombreusuario);
-//            id_Persona = credencialesAutenticadas.getId_persona();
-//            if (credencialesAutenticadas != null) {
-//                if ("admin".equalsIgnoreCase(nombreusuario) && "admin".equals(contrasena)) {
-//                    System.out.println("Inicio de sesión exitoso como administrador.");
-//                    facadeAdmin.menuadmin();
-//                } else {     
-//                	System.out.println("Inicio de sesión exitoso.");
-//                    facadePersonal.menu();
-//                }
-//            }
-//        } else {
-//            System.out.println("Nombre de usuario o contraseña incorrectos.");
-//            iniciosesion();
-//        }
-    }
+
+	public void login() {
+	    System.out.println("Nombre de usuario:");
+	    nombreusuario = sc.nextLine().trim();
+	    System.out.println("Contraseña (password):");
+	    String contrasena = sc.nextLine().trim();
+
+	    Credenciales credencialesIngresadas = new Credenciales(nombreusuario, contrasena);
+	    boolean autenticado = S_credenciales.autenticar(credencialesIngresadas);
+
+	    if (autenticado) {
+	    	System.out.println("Autenticado" + credencialesIngresadas);
+	        Optional<Credenciales> credencialesAutenticadas = S_credenciales.buscarPorUsuario(nombreusuario);
+	        if (credencialesAutenticadas.isPresent()) {
+	            credencialesAutenticadas.get().getPersona();
+	            if ("admin".equalsIgnoreCase(nombreusuario) && "admin".equals(contrasena)) {
+	                System.out.println("Inicio de sesión exitoso como administrador.");
+	                facadeAdmin.menuadmin();
+	            } else {
+	                System.out.println("Inicio de sesión exitoso.");
+	                facadePersonal.menu();
+	            }
+	        }
+	    } else {
+	        System.out.println("Nombre de usuario o contraseña incorrectos.");
+	        iniciosesion();
+	    }
+	}
 }

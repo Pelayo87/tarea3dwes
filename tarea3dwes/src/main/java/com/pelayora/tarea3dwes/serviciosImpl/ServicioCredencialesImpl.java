@@ -2,13 +2,13 @@ package com.pelayora.tarea3dwes.serviciosImpl;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Credenciales;
 import com.pelayora.tarea3dwes.repositorios.CredencialesRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 
+@Service
 public class ServicioCredencialesImpl implements ServicioCredenciales {
 
 	@Autowired
@@ -38,4 +38,12 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
     public void eliminarCredenciales(long id) {
         credencialesRepository.deleteById(id);
     }
+    
+    @Override
+    public boolean autenticar(Credenciales credenciales) {
+        Optional<Credenciales> credencialesDB = buscarPorUsuario(credenciales.getUsuario());
+        return credencialesDB.isPresent() && 
+               credencialesDB.get().getPassword().equals(credenciales.getPassword());
+    }
+
 }

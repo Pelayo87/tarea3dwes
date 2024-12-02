@@ -23,7 +23,11 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
     public Optional<Ejemplar> obtenerEjemplarPorId(Long id) {
         return ejemplar_R.findById(id);
     }
-
+    
+    public List<Ejemplar> findEjemplarByNombre(String nombre){
+    	return ejemplar_R.findEjemplaresByNombre(nombre);
+    }
+    
     @Override
     public List<Ejemplar> obtenerTodosLosEjemplares() {
         return ejemplar_R.findAll();
@@ -33,5 +37,5 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
     public void eliminarEjemplar(Long id) {
     	ejemplar_R.deleteById(id);
     }
-
 }
+

@@ -11,7 +11,7 @@ public interface ServicioPlanta {
 	
 	Planta guardarPlanta(Planta planta);
 	Planta modificarPlanta(String codigo);
-    Optional<Planta> obtenerPlantaPorId(String codigo);
-    List<Planta> obtenerTodasLasPlantas();
+    Optional<Planta> buscarPlantaPorId(String codigo);
+    List<Planta> listarPlantas();
     void eliminarPlanta(String codigo);
 }
