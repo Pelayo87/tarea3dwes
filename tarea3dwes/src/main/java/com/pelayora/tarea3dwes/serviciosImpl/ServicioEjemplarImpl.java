@@ -37,5 +37,9 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
     public void eliminarEjemplar(Long id) {
     	ejemplar_R.deleteById(id);
     }
+
+    public List<Ejemplar> obtenerEjemplarPorPlanta(String codigoPlanta) {
+        return ejemplar_R.findByPlanta(codigoPlanta);
+    }
 }
 

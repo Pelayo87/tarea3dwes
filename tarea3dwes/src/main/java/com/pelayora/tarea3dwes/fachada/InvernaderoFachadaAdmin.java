@@ -170,8 +170,6 @@ public class InvernaderoFachadaAdmin {
 	        }
 	    } catch (Exception e) {
 	        System.err.println("Ocurrió un error: " + e.getMessage());
-	    } finally {
-	        scanner.close();
 	    }
 	}
 

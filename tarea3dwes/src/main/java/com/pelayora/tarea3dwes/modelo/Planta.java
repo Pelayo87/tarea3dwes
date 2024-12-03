@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -17,9 +18,6 @@ import jakarta.persistence.Table;
 public class Planta {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
 	@Column(name = "codigo", unique = true)
 	private String codigo;
 
@@ -29,7 +27,8 @@ public class Planta {
 	@Column(name = "nombrecientifico", length = 50)
 	private String nombreCientifico;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "planta", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_planta")
 	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
 
 	public Planta() {
@@ -43,15 +42,15 @@ public class Planta {
 		this.nombreCientifico = nombreCientifico;
 	}
 
-	public Planta(String codigo, String nombreComun, String nombreCientifico, Long id, List<Ejemplar> ejemplares) {
-        this.codigo = codigo;
-        this.nombreComun = nombreComun;
-        this.nombreCientifico = nombreCientifico;
-        this.id = id;
-        this.ejemplares = ejemplares;
-    }
+    public Planta(String codigo, String nombreComun, String nombreCientifico, List<Ejemplar> ejemplares) {
+		super();
+		this.codigo = codigo;
+		this.nombreComun = nombreComun;
+		this.nombreCientifico = nombreCientifico;
+		this.ejemplares = ejemplares;
+	}
 
-    public String getCodigo() {
+	public String getCodigo() {
         return codigo;
     }
 
@@ -65,14 +64,6 @@ public class Planta {
 
     public void setEjemplares(List<Ejemplar> ejemplares) {
         this.ejemplares = ejemplares;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombreCientifico() {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pelayora.tarea3dwes.modelo.Persona;
 
-//@Service
+@Service
 public interface ServicioPersona {
 	
 	List<Persona> listarPersonas();

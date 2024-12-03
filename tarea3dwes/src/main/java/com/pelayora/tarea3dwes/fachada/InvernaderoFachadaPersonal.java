@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +16,7 @@ import com.pelayora.tarea3dwes.modelo.*;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
+import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 import com.pelayora.tarea3dwes.util.Utilidades;
 
 @Component
@@ -40,6 +43,9 @@ public class InvernaderoFachadaPersonal {
 
     @Autowired
     private ServicioPersona S_persona;
+    
+    @Autowired
+    private ServicioPlanta S_planta;
 
 	public InvernaderoFachadaPersonal(InvernaderoFachadaPrincipal facade) {
 		this.facade = facade;
@@ -478,49 +484,49 @@ public class InvernaderoFachadaPersonal {
 	}
 
 	private void filtrarAnotacionesporTipoPlanta() {
-//		List<Planta> listaPlantas = S_planta.obtenerTodasLasPlantas();
-//
-//		System.out.println("Selecciona el tipo de planta de la que quieres ver anotaciones:");
-//		int index = 1;
-//		for (Planta p : listaPlantas) {
-//			System.out.println(index + " - " + p.getNombrecomun());
-//			index++;
-//		}
-//
-//		try {
-//			// Obtener la selección del usuario
-//			int seleccion = sc.nextInt();
-//			if (seleccion < 1 || seleccion > listaPlantas.size()) {
-//				System.out.println("Selección no válida.");
-//				filtrarAnotacionesmenu();
-//			}
-//
-//			// Obtener la planta seleccionada
-//			Planta planta = (Planta) listaPlantas.toArray()[seleccion - 1];
-//			String codigo_planta = planta.getCodigo();
-//
-//			// Obtener todos los ejemplares que tengan el código de la planta seleccionada
-//			List<Ejemplar> codigo_plantaEjemplar = S_ejemplar(codigo_planta);
-//
-//			// Extraer los IDs de los ejemplares
-//			List<Mensaje> anotacionesPorTipoPlanta = (List<Mensaje>) new HashSet<Mensaje>();
-//			for (Ejemplar ejemplar : codigo_plantaEjemplar) {
-//				anotacionesPorTipoPlanta = S_mensaje.buscarPorEjemplarId(ejemplar.getId());
-//			}
-//
-//			// Mostrar las anotaciones obtenidas
-//			if (anotacionesPorTipoPlanta.isEmpty()) {
-//				System.out.println("No hay anotaciones para el tipo de planta seleccionado.");
-//				filtrarAnotacionesmenu();
-//			} else {
-//				for (Mensaje m : anotacionesPorTipoPlanta) {
-//					System.out.println(m.toString());
-//				}
-//				filtrarAnotacionesmenu();
-//			}
-//		} catch (InputMismatchException e) {
-//			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
-//			sc.nextLine();
-//		}
+		List<Planta> listaPlantas = S_planta.listarPlantas();
+
+		System.out.println("Selecciona el tipo de planta de la que quieres ver anotaciones:");
+		int index = 1;
+		for (Planta p : listaPlantas) {
+			System.out.println(index + " - " + p.getNombreComun());
+			index++;
+		}
+
+		try {
+			// Obtener la selección del usuario
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaPlantas.size()) {
+				System.out.println("Selección no válida.");
+				filtrarAnotacionesmenu();
+			}
+
+			// Obtener la planta seleccionada
+			Planta planta = (Planta) listaPlantas.toArray()[seleccion - 1];
+			String codigo_planta = planta.getCodigo();
+
+			// Obtener todos los ejemplares que tengan el código de la planta seleccionada
+			List<Ejemplar> codigo_plantaEjemplar = S_ejemplar.obtenerEjemplarPorPlanta(codigo_planta);
+
+			// Extraer los IDs de los ejemplares
+			List<Mensaje> anotacionesPorTipoPlanta = new ArrayList<>(new HashSet<Mensaje>());
+			for (Ejemplar ejemplar : codigo_plantaEjemplar) {
+				anotacionesPorTipoPlanta = S_mensaje.buscarPorEjemplarId(ejemplar.getId());
+			}
+
+			// Mostrar las anotaciones obtenidas
+			if (anotacionesPorTipoPlanta.isEmpty()) {
+				System.out.println("No hay anotaciones para el tipo de planta seleccionado.");
+				filtrarAnotacionesmenu();
+			} else {
+				for (Mensaje m : anotacionesPorTipoPlanta) {
+					System.out.println(m.toString());
+				}
+				filtrarAnotacionesmenu();
+			}
+		} catch (InputMismatchException e) {
+			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+			sc.nextLine();
+		}
 	}
 }

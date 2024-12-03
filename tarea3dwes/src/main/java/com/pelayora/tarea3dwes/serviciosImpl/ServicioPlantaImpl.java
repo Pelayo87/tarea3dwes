@@ -88,8 +88,8 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 				System.err.println("El código no puede ser nulo o vacío. Inténtelo de nuevo.");
 			} else if (!codigo.matches("[a-zA-Z]+")) {
 				System.err.println("El código solo puede contener letras. Inténtelo de nuevo.");
-			} else if (!planta_R.existsById(codigo)) {
-				System.err.println("El código '" + codigo + "' no existe. Inténtelo de nuevo.");
+			} else if (!planta_R.existeCodigo(codigo)) {
+			    System.err.println("El código '" + codigo + "' no existe. Inténtelo de nuevo.");
 			} else {
 				codigoCorrecto = true;
 			}

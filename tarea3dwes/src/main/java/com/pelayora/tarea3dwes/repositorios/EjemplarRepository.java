@@ -21,5 +21,7 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 	@Modifying
 	@Query("UPDATE Ejemplar e SET e.nombre = :nombre WHERE e.id = :id")
 	int actualizarNombreEjemplar(@Param("id") Long id, @Param("nombre") String nombre);
+	
+	List<Ejemplar> findByPlanta(String codigoPlanta);
 
 }

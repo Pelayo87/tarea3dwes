@@ -63,7 +63,6 @@ public class InvernaderoFachadaPrincipal {
 	    	System.out.println("Autenticado" + credencialesIngresadas);
 	        Optional<Credenciales> credencialesAutenticadas = S_credenciales.buscarPorUsuario(nombreusuario);
 	        if (credencialesAutenticadas.isPresent()) {
-	            credencialesAutenticadas.get().getPersona();
 	            if ("admin".equalsIgnoreCase(nombreusuario) && "admin".equals(contrasena)) {
 	                System.out.println("Inicio de sesión exitoso como administrador.");
 	                facadeAdmin.menuadmin();

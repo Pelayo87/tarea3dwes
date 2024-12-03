@@ -37,7 +37,8 @@ public class InvernaderoFachadaInvitado {
                     break;
                 }
                 case 2: {
-//                    facade.login();
+                    InvernaderoFachadaPrincipal invernaderoFachadaPrincipal = new InvernaderoFachadaPrincipal();
+					invernaderoFachadaPrincipal.login();
                     break;
                 }
                 case 3: {
@@ -50,8 +51,7 @@ public class InvernaderoFachadaInvitado {
     
     
     //MÉTODOS PARA LA GESTIÓN DE PLANTAS
-	
-//    @Bean
+
     private void mostrarPlantas() {        
         List<Planta> plantasSet = S_planta.listarPlantas();
         List<Planta> Listaplantas = new ArrayList<>(plantasSet);
