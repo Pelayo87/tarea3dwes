@@ -146,7 +146,7 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 		return planta_R.findById(codigo);
 	}
 
-//	@Override
+	@Override
 	public List<Planta> listarPlantas() {
 		return planta_R.findAll();
 	}
