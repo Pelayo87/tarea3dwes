@@ -19,17 +19,17 @@ public class Ejemplar {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id_ejemplar;
 	
 	@Column(name = "nombrecomun", length = 50)
 	private String nombre;
 	
 	@ManyToOne
-	@JoinColumn(name="idplanta")
+	@JoinColumn(name="id_planta")
 	private Planta planta;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="idejemplar")
+	@JoinColumn(name="id_ejemplar")
 	private List<Mensaje> mensajes = new LinkedList<Mensaje>();
 
 	public Ejemplar() {
@@ -38,18 +38,18 @@ public class Ejemplar {
 
 	public Ejemplar(Long id, String nombre, Planta planta, List<Mensaje> mensajes) {
 		super();
-		this.id = id;
+		this.id_ejemplar = id;
 		this.nombre = nombre;
 		this.planta = planta;
 		this.mensajes = mensajes;
 	}
 
 	public Long getId() {
-		return id;
+		return id_ejemplar;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id_ejemplar = id;
 	}
 
 	public String getNombre() {
@@ -75,6 +75,10 @@ public class Ejemplar {
 	public void setMensajes(List<Mensaje> mensajes) {
 		this.mensajes = mensajes;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Ejemplar [id_ejemplar=" + id_ejemplar + ", nombre=" + nombre + ", planta=" + planta + ", mensajes="
+				+ mensajes + "]";
+	}
 }

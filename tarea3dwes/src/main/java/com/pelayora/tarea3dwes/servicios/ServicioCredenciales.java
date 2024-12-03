@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pelayora.tarea3dwes.modelo.Credenciales;
 
-@Service
+//@Service
 public interface ServicioCredenciales {
 	
 	List<Credenciales> listarCredenciales();
@@ -15,6 +15,6 @@ public interface ServicioCredenciales {
     Optional<Credenciales> buscarPorUsuario(String usuario);
     Credenciales guardarCredenciales(Credenciales credenciales);
     void eliminarCredenciales(long id);
-
+    boolean autenticar(Credenciales credenciales);
 }
 

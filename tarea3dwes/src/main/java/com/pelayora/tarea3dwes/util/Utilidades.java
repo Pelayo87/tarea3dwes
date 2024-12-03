@@ -10,8 +10,6 @@ import java.util.Scanner;
 
 public class Utilidades {
 	
-	private static Connection con;
-	
     public static Date leerFecha() {
     	Scanner sc = new Scanner(System.in, "ISO-8859-1");
         Date ret = null;

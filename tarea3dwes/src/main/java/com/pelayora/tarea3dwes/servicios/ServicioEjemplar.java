@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
 
-@Service
+//@Service
 public interface ServicioEjemplar {
 	
 	Ejemplar guardarEjemplar(Ejemplar ejemplar);

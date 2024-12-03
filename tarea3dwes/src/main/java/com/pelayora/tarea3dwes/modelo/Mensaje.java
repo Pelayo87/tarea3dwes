@@ -85,4 +85,10 @@ public class Mensaje {
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
+
+	@Override
+	public String toString() {
+		return "Mensaje [id=" + id + ", fechahora=" + fechahora + ", mensaje=" + mensaje + ", ejemplar=" + ejemplar
+				+ ", persona=" + persona + "]";
+	}
 }

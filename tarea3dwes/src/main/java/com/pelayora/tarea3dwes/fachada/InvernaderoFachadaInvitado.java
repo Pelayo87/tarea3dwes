@@ -5,34 +5,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.modelo.*;
-import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
-import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
-import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
-import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
-import com.pelayora.tarea3dwes.util.InvernaderoServiciosFactory;
 import com.pelayora.tarea3dwes.util.*;
 
+@Component
 public class InvernaderoFachadaInvitado {
-	private InvernaderoFachadaPrincipal facade;
 	Scanner sc = new Scanner(System.in);
     String nombreusuario;
     Persona usuarioActual;    
-    
-    InvernaderoServiciosFactory factoryServicios = InvernaderoServiciosFactory.getServicios();
-    
 
-    ServicioEjemplar S_ejemplar = factoryServicios.getServiciosEjemplar();
-    ServicioPlanta S_planta = factoryServicios.getServiciosPlanta();
-    ServicioMensaje S_mensaje = factoryServicios.getServiciosMensaje();
-    ServicioCredenciales S_credenciales = factoryServicios.getServiciosCredenciales();
-    ServicioPersona S_persona = factoryServicios.getServiciosPersona();
-    
-    public InvernaderoFachadaInvitado(InvernaderoFachadaPrincipal facade) {
-        this.facade = facade;
-    }
+    @Autowired
+    private ServicioPlanta S_planta;
        
     public void invitado() {
         int opcion = -1;
@@ -51,7 +37,7 @@ public class InvernaderoFachadaInvitado {
                     break;
                 }
                 case 2: {
-                    facade.login();
+//                    facade.login();
                     break;
                 }
                 case 3: {
@@ -65,14 +51,15 @@ public class InvernaderoFachadaInvitado {
     
     //MÉTODOS PARA LA GESTIÓN DE PLANTAS
 	
+//    @Bean
     private void mostrarPlantas() {        
-        List<Planta> plantasSet = S_planta.obtenerTodasLasPlantas();
+        List<Planta> plantasSet = S_planta.listarPlantas();
         List<Planta> Listaplantas = new ArrayList<>(plantasSet);
 
         Collections.sort(Listaplantas, new Comparator<Planta>() {
             @Override
             public int compare(Planta p1, Planta p2) {
-                return p1.getNombrecomun().compareToIgnoreCase(p2.getNombrecomun());
+                return p1.getNombreComun().compareToIgnoreCase(p2.getNombreComun());
             }
         });
 

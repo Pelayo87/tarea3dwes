@@ -2,34 +2,32 @@ package com.pelayora.tarea3dwes.fachada;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.pelayora.tarea3dwes.modelo.*;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
-import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
-import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
-import com.pelayora.tarea3dwes.util.InvernaderoServiciosFactory;
 import com.pelayora.tarea3dwes.util.Utilidades;
 
+@Component
 public class InvernaderoFachadaAdmin {
 	private InvernaderoFachadaPrincipal facade;
 	private InvernaderoFachadaPersonal facadePersonal;
+	
 	Scanner sc = new Scanner(System.in);
 	String nombreusuario;
 	Persona usuarioActual;
 
-	InvernaderoServiciosFactory factoryServicios = InvernaderoServiciosFactory.getServicios();
+    @Autowired
+    private ServicioPlanta S_planta;
 
-	ServicioEjemplar S_ejemplar = factoryServicios.getServiciosEjemplar();
-	ServicioPlanta S_planta = factoryServicios.getServiciosPlanta();
-	ServicioMensaje S_mensaje = factoryServicios.getServiciosMensaje();
-	ServicioCredenciales S_credenciales = factoryServicios.getServiciosCredenciales();
-	ServicioPersona S_persona = factoryServicios.getServiciosPersona();
+    @Autowired
+    private ServicioCredenciales S_credenciales;
 
-	public InvernaderoFachadaAdmin(InvernaderoFachadaPrincipal facade) {
-        this.facade = facade;
-        this.facadePersonal = new InvernaderoFachadaPersonal(facade);
-    }
+    @Autowired
+    private ServicioPersona S_persona;
 
 	public void menuadmin() {
 		int opcion = -1;
@@ -85,7 +83,7 @@ public class InvernaderoFachadaAdmin {
 				break;
 			}
 			case 2: {
-//				S_planta.modificar(null);
+				S_planta.modificarPlanta(null);
 				break;
 			}
 			case 3: {

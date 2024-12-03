@@ -10,7 +10,8 @@ import com.pelayora.tarea3dwes.modelo.Planta;
 public interface ServicioPlanta {
 	
 	Planta guardarPlanta(Planta planta);
-    Optional<Planta> obtenerPlantaPorId(Long id);
-    List<Planta> obtenerTodasLasPlantas();
-    void eliminarPlanta(Long id);
+	Planta modificarPlanta(String codigo);
+    Optional<Planta> buscarPlantaPorId(String codigo);
+    List<Planta> listarPlantas();
+    void eliminarPlanta(String codigo);
 }

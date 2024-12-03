@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.pelayora.tarea3dwes.modelo.Mensaje;
 import com.pelayora.tarea3dwes.repositorios.MensajeRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 
+@Service
 public class ServicioMensajeImpl implements ServicioMensaje {
 
 	@Autowired

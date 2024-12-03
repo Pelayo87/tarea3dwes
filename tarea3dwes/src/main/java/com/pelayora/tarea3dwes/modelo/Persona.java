@@ -13,7 +13,7 @@ public class Persona {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id_persona;
 	
 	@Column(name = "nombre", length = 50)
 	private String nombre;
@@ -25,9 +25,9 @@ public class Persona {
 		super();
 	}
 
-	public Persona(Long id, String nombre, String email) {
+	public Persona(Long id_persona, String nombre, String email) {
 		super();
-		this.id = id;
+		this.id_persona = id_persona;
 		this.nombre = nombre;
 		this.email = email;
 	}
@@ -49,10 +49,15 @@ public class Persona {
 	}
 
 	public Long getId() {
-		return id;
+		return id_persona;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id_persona = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Persona [id_persona=" + id_persona + ", nombre=" + nombre + ", email=" + email + "]";
 	}
 }
