@@ -7,17 +7,14 @@ import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.fachada.InvernaderoFachadaPrincipal;
 
 @Component
-public class Principal implements CommandLineRunner {
-	
+public class Principal implements CommandLineRunner {	
 	
 	@Autowired
-	InvernaderoFachadaPrincipal facade;
+	public InvernaderoFachadaPrincipal facade;
 	
 	@Override
 	public void run(String... args) throws Exception {
-		
-//        InvernaderoFachadaPrincipal facade = new InvernaderoFachadaPrincipal();
-//        
+     
         System.out.println("--Bienvenido al sistema del invernadero (DWES)--");
         
         facade.iniciosesion();

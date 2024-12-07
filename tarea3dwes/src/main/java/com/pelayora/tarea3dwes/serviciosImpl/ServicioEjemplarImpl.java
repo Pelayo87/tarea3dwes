@@ -39,7 +39,7 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
     }
 
     public List<Ejemplar> obtenerEjemplarPorPlanta(String codigoPlanta) {
-        return ejemplar_R.findByPlanta(codigoPlanta);
+        return ejemplar_R.findByPlanta_Codigo(codigoPlanta);
     }
 }
 

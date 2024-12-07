@@ -8,6 +8,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.modelo.*;
+import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 import com.pelayora.tarea3dwes.util.*;
 
@@ -19,6 +20,9 @@ public class InvernaderoFachadaInvitado {
 
     @Autowired
     private ServicioPlanta S_planta;
+    
+    @Autowired
+    private ServicioCredenciales S_credenciales;
        
     public void invitado() {
         int opcion = -1;
