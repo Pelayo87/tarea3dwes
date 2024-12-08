@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.modelo.*;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
@@ -14,6 +15,10 @@ import com.pelayora.tarea3dwes.util.*;
 
 @Component
 public class InvernaderoFachadaInvitado {
+	@Autowired
+	@Lazy
+	private InvernaderoFachadaPrincipal invernaderoFachadaPrincipal;
+	
 	Scanner sc = new Scanner(System.in);
     String nombreusuario;
     Persona usuarioActual;    
@@ -41,7 +46,6 @@ public class InvernaderoFachadaInvitado {
                     break;
                 }
                 case 2: {
-                    InvernaderoFachadaPrincipal invernaderoFachadaPrincipal = new InvernaderoFachadaPrincipal();
 					invernaderoFachadaPrincipal.login();
                     break;
                 }

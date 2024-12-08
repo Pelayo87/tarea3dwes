@@ -13,7 +13,10 @@ import com.pelayora.tarea3dwes.util.Utilidades;
 
 @Component
 public class InvernaderoFachadaAdmin {
+	@Autowired
 	private InvernaderoFachadaPrincipal facade;
+	
+	@Autowired
 	private InvernaderoFachadaPersonal facadePersonal;
 	
 	Scanner sc = new Scanner(System.in);
@@ -126,15 +129,15 @@ public class InvernaderoFachadaAdmin {
 
 	private void registrarPersona() {
 	    // Escáner para entrada del usuario
-	    Scanner scanner = new Scanner(System.in);
+	    Scanner sc = new Scanner(System.in);
 
 	    try {
 	        // Recoger datos de la persona
 	        System.out.print("Ingrese el nombre de la persona: ");
-	        String nombre = scanner.nextLine();
+	        String nombre = sc.nextLine();
 
 	        System.out.print("Ingrese el email de la persona: ");
-	        String email = scanner.nextLine();
+	        String email = sc.nextLine();
 
 	        // Creación de la entidad Persona
 	        Persona persona = new Persona();
@@ -146,10 +149,10 @@ public class InvernaderoFachadaAdmin {
 
 	        if (personaGuardada != null && personaGuardada.getId() > 0) {
 	            System.out.print("Ingrese el nombre de usuario: ");
-	            String usuario = scanner.nextLine();
+	            String usuario = sc.nextLine();
 
 	            System.out.print("Ingrese la contraseña: ");
-	            String password = scanner.nextLine();
+	            String password = sc.nextLine();
 
 	            // Creación de la entidad Credenciales vinculada a la Persona
 	            Credenciales credenciales = new Credenciales();

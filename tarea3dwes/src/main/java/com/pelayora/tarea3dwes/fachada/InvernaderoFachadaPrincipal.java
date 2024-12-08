@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.modelo.Credenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
@@ -11,13 +12,17 @@ import com.pelayora.tarea3dwes.util.Utilidades;
 
 @Component
 public class InvernaderoFachadaPrincipal {
-	@Autowired
+
+    @Autowired
+    @Lazy
     private InvernaderoFachadaAdmin facadeAdmin;
-	
+
+    @Autowired
+    @Lazy
     private InvernaderoFachadaPersonal facadePersonal;
-    
     @Autowired
     private InvernaderoFachadaInvitado facadeInvitado;
+
     
     Scanner sc = new Scanner(System.in);
     String nombreusuario;
@@ -60,9 +65,9 @@ public class InvernaderoFachadaPrincipal {
 	    boolean autenticado = S_credenciales.autenticar(credencialesIngresadas);
 
 	    if (autenticado) {
-	    	System.out.println("Autenticado" + credencialesIngresadas);
 	        Optional<Credenciales> credencialesAutenticadas = S_credenciales.buscarPorUsuario(nombreusuario);
 	        if (credencialesAutenticadas.isPresent()) {
+	        	id_Persona = credencialesAutenticadas.get().getPersona().getId();
 	            if ("admin".equalsIgnoreCase(nombreusuario) && "admin".equals(contrasena)) {
 	                System.out.println("Inicio de sesión exitoso como administrador.");
 	                facadeAdmin.menuadmin();
@@ -76,4 +81,8 @@ public class InvernaderoFachadaPrincipal {
 	        iniciosesion();
 	    }
 	}
+	
+	public long obtenerPersonaActual() {
+        return id_Persona;
+    }
 }

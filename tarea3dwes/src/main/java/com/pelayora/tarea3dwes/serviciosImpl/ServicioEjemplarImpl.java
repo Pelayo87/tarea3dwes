@@ -9,6 +9,8 @@ import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.repositorios.EjemplarRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ServicioEjemplarImpl implements ServicioEjemplar{
 	@Autowired

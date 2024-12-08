@@ -78,7 +78,6 @@ public class Ejemplar {
 
 	@Override
 	public String toString() {
-		return "Ejemplar [id_ejemplar=" + id_ejemplar + ", nombre=" + nombre + ", planta=" + planta + ", mensajes="
-				+ mensajes + "]";
+		return "Ejemplar [id_ejemplar=" + id_ejemplar + ", nombre=" + nombre + ", planta=" + planta;
 	}
 }
