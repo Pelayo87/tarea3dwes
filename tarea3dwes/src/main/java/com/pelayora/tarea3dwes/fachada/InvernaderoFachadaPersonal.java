@@ -27,7 +27,7 @@ public class InvernaderoFachadaPersonal {
 	private InvernaderoFachadaPrincipal facade;
 	
 	Scanner sc = new Scanner(System.in);
-	String nombreusuario;
+	
 	Persona usuarioActual;
 
 	// FECHA ACTUAL Y FORMATEADA
@@ -57,7 +57,7 @@ public class InvernaderoFachadaPersonal {
 
 	public void menu() {
 		int opcion = -1;
-			System.out.println("\n\n\n\n\n\t\t\t\tPERSONAL VIVERO\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tPERSONAL VIVERO" + " [Usuario actual:" +facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - GESTIÓN DE EJEMPLARES");
 			System.out.println("\t\t\t\t2 - GESTIÓN DE MENSAJES");
 			System.out.println("\t\t\t\t3 - CERRAR SESIÓN");
@@ -85,7 +85,7 @@ public class InvernaderoFachadaPersonal {
 	
 	public void gestionEjemplaresmenu() {
 		int opcion = -1;
-			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE EJEMPLARES\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE EJEMPLARES" + " [Usuario actual:" +facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - AÑADIR NUEVO EJEMPLAR");
 			System.out.println("\t\t\t\t2 - FILTRAR EJEMPLAR/ES");
 			System.out.println("\t\t\t\t3 - VER MENSAJES DE UN EJEMPLAR");
@@ -118,7 +118,7 @@ public class InvernaderoFachadaPersonal {
 
 	public void filtrarEjemplaresmenu() {
 		int opcion = -1;
-			System.out.println("\n\n\n\n\n\t\t\t\tFILTRAR EJEMPLARES\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tFILTRAR EJEMPLARES" + " [Usuario actual:" +facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - MOSTRAR TODOS LOS EJEMPLARES");
 			System.out.println("\t\t\t\t2 - FILTRAR EJEMPLAR/ES POR TIPO/S DE PLANTA/S");
 			System.out.println("\t\t\t\t3 - VOLVER ATRÁS");
@@ -136,7 +136,7 @@ public class InvernaderoFachadaPersonal {
 				break;
 			}
 			case 3: {
-				menu();
+				gestionEjemplaresmenu();
 			}
 			case 4: {
 				Utilidades.salirdelprograma();
@@ -146,7 +146,7 @@ public class InvernaderoFachadaPersonal {
 
 	public void gestionMensajesmenu() {
 		int opcion = -1;
-			System.out.println("\n\n\n\n\n\t\t\t\tGESTION DE MENSAJES/ANOTACIONES\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tGESTION DE MENSAJES/ANOTACIONES" + " [Usuario actual:" +facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - REALIZAR ANOTACIONES EN FORMA DE MENSAJES");
 			System.out.println("\t\t\t\t2 - MOSTRAR TODOS LOS MENSAJES/ANOTACIONES");
 			System.out.println("\t\t\t\t3 - FILTRAR ANOTACIONES/MENSAJES");
@@ -178,7 +178,7 @@ public class InvernaderoFachadaPersonal {
 
 	public void filtrarAnotacionesmenu() {
 		int opcion = -1;
-			System.out.println("\n\n\n\n\n\t\t\t\tFILTRAR MENSAJES/ANOTACIONES\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tFILTRAR MENSAJES/ANOTACIONES" + " [Usuario actual:" +facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - FILTRAR POR PERSONA QUE LO ESCRIBIO");
 			System.out.println("\t\t\t\t2 - FILTRAR POR RANGO DE FECHA");
 			System.out.println("\t\t\t\t3 - FILTRAR POR TIPO DE PLANTA");
@@ -247,7 +247,7 @@ public class InvernaderoFachadaPersonal {
 
 	        Mensaje mensajeInicial = new Mensaje();
 	        mensajeInicial.setFechahora(new Date()); // Fecha actual
-	        mensajeInicial.setMensaje("Registro realizado por " + nombreusuario + " el " + new Date());
+	        mensajeInicial.setMensaje("Registro realizado por " + facade.nombreusuario + " el " + new Date());
 
 	        // Asocio el ejemplar y la persona
 	        mensajeInicial.setEjemplar(nuevoEjemplar);

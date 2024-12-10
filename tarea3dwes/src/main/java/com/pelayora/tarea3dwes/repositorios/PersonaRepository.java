@@ -6,7 +6,7 @@ import com.pelayora.tarea3dwes.modelo.Persona;
 
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Long> {
-    boolean ExistePersonaNombre(String nombre);
-    boolean ExistePersonaCorreo(String email);
+	
+	boolean existsByNombre(String nombre);
+    boolean existsByEmail(String email);
 }
-

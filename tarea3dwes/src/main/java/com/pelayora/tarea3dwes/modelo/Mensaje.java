@@ -11,6 +11,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+//--------------------------------------------------------
+//Autor: Pelayo Rodríguez Álvarez
+//Fecha: 2024-12-10
+//Descripción: Clase VO de mensajes.
+//--------------------------------------------------------
+
 @Entity
 @Table(name = "mensajes")
 public class Mensaje {

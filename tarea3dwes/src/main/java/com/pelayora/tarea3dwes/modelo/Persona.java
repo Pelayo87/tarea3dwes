@@ -7,6 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+//--------------------------------------------------------
+//Autor: Pelayo Rodríguez Álvarez
+//Fecha: 2024-12-10
+//Descripción: Clase VO de personas.
+//--------------------------------------------------------
+
 @Entity
 @Table(name = "personas")
 public class Persona {

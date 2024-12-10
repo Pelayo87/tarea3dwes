@@ -20,7 +20,6 @@ public class InvernaderoFachadaAdmin {
 	private InvernaderoFachadaPersonal facadePersonal;
 	
 	Scanner sc = new Scanner(System.in);
-	String nombreusuario;
 	Persona usuarioActual;
 
     @Autowired
@@ -34,7 +33,7 @@ public class InvernaderoFachadaAdmin {
 
 	public void menuadmin() {
 		int opcion = -1;
-		System.out.println("\n\n\n\n\n\t\t\t\tADMINISTRADOR INVERNADERO\n");
+		System.out.println("\n\n\n\n\n\t\t\t\tADMINISTRADOR INVERNADERO" + " [Usuario actual:" + facade.nombreusuario + "]\n");
 		System.out.println("\t\t\t\t1 - GESTIÓN DE PLANTAS");
 		System.out.println("\t\t\t\t2 - GESTIÓN DE PERSONAS");
 		System.out.println("\t\t\t\t3 - GESTIÓN DE EJEMPLARES");
@@ -70,7 +69,7 @@ public class InvernaderoFachadaAdmin {
 
 	public void menuadminplantas() {
 		int opcion = -1;
-			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE PLANTAS\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE PLANTAS" + " [Usuario actual:" + facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - AÑADIR PLANTA");
 			System.out.println("\t\t\t\t2 - MODIFICAR PLANTA");
 			System.out.println("\t\t\t\t3 - BORRAR PLANTA");
@@ -83,19 +82,18 @@ public class InvernaderoFachadaAdmin {
 			switch (opcion) {
 			case 1: {
 				S_planta.guardarPlanta(null);
-				break;
+				menuadminplantas();
 			}
 			case 2: {
 				S_planta.modificarPlanta(null);
-				break;
+				menuadminplantas();
 			}
 			case 3: {
 				S_planta.eliminarPlanta(null);
-				break;
+				menuadminplantas();
 			}
 			case 4: {
 				facade.iniciosesion();
-				;
 				break;
 			}
 			case 5: {
@@ -110,7 +108,7 @@ public class InvernaderoFachadaAdmin {
 	public void menuadminpersonas() {
 		int opcion = -1;
 		do {
-			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE PERSONAS\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE PERSONAS" + " [Usuario actual:" + facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - REGISTRAR PERSONA");
 			System.out.println("\t\t\t\t2 - VOLVER ATRÁS");
 

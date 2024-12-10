@@ -46,7 +46,7 @@ private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@[\\w-]
 	            System.err.println("El nombre no puede estar vacío. Inténtelo de nuevo.");
 	        } else if (!nombrePersona.matches("[a-zA-Z]+")) {
 	            System.err.println("El nombre solo debe contener letras. Inténtelo de nuevo.");
-	        } else if (persona_R.ExistePersonaNombre(nombrePersona)) {
+	        } else if (persona_R.existsByNombre(nombrePersona)) {
 	            System.err.println("Ya hay un '" + nombrePersona + "' en uso. Inténtelo de nuevo.");
 	        } else {
 	            nombreCorrecto = true;
@@ -63,7 +63,7 @@ private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@[\\w-]
 	            System.err.println("El email no puede estar vacío. Inténtelo de nuevo.");
 	        } else if (!EMAIL_PATTERN.matcher(emailPersona).matches()) {
 	            System.err.println("El email es inválido. Debe tener un formato correcto. Inténtelo de nuevo.");
-	        } else if (persona_R.ExistePersonaCorreo(emailPersona)) {
+	        } else if (persona_R.existsByEmail(emailPersona)) {
 	            System.err.println("El correo '" + emailPersona + "' ya está en uso. Inténtelo de nuevo.");
 	        } else {
 	            emailCorrecto = true;

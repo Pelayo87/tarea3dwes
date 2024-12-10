@@ -20,12 +20,13 @@ public class InvernaderoFachadaPrincipal {
     @Autowired
     @Lazy
     private InvernaderoFachadaPersonal facadePersonal;
+    
     @Autowired
     private InvernaderoFachadaInvitado facadeInvitado;
 
     
     Scanner sc = new Scanner(System.in);
-    String nombreusuario;
+    protected static String nombreusuario;
     public long id_Persona;
 
     @Autowired

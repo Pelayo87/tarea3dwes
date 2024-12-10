@@ -2,7 +2,6 @@ package com.pelayora.tarea3dwes.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
@@ -93,4 +92,3 @@ public class Utilidades {
     }
 
 }
-

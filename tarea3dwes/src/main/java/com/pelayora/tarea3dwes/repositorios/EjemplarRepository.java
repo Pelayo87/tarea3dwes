@@ -24,4 +24,3 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 
     List<Ejemplar> findByPlanta_Codigo(String codigoPlanta);
 }
-

@@ -4,12 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.repositorios.EjemplarRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class ServicioEjemplarImpl implements ServicioEjemplar{
@@ -44,4 +41,3 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
         return ejemplar_R.findByPlanta_Codigo(codigoPlanta);
     }
 }
-

@@ -13,6 +13,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+//--------------------------------------------------------
+//Autor: Pelayo Rodríguez Álvarez
+//Fecha: 2024-12-10
+//Descripción: Clase VO de ejemplares.
+//--------------------------------------------------------
+
 @Entity
 @Table(name = "ejemplares")
 public class Ejemplar {
