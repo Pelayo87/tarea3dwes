@@ -11,6 +11,12 @@ import com.pelayora.tarea3dwes.modelo.Ejemplar;
 
 import jakarta.transaction.Transactional;
 
+//--------------------------------------------------------
+//Autor: Pelayo Rodríguez Álvarez
+//Fecha: 2024-12-10
+//Descripción: Repositorio de Ejemplares.
+//--------------------------------------------------------
+
 @Repository
 public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 

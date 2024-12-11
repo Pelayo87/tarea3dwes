@@ -6,6 +6,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.pelayora.tarea3dwes.modelo.Planta;
 
+//--------------------------------------------------------
+//Autor: Pelayo Rodríguez Álvarez
+//Fecha: 2024-12-10
+//Descripción: Repositorio de Plantas.
+//--------------------------------------------------------
+
 @Repository
 public interface PlantaRepository extends JpaRepository<Planta, String> {
 	

@@ -7,14 +7,21 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Credenciales;
+import com.pelayora.tarea3dwes.modelo.Persona;
 import com.pelayora.tarea3dwes.repositorios.CredencialesRepository;
+import com.pelayora.tarea3dwes.repositorios.PersonaRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class ServicioCredencialesImpl implements ServicioCredenciales {
 
 	@Autowired
     private CredencialesRepository credencialesRepository;
+
+    @Autowired
+    private PersonaRepository personaRepository;
 	
 	private Scanner sc = new Scanner(System.in);
 
@@ -31,6 +38,29 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
     @Override
     public Optional<Credenciales> buscarPorUsuario(String usuario) {
         return credencialesRepository.findByUsuario(usuario);
+    }
+    
+    @PostConstruct
+    public void crearAdminSiNoExiste() {
+        // Verificar si ya existe el administrador
+        Optional<Credenciales> admin = credencialesRepository.findByUsuario("admin");
+        if (admin.isEmpty()) {
+            // Crear un nuevo usuario administrador
+            Persona personaAdmin = new Persona();
+            personaAdmin.setNombre("Admin");
+            personaAdmin.setEmail("admin@admin.com");
+            personaAdmin = personaRepository.save(personaAdmin);
+
+            Credenciales credencialesAdmin = new Credenciales();
+            credencialesAdmin.setUsuario("admin");
+            credencialesAdmin.setPassword("admin");
+            credencialesAdmin.setPersona(personaAdmin);
+
+            credencialesRepository.save(credencialesAdmin);
+            System.out.println("Administrador creado con éxito.");
+        } else {
+            System.out.println("El usuario administrador ya existe.");
+        }
     }
 
     @Override
