@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.pelayora.tarea3dwes.modelo.*;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
+import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 import com.pelayora.tarea3dwes.util.Utilidades;
@@ -30,6 +31,9 @@ public class InvernaderoFachadaAdmin {
 
     @Autowired
     private ServicioPersona S_persona;
+    
+    @Autowired
+    private ServicioFitosanitario S_fitosanitario;
 
 	public void menuadmin() {
 		int opcion = -1;
@@ -38,10 +42,11 @@ public class InvernaderoFachadaAdmin {
 		System.out.println("\t\t\t\t2 - GESTIÓN DE PERSONAS");
 		System.out.println("\t\t\t\t3 - GESTIÓN DE EJEMPLARES");
 		System.out.println("\t\t\t\t4 - GESTIÓN DE MENSAJES");
-		System.out.println("\t\t\t\t5 - CERRAR SESIÓN");
-		System.out.println("\t\t\t\t6 - SALIR DEL PROGRAMA");
+		System.out.println("\t\t\t\t5 - GESTIÓN DE FITOSANITARIOS");
+		System.out.println("\t\t\t\t6 - CERRAR SESIÓN");
+		System.out.println("\t\t\t\t7 - SALIR DEL PROGRAMA");
 
-		opcion = Utilidades.obtenerOpcionUsuario(6);
+		opcion = Utilidades.obtenerOpcionUsuario(7);
 
 		switch (opcion) {
 		case 1: {
@@ -59,9 +64,12 @@ public class InvernaderoFachadaAdmin {
 			facadePersonal.gestionMensajesmenu();
 		}
 		case 5: {
+			menuadminfitosanitarios();
+		}
+		case 6: {
 			facade.iniciosesion();
 		}			
-		case 6: {
+		case 7: {
 			Utilidades.salirdelprograma();
 		}
 		}
@@ -121,6 +129,34 @@ public class InvernaderoFachadaAdmin {
 			}
 			}
 		} while (opcion != 2);
+	}
+	
+	public void menuadminfitosanitarios() {
+		int opcion = -1;
+			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE FITOSANITARIOS" + " [Usuario actual:" + facade.nombreusuario + "]\n");
+			System.out.println("\t\t\t\t1 - AÑADIR FITOSANITARIO");
+			System.out.println("\t\t\t\t2 - CERRAR SESIÓN");
+			System.out.println("\t\t\t\t3 - SALIR DEL PROGRAMA");
+			System.out.println("\t\t\t\t4 - VOLVER ATRÁS");
+
+			opcion = Utilidades.obtenerOpcionUsuario(4);
+
+			switch (opcion) {
+			case 1: {
+				S_fitosanitario.guardarFitosanitario(null);
+				menuadmin();
+			}
+			case 4: {
+				facade.iniciosesion();
+				break;
+			}
+			case 5: {
+				Utilidades.salirdelprograma();
+			}
+			case 6: {
+				menuadmin();
+			}
+			}
 	}
 
 	// METODÓS PARA LA GESTIÓN DE PERSONAS
