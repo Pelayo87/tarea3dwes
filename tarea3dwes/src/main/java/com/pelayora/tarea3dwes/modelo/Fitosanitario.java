@@ -16,30 +16,38 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "fitosanitario")
 public class Fitosanitario {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_fitosanitario;
-	
+
 	@Column(name = "nombre", length = 50)
 	private String nombre;
-	
+
 	@Column(name = "marca", length = 100)
 	private String marca;
-	
+
 	@Column(name = "eco")
 	private boolean eco;
-	
-    @JoinTable(
-        name = "fitosanitario_ejemplar",
-        joinColumns = @JoinColumn(name = "id_fitosanitario"),
-        inverseJoinColumns = @JoinColumn(name = "id_ejemplar")
-    )
+
+	@JoinTable(name = "fitosanitario_ejemplar", joinColumns = @JoinColumn(name = "id_fitosanitario"), inverseJoinColumns = @JoinColumn(name = "id_ejemplar"))
 	@ManyToMany(cascade = CascadeType.ALL)
-    private List<Ejemplar> ejemplares;
+	private List<Ejemplar> ejemplares;
+
+	public Fitosanitario() {
+		super();
+	}
 
 	public Fitosanitario(String nombre, String marca, boolean eco) {
 		super();
+		this.nombre = nombre;
+		this.marca = marca;
+		this.eco = eco;
+	}
+
+	public Fitosanitario(Long id_fitosanitario, String nombre, String marca, boolean eco) {
+		super();
+		this.id_fitosanitario = id_fitosanitario;
 		this.nombre = nombre;
 		this.marca = marca;
 		this.eco = eco;

@@ -135,25 +135,30 @@ public class InvernaderoFachadaAdmin {
 		int opcion = -1;
 			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE FITOSANITARIOS" + " [Usuario actual:" + facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - AÑADIR FITOSANITARIO");
-			System.out.println("\t\t\t\t2 - CERRAR SESIÓN");
-			System.out.println("\t\t\t\t3 - SALIR DEL PROGRAMA");
-			System.out.println("\t\t\t\t4 - VOLVER ATRÁS");
+			System.out.println("\t\t\t\t2 - MODIFICAR FITOSANITARIO");
+			System.out.println("\t\t\t\t3 - CERRAR SESIÓN");
+			System.out.println("\t\t\t\t4 - SALIR DEL PROGRAMA");
+			System.out.println("\t\t\t\t5 - VOLVER ATRÁS");
 
-			opcion = Utilidades.obtenerOpcionUsuario(4);
+			opcion = Utilidades.obtenerOpcionUsuario(5);
 
 			switch (opcion) {
 			case 1: {
 				S_fitosanitario.guardarFitosanitario(null);
 				menuadmin();
 			}
-			case 4: {
+			case 2: {
+				S_fitosanitario.modificarFitosanitario(null);
+				menuadmin();
+			}
+			case 3: {
 				facade.iniciosesion();
 				break;
 			}
-			case 5: {
+			case 4: {
 				Utilidades.salirdelprograma();
 			}
-			case 6: {
+			case 5: {
 				menuadmin();
 			}
 			}
