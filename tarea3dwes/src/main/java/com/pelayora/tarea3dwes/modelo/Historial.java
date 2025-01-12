@@ -3,7 +3,6 @@ package com.pelayora.tarea3dwes.modelo;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +13,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+//--------------------------------------------------------
+//Autor: Pelayo Rodríguez Álvarez
+//Fecha: 2025-01-12
+//Descripción: Clase VO de historiales.
+//--------------------------------------------------------
 
 @Entity
 @Table(name = "historial")

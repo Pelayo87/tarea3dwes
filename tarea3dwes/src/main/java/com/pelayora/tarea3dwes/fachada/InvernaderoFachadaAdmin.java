@@ -1,11 +1,13 @@
 package com.pelayora.tarea3dwes.fachada;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pelayora.tarea3dwes.modelo.*;
+import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
@@ -33,6 +35,9 @@ public class InvernaderoFachadaAdmin {
     private ServicioPersona S_persona;
     
     @Autowired
+    private ServicioCliente S_cliente;
+    
+    @Autowired
     private ServicioFitosanitario S_fitosanitario;
 
 	public void menuadmin() {
@@ -40,13 +45,14 @@ public class InvernaderoFachadaAdmin {
 		System.out.println("\n\n\n\n\n\t\t\t\tADMINISTRADOR INVERNADERO" + " [Usuario actual:" + facade.nombreusuario + "]\n");
 		System.out.println("\t\t\t\t1 - GESTIÓN DE PLANTAS");
 		System.out.println("\t\t\t\t2 - GESTIÓN DE PERSONAS");
-		System.out.println("\t\t\t\t3 - GESTIÓN DE EJEMPLARES");
-		System.out.println("\t\t\t\t4 - GESTIÓN DE MENSAJES");
-		System.out.println("\t\t\t\t5 - GESTIÓN DE FITOSANITARIOS");
-		System.out.println("\t\t\t\t6 - CERRAR SESIÓN");
-		System.out.println("\t\t\t\t7 - SALIR DEL PROGRAMA");
+		System.out.println("\t\t\t\t3 - GESTIÓN DE CLIENTES");
+		System.out.println("\t\t\t\t4 - GESTIÓN DE EJEMPLARES");
+		System.out.println("\t\t\t\t5 - GESTIÓN DE MENSAJES");
+		System.out.println("\t\t\t\t6 - GESTIÓN DE FITOSANITARIOS");
+		System.out.println("\t\t\t\t7 - CERRAR SESIÓN");
+		System.out.println("\t\t\t\t8 - SALIR DEL PROGRAMA");
 
-		opcion = Utilidades.obtenerOpcionUsuario(7);
+		opcion = Utilidades.obtenerOpcionUsuario(8);
 
 		switch (opcion) {
 		case 1: {
@@ -57,19 +63,22 @@ public class InvernaderoFachadaAdmin {
 			menuadminpersonas();
 			break;
 		}
-		case 3: {
-			facadePersonal.gestionEjemplaresmenu();
+		case 3:{
+			menuadminclientes();
 		}
 		case 4: {
-			facadePersonal.gestionMensajesmenu();
+			facadePersonal.gestionEjemplaresmenu();
 		}
 		case 5: {
-			menuadminfitosanitarios();
+			facadePersonal.gestionMensajesmenu();
 		}
 		case 6: {
+			menuadminfitosanitarios();
+		}
+		case 7: {
 			facade.iniciosesion();
 		}			
-		case 7: {
+		case 8: {
 			Utilidades.salirdelprograma();
 		}
 		}
@@ -131,6 +140,23 @@ public class InvernaderoFachadaAdmin {
 		} while (opcion != 2);
 	}
 	
+	public void menuadminclientes() {
+		int opcion = -1;
+		do {
+			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE CLIENTES" + " [Usuario actual:" + facade.nombreusuario + "]\n");
+			System.out.println("\t\t\t\t1 - VER CLIENTES");
+			System.out.println("\t\t\t\t2 - VOLVER ATRÁS");
+
+			opcion = Utilidades.obtenerOpcionUsuario(2);
+
+			switch (opcion) {
+			case 1: {
+				mostrarDatosClientes();
+			}
+			}
+		} while (opcion != 2);
+	}
+	
 	public void menuadminfitosanitarios() {
 		int opcion = -1;
 			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE FITOSANITARIOS" + " [Usuario actual:" + facade.nombreusuario + "]\n");
@@ -171,20 +197,8 @@ public class InvernaderoFachadaAdmin {
 	    Scanner sc = new Scanner(System.in);
 
 	    try {
-	        // Recoger datos de la persona
-	        System.out.print("Ingrese el nombre de la persona: ");
-	        String nombre = sc.nextLine();
-
-	        System.out.print("Ingrese el email de la persona: ");
-	        String email = sc.nextLine();
-
-	        // Creación de la entidad Persona
-	        Persona persona = new Persona();
-	        persona.setNombre(nombre);
-	        persona.setEmail(email);
-
 	        // Guardar Persona y obtener la entidad con el ID generado
-	        Persona personaGuardada = S_persona.guardarPersona(persona);
+	        Persona personaGuardada = S_persona.guardarPersona(null);
 
 	        if (personaGuardada != null && personaGuardada.getId() > 0) {
 	            System.out.print("Ingrese el nombre de usuario: ");
@@ -213,6 +227,22 @@ public class InvernaderoFachadaAdmin {
 	    } catch (Exception e) {
 	        System.err.println("Ocurrió un error: " + e.getMessage());
 	    }
+	}
+	
+	private void mostrarDatosClientes() {
+		List<Cliente> clientes = S_cliente.listarClientes();
+
+		if (clientes.isEmpty()) {
+			System.out.println("No hay datos de ningún cliente disponibles en el sistema.");
+			menuadminclientes();
+		}
+
+		for (Cliente c: clientes) {
+			System.out.println(c.toString());
+		}
+		
+		menuadminclientes();
+
 	}
 
 }

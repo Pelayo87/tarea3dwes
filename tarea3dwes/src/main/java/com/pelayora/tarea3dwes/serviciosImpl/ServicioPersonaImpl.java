@@ -17,7 +17,7 @@ public class ServicioPersonaImpl implements ServicioPersona {
 	@Autowired
 	private PersonaRepository persona_R;
 	
-private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@[\\w-]+\\.[a-zA-Z]{2,4}$");
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@[\\w-]+\\.[a-zA-Z]{2,4}$");
     
     private Scanner sc = new Scanner(System.in);
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.modelo.*;
+import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 import com.pelayora.tarea3dwes.util.*;
@@ -28,6 +29,9 @@ public class InvernaderoFachadaInvitado {
     
     @Autowired
     private ServicioCredenciales S_credenciales;
+    
+    @Autowired
+    private ServicioCliente S_cliente;
        
     public void invitado() {
         int opcion = -1;
@@ -35,10 +39,11 @@ public class InvernaderoFachadaInvitado {
             System.out.println("\n\n\n\n\n\t\t\t\tPERFIL INVITADO\n");
             System.out.println("\t\t\t\t1 - VER PLANTAS");
             System.out.println("\t\t\t\t2 - LOGIN");
-            System.out.println("\t\t\t\t3 - SALIR DEL PROGRAMA");
-            System.out.println("\t\t\t\t4 - VOLVER ATRAS");
+            System.out.println("\t\t\t\t3 - REGISTRARSE (NUEVO CLIENTE)");
+            System.out.println("\t\t\t\t4 - SALIR DEL PROGRAMA");
+            System.out.println("\t\t\t\t5 - VOLVER ATRAS");
 
-            opcion = Utilidades.obtenerOpcionUsuario(4);
+            opcion = Utilidades.obtenerOpcionUsuario(5);
 
             switch (opcion) {
                 case 1: {
@@ -49,11 +54,14 @@ public class InvernaderoFachadaInvitado {
 					invernaderoFachadaPrincipal.login();
                     break;
                 }
-                case 3: {
+                case 3:{
+                	registrarCliente();
+                }
+                case 4: {
                 	Utilidades.salirdelprograma();
                 }
             }
-        } while (opcion != 3);
+        } while (opcion != 5);
     }
     
     
@@ -76,5 +84,42 @@ public class InvernaderoFachadaInvitado {
             System.out.println(planta);
         }
     } 
+    
+    private void registrarCliente() {
+	    // Escáner para entrada del usuario
+	    Scanner sc = new Scanner(System.in);
+
+	    try {
+	        // Guardar Cliente y obtener la entidad con el ID generado
+	        Cliente clienteGuardado = S_cliente.guardarCliente(null);
+
+	        if (clienteGuardado != null && clienteGuardado.getId_cliente() > 0) {
+	            System.out.print("Ingrese el nombre de usuario: ");
+	            String usuario = sc.nextLine();
+
+	            System.out.print("Ingrese la contraseña: ");
+	            String password = sc.nextLine();
+
+	            // Creación de la entidad Credenciales vinculado al Cliente
+	            Credenciales credenciales = new Credenciales();
+	            credenciales.setUsuario(usuario);
+	            credenciales.setPassword(password);
+	            credenciales.setCliente(clienteGuardado);
+
+	            // Guardar Credenciales
+	            Credenciales credencialesGuardadas = S_credenciales.guardarCredenciales(credenciales);
+
+	            if (credencialesGuardadas != null && credencialesGuardadas.getId() > 0) {
+	                System.out.println("Cliente y credenciales registradas correctamente.");
+	            } else {
+	                System.err.println("Error al registrar las credenciales.");
+	            }
+	        } else {
+	            System.err.println("Error al registrar al cliente.");
+	        }
+	    } catch (Exception e) {
+	        System.err.println("Ocurrió un error: " + e.getMessage());
+	    }
+	}
 
 }

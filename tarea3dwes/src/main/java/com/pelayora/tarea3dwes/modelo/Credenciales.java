@@ -33,6 +33,10 @@ public class Credenciales {
 	@OneToOne
 	@JoinColumn(name = "id_persona")
 	private Persona persona;
+	
+	@OneToOne
+	@JoinColumn(name = "id_cliente")
+	private Cliente cliente;
 
 
 	public Credenciales() {
@@ -51,6 +55,15 @@ public class Credenciales {
 		this.usuario = usuario;
 		this.password = password;
 		this.persona = persona;
+	}
+
+	public Credenciales(long id, String usuario, String password, Persona persona, Cliente cliente) {
+		super();
+		this.id = id;
+		this.usuario = usuario;
+		this.password = password;
+		this.persona = persona;
+		this.cliente = cliente;
 	}
 
 	public long getId() {
@@ -85,9 +98,17 @@ public class Credenciales {
 		this.persona = persona;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	@Override
 	public String toString() {
 		return "Credenciales [id=" + id + ", usuario=" + usuario + ", password=" + password + ", persona=" + persona
-				+ "]";
+				+ ", cliente=" + cliente + "]";
 	}
 }

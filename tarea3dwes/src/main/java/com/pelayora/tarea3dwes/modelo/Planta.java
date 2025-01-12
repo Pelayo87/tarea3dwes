@@ -5,8 +5,10 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -33,6 +35,9 @@ public class Planta {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_planta")
 	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Cliente> clientes;
 
 	public Planta() {
 		super();
@@ -51,6 +56,16 @@ public class Planta {
 		this.nombreComun = nombreComun;
 		this.nombreCientifico = nombreCientifico;
 		this.ejemplares = ejemplares;
+	}
+
+	public Planta(String codigo, String nombreComun, String nombreCientifico, List<Ejemplar> ejemplares,
+			List<Cliente> clientes) {
+		super();
+		this.codigo = codigo;
+		this.nombreComun = nombreComun;
+		this.nombreCientifico = nombreCientifico;
+		this.ejemplares = ejemplares;
+		this.clientes = clientes;
 	}
 
 	public String getCodigo() {
@@ -85,7 +100,15 @@ public class Planta {
         this.nombreComun = nombreComun;
     }
 
-    @Override
+    public List<Cliente> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
+	@Override
     public String toString() {
         return "Planta {" +
                "codigo='" + codigo + '\'' +
@@ -93,5 +116,4 @@ public class Planta {
                ", nombreCientifico='" + nombreCientifico + '\'' +
                '}';
     }
-
 }

@@ -14,6 +14,12 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+//--------------------------------------------------------
+//Autor: Pelayo Rodríguez Álvarez
+//Fecha: 2025-01-12
+//Descripción: Clase VO de fitosanitarios.
+//--------------------------------------------------------
+
 @Entity
 @Table(name = "fitosanitario")
 public class Fitosanitario {
