@@ -1,6 +1,7 @@
 package com.pelayora.tarea3dwes.fachada;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.modelo.*;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
+import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
+import com.pelayora.tarea3dwes.servicios.ServicioHistorial;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
@@ -38,6 +41,12 @@ public class InvernaderoFachadaPersonal {
 
 	@Autowired
     private ServicioEjemplar S_ejemplar;
+	
+	@Autowired
+    private ServicioFitosanitario S_fitosanitario;
+	
+	@Autowired
+    private ServicioHistorial S_historial;
 
     @Autowired
     private ServicioMensaje S_mensaje;
@@ -59,11 +68,12 @@ public class InvernaderoFachadaPersonal {
 		int opcion = -1;
 			System.out.println("\n\n\n\n\n\t\t\t\tPERSONAL VIVERO" + " [Usuario actual:" +facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - GESTIÓN DE EJEMPLARES");
-			System.out.println("\t\t\t\t2 - GESTIÓN DE MENSAJES");
-			System.out.println("\t\t\t\t3 - CERRAR SESIÓN");
-			System.out.println("\t\t\t\t4 - SALIR DEL PROGRAMA");
+			System.out.println("\t\t\t\t2 - GESTIÓN DE FITOSANITARIOS");
+			System.out.println("\t\t\t\t3 - GESTIÓN DE MENSAJES");
+			System.out.println("\t\t\t\t4 - CERRAR SESIÓN");
+			System.out.println("\t\t\t\t5 - SALIR DEL PROGRAMA");
 
-			opcion = Utilidades.obtenerOpcionUsuario(4);
+			opcion = Utilidades.obtenerOpcionUsuario(5);
 
 			switch (opcion) {
 			case 1: {
@@ -71,13 +81,17 @@ public class InvernaderoFachadaPersonal {
 				break;
 			}
 			case 2: {
-				gestionMensajesmenu();
-				break;
+			   gestionFitosanitariosmenu();
+			   break;
 			}
 			case 3: {
+				gestionMensajesmenu();
+				break;
+			} 
+			case 4: {
 				facade.iniciosesion();
 			}
-			case 4: {
+			case 5: {
 				Utilidades.salirdelprograma();
 			}
 			}
@@ -105,6 +119,29 @@ public class InvernaderoFachadaPersonal {
 			}
 			case 3: {
 				vermensajesEjemplar();
+				break;
+			}
+			case 4: {
+				facade.iniciosesion();
+			}
+			case 5: {
+				Utilidades.salirdelprograma();
+			}
+			}
+	}
+	
+	public void gestionFitosanitariosmenu() {
+		int opcion = -1;
+			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE FITOSANITARIOS" + " [Usuario actual:" +facade.nombreusuario + "]\n");
+			System.out.println("\t\t\t\t1 - APLICAR FITOSANITARIO A UN EJEMPLAR");
+			System.out.println("\t\t\t\t2 - CERRAR SESIÓN");
+			System.out.println("\t\t\t\t3 - SALIR DEL PROGRAMA");
+
+			opcion = Utilidades.obtenerOpcionUsuario(3);
+
+			switch (opcion) {
+			case 1: {
+				aplicarFitosaniarioAEjemplar();
 				break;
 			}
 			case 4: {
@@ -374,6 +411,113 @@ public class InvernaderoFachadaPersonal {
 			sc.nextLine();
 		}
 	}
+	
+	// MÉTODOS PARA LA GESTIÓN DE FITOSANITARIOS
+	
+	private void aplicarFitosaniarioAEjemplar() {
+	    List<Ejemplar> ejemplares = S_ejemplar.obtenerTodosLosEjemplares();
+	    List<Fitosanitario> fitosanitarios = S_fitosanitario.obtenerTodosLosFitosanitarios();
+
+	    if (ejemplares.isEmpty()) {
+	        System.out.println("No hay ejemplares de plantas disponibles en el sistema.");
+	        gestionMensajesmenu();
+	        return;
+	    }
+	    
+	    if (fitosanitarios.isEmpty()) {
+	        System.out.println("No hay fitosanitarios disponibles en el sistema.");
+	        gestionMensajesmenu();
+	        return;
+	    }
+
+	    System.out.println("Selecciona el ejemplar al que deseas aplicar un fitosanitario:");
+	    int index = 1;
+	    
+	    for (Ejemplar e : ejemplares) {
+	        System.out.println(index + " - " + e.getNombre());
+	        index++;
+	    }
+
+	    Ejemplar ejemplarSeleccionado = null;
+	    try {
+	        int seleccion = sc.nextInt();
+	        sc.nextLine();
+
+	        if (seleccion < 1 || seleccion > ejemplares.size()) {
+	            System.out.println("Selección no válida.");
+	            return;
+	        }
+
+	        // Obtengo el ejemplar seleccionado
+	        ejemplarSeleccionado = ejemplares.get(seleccion - 1);
+	    } catch (InputMismatchException e) {
+	        System.out.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+	        sc.nextLine();
+	        return;
+	    }
+	    
+	    System.out.println("Selecciona el fitosanitario que deseas aplicar al ejemplar " + ejemplarSeleccionado.getNombre() + ":");
+	    index = 1;  // Reinicio el índice
+	    for (Fitosanitario f : fitosanitarios) {
+	        System.out.println(index + " - " + f.getNombre());
+	        index++;
+	    }
+
+	    Fitosanitario fitosanitarioSeleccionado = null;
+	    try {
+	        int seleccion = sc.nextInt();
+	        sc.nextLine();
+
+	        if (seleccion < 1 || seleccion > fitosanitarios.size()) {
+	            System.out.println("Selección no válida.");
+	            return;
+	        }
+
+	        // Obtengo el fitosanitario seleccionado
+	        fitosanitarioSeleccionado = fitosanitarios.get(seleccion - 1);
+	    } catch (InputMismatchException e) {
+	        System.out.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+	        sc.nextLine();
+	        return;
+	    }
+
+	    fitosanitarioSeleccionado.getEjemplares().add(ejemplarSeleccionado);
+
+	    S_fitosanitario.aplicarFitosanitarioAejemplar(fitosanitarioSeleccionado);
+	    
+	    String nombreEjemplar = ejemplarSeleccionado.getNombre();
+
+	    System.out.println("El fitosanitario " + fitosanitarioSeleccionado.getNombre() +
+	                       " ha sido aplicado al ejemplar " + nombreEjemplar + ".");
+	    
+	    String nh = "NH_" + nombreEjemplar;
+	    LocalDate actualizado = LocalDate.now();
+	    
+	    Historial historialEjemplar = new Historial();
+	    historialEjemplar.setNh(nh);
+	    historialEjemplar.setActualizado(actualizado);
+	    historialEjemplar.setEjemplar(ejemplarSeleccionado);
+	    
+	    S_historial.guardarHistorial(historialEjemplar);
+	    
+	    Mensaje mensajeHistorial = new Mensaje();
+        mensajeHistorial.setFechahora(new Date()); // Fecha actual
+        mensajeHistorial.setMensaje("Se aplica " +  fitosanitarioSeleccionado.getNombre() + " por " + facade.nombreusuario 
+                                     + " a fecha " + new Date());
+        
+        mensajeHistorial.setEjemplar(ejemplarSeleccionado);
+        mensajeHistorial.setHistorial(historialEjemplar);
+        Persona personaActual = new Persona();
+        personaActual.setId(facade.obtenerPersonaActual());
+        mensajeHistorial.setPersona(personaActual);
+        
+        // Guardo el mensaje
+        S_mensaje.guardarMensaje(mensajeHistorial);
+
+	    gestionFitosanitariosmenu();
+	}
+
+
 
 	// MÉTODOS PARA LA GESTIÓN DE MENSAJES
 

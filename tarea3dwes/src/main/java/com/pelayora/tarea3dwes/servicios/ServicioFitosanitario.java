@@ -10,6 +10,7 @@ public interface ServicioFitosanitario {
 
 	Fitosanitario guardarFitosanitario(Fitosanitario fitosanitario);
 	Fitosanitario modificarFitosanitario(Long id);
+	Fitosanitario aplicarFitosanitarioAejemplar(Fitosanitario fitosanitario);
     Optional<Fitosanitario> obtenerFitosanitariosPorId(Long id);
     List<Fitosanitario> obtenerFitosanitariosPorNombre(String nombre);
     List<Fitosanitario> obtenerTodosLosFitosanitarios();

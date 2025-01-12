@@ -182,4 +182,9 @@ public class ServicioFitosanitarioImpl implements ServicioFitosanitario {
 	public void eliminarFitosanitario(Long id) {
 	    fitosanitario_R.deleteById(id);
 	}
+
+	@Override
+	public Fitosanitario aplicarFitosanitarioAejemplar(Fitosanitario fitosanitario) {
+		return fitosanitario_R.save(fitosanitario);
+	}
 }

@@ -38,6 +38,10 @@ public class Mensaje {
 	@ManyToOne
 	@JoinColumn(name = "id_persona")
 	private Persona persona;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_historial")
+	private Historial historial;
 
 	public Mensaje() {
 		super();
@@ -50,6 +54,16 @@ public class Mensaje {
 		this.mensaje = mensaje;
 		this.ejemplar = ejemplar;
 		this.persona = persona;
+	}
+
+	public Mensaje(long id, Date fechahora, String mensaje, Ejemplar ejemplar, Persona persona, Historial historial) {
+		super();
+		this.id = id;
+		this.fechahora = fechahora;
+		this.mensaje = mensaje;
+		this.ejemplar = ejemplar;
+		this.persona = persona;
+		this.historial = historial;
 	}
 
 	public long getId() {
@@ -90,6 +104,14 @@ public class Mensaje {
 
 	public void setPersona(Persona persona) {
 		this.persona = persona;
+	}
+
+	public Historial getHistorial() {
+		return historial;
+	}
+
+	public void setHistorial(Historial historial) {
+		this.historial = historial;
 	}
 
 	@Override

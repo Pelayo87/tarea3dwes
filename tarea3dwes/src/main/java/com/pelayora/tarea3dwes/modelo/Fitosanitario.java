@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,8 +31,7 @@ public class Fitosanitario {
 	@Column(name = "eco")
 	private boolean eco;
 
-	@JoinTable(name = "fitosanitario_ejemplar", joinColumns = @JoinColumn(name = "id_fitosanitario"), inverseJoinColumns = @JoinColumn(name = "id_ejemplar"))
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Ejemplar> ejemplares;
 
 	public Fitosanitario() {
@@ -92,5 +92,13 @@ public class Fitosanitario {
 
 	public void setEco(boolean eco) {
 		this.eco = eco;
+	}
+
+	public List<Ejemplar> getEjemplares() {
+		return ejemplares;
+	}
+
+	public void setEjemplares(List<Ejemplar> ejemplares) {
+		this.ejemplares = ejemplares;
 	}
 }

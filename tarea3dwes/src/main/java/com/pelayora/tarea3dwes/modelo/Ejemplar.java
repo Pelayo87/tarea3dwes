@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 //--------------------------------------------------------
@@ -41,6 +42,9 @@ public class Ejemplar {
 	
 	@ManyToMany(mappedBy = "ejemplares")
     private List<Fitosanitario> fitosanitarios;
+	
+	@OneToOne(mappedBy = "ejemplar", cascade = CascadeType.ALL)
+    private Historial historial;
 
 	public Ejemplar() {
 		super();
@@ -52,6 +56,17 @@ public class Ejemplar {
 		this.nombre = nombre;
 		this.planta = planta;
 		this.mensajes = mensajes;
+	}
+
+	public Ejemplar(Long id_ejemplar, String nombre, Planta planta, List<Mensaje> mensajes,
+			List<Fitosanitario> fitosanitarios, Historial historial) {
+		super();
+		this.id_ejemplar = id_ejemplar;
+		this.nombre = nombre;
+		this.planta = planta;
+		this.mensajes = mensajes;
+		this.fitosanitarios = fitosanitarios;
+		this.historial = historial;
 	}
 
 	public Long getId() {
@@ -84,6 +99,22 @@ public class Ejemplar {
 
 	public void setMensajes(List<Mensaje> mensajes) {
 		this.mensajes = mensajes;
+	}
+
+	public List<Fitosanitario> getFitosanitarios() {
+		return fitosanitarios;
+	}
+
+	public void setFitosanitarios(List<Fitosanitario> fitosanitarios) {
+		this.fitosanitarios = fitosanitarios;
+	}
+
+	public Historial getHistorial() {
+		return historial;
+	}
+
+	public void setHistorial(Historial historial) {
+		this.historial = historial;
 	}
 
 	@Override
