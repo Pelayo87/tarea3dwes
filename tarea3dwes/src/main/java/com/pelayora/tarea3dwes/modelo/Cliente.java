@@ -1,12 +1,17 @@
 package com.pelayora.tarea3dwes.modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
@@ -36,8 +41,14 @@ public class Cliente {
 	@Column(name = "fechaRegistro")
 	private LocalDate fechaRegistro;
 	
-	@ManyToMany(mappedBy = "clientes")
-    private List<Planta> plantas;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+	    name = "plantas_clientes",
+	    joinColumns = @JoinColumn(name = "id_cliente"),
+	    inverseJoinColumns = @JoinColumn(name = "codigo")
+	)
+	private List<Planta> plantas = new ArrayList<>();
+
 
 	public Cliente() {
 		super();

@@ -11,6 +11,7 @@ public interface ServicioCliente {
 	List<Cliente> listarClientes();
     Optional<Cliente> buscarPorId(Long id);
     Cliente guardarCliente(Cliente cliente);
+    Cliente guardarPlantasFavoritasCliente(Cliente cliente);
     void eliminarCliente(Long id);
 
 }

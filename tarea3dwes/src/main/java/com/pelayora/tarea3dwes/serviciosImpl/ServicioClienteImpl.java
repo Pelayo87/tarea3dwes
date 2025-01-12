@@ -11,6 +11,8 @@ import com.pelayora.tarea3dwes.modelo.Cliente;
 import com.pelayora.tarea3dwes.repositorios.ClienteRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ServicioClienteImpl implements ServicioCliente{
 	
@@ -81,6 +83,11 @@ public class ServicioClienteImpl implements ServicioCliente{
 	public void eliminarCliente(Long id) {
 		cliente_R.deleteById(id);
 
+	}
+	
+	@Transactional
+	public Cliente guardarPlantasFavoritasCliente(Cliente cliente) {
+		return cliente_R.save(cliente);
 	}
 
 }

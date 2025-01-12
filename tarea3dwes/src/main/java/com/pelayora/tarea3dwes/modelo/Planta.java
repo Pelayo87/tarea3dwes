@@ -1,5 +1,6 @@
 package com.pelayora.tarea3dwes.modelo;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import jakarta.persistence.CascadeType;
@@ -36,8 +37,8 @@ public class Planta {
 	@JoinColumn(name = "id_planta")
 	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Cliente> clientes;
+	@ManyToMany(mappedBy = "plantas", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Cliente> clientes = new ArrayList<>();
 
 	public Planta() {
 		super();
