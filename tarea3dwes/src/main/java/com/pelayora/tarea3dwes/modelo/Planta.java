@@ -9,7 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -33,12 +35,17 @@ public class Planta {
 	@Column(name = "nombrecientifico", length = 50)
 	private String nombreCientifico;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_planta")
-	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+	    name = "plantas_enfermedades",
+	    joinColumns = @JoinColumn(name = "codigo"),
+	    inverseJoinColumns = @JoinColumn(name = "id_enfermedad")
+	)
+	private List<Enfermedad> enfermedades = new LinkedList<Enfermedad>();
 	
 	@ManyToMany(mappedBy = "plantas", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Cliente> clientes = new ArrayList<>();
+
 
 	public Planta() {
 		super();
@@ -51,38 +58,12 @@ public class Planta {
 		this.nombreCientifico = nombreCientifico;
 	}
 
-    public Planta(String codigo, String nombreComun, String nombreCientifico, List<Ejemplar> ejemplares) {
-		super();
-		this.codigo = codigo;
-		this.nombreComun = nombreComun;
-		this.nombreCientifico = nombreCientifico;
-		this.ejemplares = ejemplares;
-	}
-
-	public Planta(String codigo, String nombreComun, String nombreCientifico, List<Ejemplar> ejemplares,
-			List<Cliente> clientes) {
-		super();
-		this.codigo = codigo;
-		this.nombreComun = nombreComun;
-		this.nombreCientifico = nombreCientifico;
-		this.ejemplares = ejemplares;
-		this.clientes = clientes;
-	}
-
 	public String getCodigo() {
         return codigo;
     }
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
-    }
-
-    public List<Ejemplar> getEjemplares() {
-        return ejemplares;
-    }
-
-    public void setEjemplares(List<Ejemplar> ejemplares) {
-        this.ejemplares = ejemplares;
     }
 
     public String getNombreCientifico() {

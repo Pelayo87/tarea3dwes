@@ -1,5 +1,6 @@
 package com.pelayora.tarea3dwes.fachada;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.modelo.*;
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
+import com.pelayora.tarea3dwes.servicios.ServicioEnfermedad;
 import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
+import com.pelayora.tarea3dwes.servicios.ServicioParasitos;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 import com.pelayora.tarea3dwes.util.Utilidades;
@@ -39,6 +42,12 @@ public class InvernaderoFachadaAdmin {
     
     @Autowired
     private ServicioFitosanitario S_fitosanitario;
+    
+    @Autowired
+    private ServicioEnfermedad S_enfermedad;
+    
+    @Autowired
+    private ServicioParasitos S_parasitos;
 
 	public void menuadmin() {
 		int opcion = -1;
@@ -49,10 +58,12 @@ public class InvernaderoFachadaAdmin {
 		System.out.println("\t\t\t\t4 - GESTIÓN DE EJEMPLARES");
 		System.out.println("\t\t\t\t5 - GESTIÓN DE MENSAJES");
 		System.out.println("\t\t\t\t6 - GESTIÓN DE FITOSANITARIOS");
-		System.out.println("\t\t\t\t7 - CERRAR SESIÓN");
-		System.out.println("\t\t\t\t8 - SALIR DEL PROGRAMA");
+		System.out.println("\t\t\t\t7 - GESTIÓN DE ENFERMEDADES");
+		System.out.println("\t\t\t\t8 - GESTIÓN DE PARÁSITOS");
+		System.out.println("\t\t\t\t9 - CERRAR SESIÓN");
+		System.out.println("\t\t\t\t10 - SALIR DEL PROGRAMA");
 
-		opcion = Utilidades.obtenerOpcionUsuario(8);
+		opcion = Utilidades.obtenerOpcionUsuario(10);
 
 		switch (opcion) {
 		case 1: {
@@ -76,9 +87,15 @@ public class InvernaderoFachadaAdmin {
 			menuadminfitosanitarios();
 		}
 		case 7: {
+			menuadminenfermedades();
+		}
+		case 8: {
+			menuadminparasitos();
+		}
+		case 9: {
 			facade.iniciosesion();
 		}			
-		case 8: {
+		case 10: {
 			Utilidades.salirdelprograma();
 		}
 		}
@@ -189,8 +206,51 @@ public class InvernaderoFachadaAdmin {
 			}
 			}
 	}
+	
+	public void menuadminenfermedades() {
+		int opcion = -1;
+			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE ENFERMEDADES" + " [Usuario actual:" + facade.nombreusuario + "]\n");
+			System.out.println("\t\t\t\t1 - REGISTRAR ENFERMEDAD DE PLANTA");
+			System.out.println("\t\t\t\t2 - VOLVER ATRÁS");
 
-	// METODÓS PARA LA GESTIÓN DE PERSONAS
+			opcion = Utilidades.obtenerOpcionUsuario(2);
+
+			switch (opcion) {
+			case 1: {
+				registrarEnfermedad();
+				menuadmin();
+			}
+			case 2:{
+				menuadmin();
+			}
+			}
+	}
+	
+	public void menuadminparasitos() {
+		int opcion = -1;
+		System.out
+				.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE PARASITOS" + " [Usuario actual:" + facade.nombreusuario + "]\n");
+		System.out.println("\t\t\t\t1 - REGISTRAR PARASITOS");
+		System.out.println("\t\t\t\t2 - MODIFICAR PARASITOS");
+		System.out.println("\t\t\t\t3 - VOLVER ATRÁS");
+
+		opcion = Utilidades.obtenerOpcionUsuario(3);
+
+		switch (opcion) {
+		case 1: {
+			S_parasitos.guardarParasitos(null);
+			menuadmin();
+		}
+		case 2: {
+			S_parasitos.modificarParasitos(null);
+		}
+		case 3: {
+			menuadmin();
+		}
+		}
+	}
+
+	// METODÓS PARA LA GESTIÓN DE PERSONAS Y CLIENTES
 
 	private void registrarPersona() {
 	    // Escáner para entrada del usuario
@@ -242,7 +302,59 @@ public class InvernaderoFachadaAdmin {
 		}
 		
 		menuadminclientes();
+	}
+	
+	private void registrarEnfermedad() {
+	    Enfermedad enfermedadGuardada = S_enfermedad.guardarEnfermedad(null);
 
+	    System.out.println("¿La enfermedad fue provocada por algún o varios parásitos? (S/N):");
+	    String respuesta = sc.nextLine().trim().toUpperCase();
+	    
+	    if (respuesta.equals("S")) {
+	        List<Parasitos> parasitos = S_parasitos.obtenerTodosLosParasitos();
+	        
+	        if (parasitos.isEmpty()) {
+	            System.out.println("No hay parásitos disponibles en el sistema.");
+	            menuadminenfermedades();
+	            return;
+	        }
+
+	        System.out.println("Selecciona el parásito que provoca la enfermedad:");
+	        int index = 1;
+	        for (Parasitos p : parasitos) {
+	            System.out.println(index + " - " + p.getNombre());
+	            index++;
+	        }
+
+	        boolean seleccionValida = false;
+	        while (!seleccionValida) {
+	            try {
+	                int seleccion = sc.nextInt();
+	                sc.nextLine();
+
+	                if (seleccion >= 1 && seleccion <= parasitos.size()) {
+	                    Parasitos parasitoSeleccionado = parasitos.get(seleccion - 1);
+
+	                    // Asigno el parásito a la enfermedad
+	                    enfermedadGuardada.setParasitos(parasitoSeleccionado);
+	                    S_enfermedad.modificarEnfermedad(enfermedadGuardada);
+
+	                    System.out.println("Enfermedad guardada con el parásito asociado: " + parasitoSeleccionado.getNombre());
+	                    seleccionValida = true;
+	                } else {
+	                    System.err.println("Selección no válida. Inténtalo de nuevo.");
+	                }
+	            } catch (InputMismatchException e) {
+	                System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+	                sc.nextLine();
+	            }
+	        }
+	    } else if (respuesta.equals("N")) {
+	        System.out.println("Enfermedad: " + enfermedadGuardada.getNombre() + " guardada, con síntomas: " + enfermedadGuardada.getSintomas());
+	    } else {
+	        System.err.println("Respuesta inválida. Debe ser 'S' o 'N'.");
+	        registrarEnfermedad();
+	    }
 	}
 
 }

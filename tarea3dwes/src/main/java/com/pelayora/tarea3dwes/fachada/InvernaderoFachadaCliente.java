@@ -137,7 +137,6 @@ public class InvernaderoFachadaCliente {
 
 			// Obtengo la planta seleccionada
 			Planta plantaSeleccionada = (Planta) plantas.toArray()[seleccion - 1];
-			List<Planta> plantasFavoritas = new ArrayList<>();
 
 			Optional<Cliente> clienteActual = S_cliente.buscarPorId(facade.id_Cliente);
 

@@ -152,7 +152,7 @@ public class ServicioFitosanitarioImpl implements ServicioFitosanitario {
 			} while (!ecoCorrecto);
 			fitosanitarioExistente.setEco(eco);
 
-			// Guardar los cambios
+			// Guardo los cambios
 			fitosanitario_R.save(fitosanitarioExistente);
 			System.out.println("Fitosanitario modificado correctamente.");
 			return fitosanitarioExistente;
