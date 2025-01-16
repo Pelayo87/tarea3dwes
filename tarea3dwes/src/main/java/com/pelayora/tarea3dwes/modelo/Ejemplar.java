@@ -45,6 +45,10 @@ public class Ejemplar {
 	
 	@OneToOne(mappedBy = "ejemplar", cascade = CascadeType.ALL)
     private Historial historial;
+	
+	@OneToOne
+    @JoinColumn(name = "id_localizacion")
+    private Localizacion localizacion;
 
 	public Ejemplar() {
 		super();
