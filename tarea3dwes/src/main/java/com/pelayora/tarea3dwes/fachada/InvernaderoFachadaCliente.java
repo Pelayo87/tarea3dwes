@@ -145,7 +145,7 @@ public class InvernaderoFachadaCliente {
 
 				/*
 				 * Añado la planta seleccionada a la lista existente y guardo el cliente con la
-				 * planta favorita que ha selsccionado
+				 * planta favorita que se ha selsccionado
 				 */
 
 				cliente.getPlantas().add(plantaSeleccionada);

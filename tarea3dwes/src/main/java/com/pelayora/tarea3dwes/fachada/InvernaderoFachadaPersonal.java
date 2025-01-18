@@ -32,6 +32,11 @@ public class InvernaderoFachadaPersonal {
 	Scanner sc = new Scanner(System.in);
 	
 	Persona usuarioActual;
+	
+	private Planta planta;
+	private Persona personas;
+	private Ejemplar ejemplar;
+	private Fitosanitario fitosanitario;
 
 	// FECHA ACTUAL Y FORMATEADA
 	Date fechaActual = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
@@ -70,28 +75,29 @@ public class InvernaderoFachadaPersonal {
 			System.out.println("\t\t\t\t1 - GESTIÓN DE EJEMPLARES");
 			System.out.println("\t\t\t\t2 - GESTIÓN DE FITOSANITARIOS");
 			System.out.println("\t\t\t\t3 - GESTIÓN DE MENSAJES");
-			System.out.println("\t\t\t\t4 - CERRAR SESIÓN");
-			System.out.println("\t\t\t\t5 - SALIR DEL PROGRAMA");
+			System.out.println("\t\t\t\t4 - Ubicar Ejemplar en localizacion");
+			System.out.println("\t\t\t\t5 - CERRAR SESIÓN");
+			System.out.println("\t\t\t\t6 - SALIR DEL PROGRAMA");
 
-			opcion = Utilidades.obtenerOpcionUsuario(5);
+			opcion = Utilidades.obtenerOpcionUsuario(6);
 
 			switch (opcion) {
 			case 1: {
 				gestionEjemplaresmenu();
-				break;
 			}
 			case 2: {
 			   gestionFitosanitariosmenu();
-			   break;
 			}
 			case 3: {
 				gestionMensajesmenu();
-				break;
-			} 
+			}
 			case 4: {
-				facade.iniciosesion();
+				ubicarEjemplarEnLocalizacion();
 			}
 			case 5: {
+				facade.iniciosesion();
+			}
+			case 6: {
 				Utilidades.salirdelprograma();
 			}
 			}
@@ -111,15 +117,14 @@ public class InvernaderoFachadaPersonal {
 			switch (opcion) {
 			case 1: {
 				registrarEjemplar();
-				break;
+				gestionEjemplaresmenu();
 			}
 			case 2: {
 				filtrarEjemplaresmenu();
-				break;
 			}
 			case 3: {
 				vermensajesEjemplar();
-				break;
+				gestionEjemplaresmenu();
 			}
 			case 4: {
 				facade.iniciosesion();
@@ -142,7 +147,7 @@ public class InvernaderoFachadaPersonal {
 			switch (opcion) {
 			case 1: {
 				aplicarFitosaniarioAEjemplar();
-				break;
+				gestionFitosanitariosmenu();
 			}
 			case 4: {
 				facade.iniciosesion();
@@ -166,11 +171,11 @@ public class InvernaderoFachadaPersonal {
 			switch (opcion) {
 			case 1: {
 				filtrarEjemplarestodos();
-				break;
+				filtrarEjemplaresmenu();
 			}
 			case 2: {
 				filtrarEjemplarestipoplanta();
-				break;
+				filtrarEjemplaresmenu();
 			}
 			case 3: {
 				gestionEjemplaresmenu();
@@ -195,14 +200,15 @@ public class InvernaderoFachadaPersonal {
 			switch (opcion) {
 			case 1: {
 				realizarAnotaciones();
-				break;
+				gestionMensajesmenu();
 			}
 			case 2: {
 				mostrarAnotaciones();
-				break;
+				gestionMensajesmenu();
 			}
 			case 3: {
 				filtrarAnotacionesmenu();
+				gestionMensajesmenu();
 			}
 			case 4: {
 				menu();
@@ -249,36 +255,18 @@ public class InvernaderoFachadaPersonal {
 	// MÉTODOS PARA LA GESTIÓN DE EJEMPLARES
 
 	private void registrarEjemplar() {
-	    List<Planta> tiposPlantas = S_planta.listarPlantas();
-	    if (tiposPlantas.isEmpty()) {
-	        System.out.println("No hay tipos de plantas disponibles en el sistema.");
-	        gestionEjemplaresmenu();
-	        return;
-	    }
-
 	    System.out.println("Selecciona el tipo de planta:");
-	    int index = 1;
-	    for (Planta planta : tiposPlantas) {
-	        System.out.println(index + " - " + planta.getNombreComun());
-	        index++;
-	    }
+	    eligePlanta();
 
 	    try {
-	        // Obtengo la selección del usuario
-	        int seleccion = sc.nextInt();
-	        if (seleccion < 1 || seleccion > tiposPlantas.size()) {
-	            System.out.println("Selección no válida.");
-	            return;
-	        }
-
-	        Planta plantaElegida = tiposPlantas.get(seleccion - 1);
-	        System.out.println("Planta seleccionada: " + plantaElegida.getNombreComun());
+	    	sc.nextLine();
+	        System.out.println("Planta seleccionada: " + planta.getNombreComun());
 
 	        Ejemplar nuevoEjemplar = new Ejemplar();
-	        nuevoEjemplar.setPlanta(plantaElegida);
+	        nuevoEjemplar.setPlanta(planta);
 	        nuevoEjemplar = S_ejemplar.guardarEjemplar(nuevoEjemplar);
 
-	        String nombreEjemplar = plantaElegida.getCodigo() + "_" + nuevoEjemplar.getId();
+	        String nombreEjemplar = planta.getCodigo() + "_" + nuevoEjemplar.getId();
 	        nuevoEjemplar.setNombre(nombreEjemplar);
 	        S_ejemplar.guardarEjemplar(nuevoEjemplar);
 
@@ -298,49 +286,26 @@ public class InvernaderoFachadaPersonal {
 
 	        System.out.println("Ejemplar registrado exitosamente con nombre: " + nombreEjemplar);
 	        gestionEjemplaresmenu();
-	    } catch (InputMismatchException e) {
-	        System.out.println("Solo se permiten ingresar números, inténtalo de nuevo.");
-	        sc.nextLine();
 	    } catch (Exception e) {
 	        System.err.println("Ocurrió un error al registrar el ejemplar: " + e.getMessage());
 	    }
 	}
 
-
-
 	private void vermensajesEjemplar() {
-		List<Ejemplar> ejemplares = S_ejemplar.obtenerTodosLosEjemplares();
-		if (ejemplares.isEmpty()) {
-			System.out.println("No hay ejemplares de plantas disponibles en el sistema.");
-			gestionEjemplaresmenu();
-		}
-
 		System.out.println("Selecciona el ejemplar del que deseas ver los mensajes:");
-		int index = 1;
-		for (Ejemplar e : ejemplares) {
-			System.out.println(index + " - " + e.getNombre());
-			index++;
-		}
+		eligeEjemplar();
 		try {
-			// Obtener la selección del usuario
-			int seleccion = sc.nextInt();
-			if (seleccion < 1 || seleccion > ejemplares.size()) {
-				System.err.println("Selección no válida.");
-				return;
-			}
+			sc.nextLine();
+			long idEjemplar = ejemplar.getId();
 
-			// Obtener el ejemplar seleccionado
-			Ejemplar ejemplarElegido = (Ejemplar) ejemplares.toArray()[seleccion - 1];
-			long idEjemplar = ejemplarElegido.getId();
-
-			// Obtener los mensajes relacionados con el ejemplar seleccionado
+			// Obtengo los mensajes relacionados con el ejemplar seleccionado
 			List<Mensaje> mensajes = S_mensaje.buscarPorEjemplarId(idEjemplar);
 
 			if (mensajes.isEmpty()) {
 				System.out.println("No hay mensajes para el ejemplar seleccionado.");
 				gestionEjemplaresmenu();
 			} else {
-				System.out.println("Mensajes para el ejemplar " + ejemplarElegido.getNombre() + ":");
+				System.out.println("Mensajes para el ejemplar " + ejemplar.getNombre() + ":");
 				for (Mensaje mensaje : mensajes) {
 					System.out.println("Fecha y hora: " + mensaje.getFechahora());
 					System.out.println("Mensaje: " + mensaje.getMensaje());
@@ -371,31 +336,14 @@ public class InvernaderoFachadaPersonal {
 	}
 
 	private void filtrarEjemplarestipoplanta() {
-		List<Planta> plantas = S_planta.listarPlantas();
-		if (plantas.isEmpty()) {
-			System.out.println("No hay plantas disponibles en el sistema.");
-			return;
-		}
-
 		System.out.println("Selecciona el tipo de planta que deseas ver sus ejemplares:");
-		int index = 1;
-		for (Planta p : plantas) {
-			System.out.println(index + " - " + p.getNombreComun());
-			index++;
-		}
+		eligePlanta();
+
 		try {
-			// Obtener la selección del usuario
-			int seleccion = sc.nextInt();
-			if (seleccion < 1 || seleccion > plantas.size()) {
-				System.out.println("Selección no válida.");
-				return;
-			}
+			sc.nextLine();
+			String tipo_Planta = planta.getCodigo();
 
-			// Obtener el tipo de planta seleccionado
-			Planta tipoplanta = (Planta) plantas.toArray()[seleccion - 1];
-			String tipo_Planta = tipoplanta.getCodigo();
-
-			// Obtener todos los ejemplares del tipo de planta seleccionado
+			// Obtengo todos los ejemplares del tipo de planta seleccionado
 			List<Ejemplar> ejemplaresTipoPlanta = S_ejemplar.obtenerEjemplarPorPlanta(tipo_Planta);
 			if (ejemplaresTipoPlanta.isEmpty()) {
 				System.out.println("No hay ejemplares para el tipo de planta seleccionado.");
@@ -415,79 +363,24 @@ public class InvernaderoFachadaPersonal {
 	// MÉTODOS PARA LA GESTIÓN DE FITOSANITARIOS
 	
 	private void aplicarFitosaniarioAEjemplar() {
-	    List<Ejemplar> ejemplares = S_ejemplar.obtenerTodosLosEjemplares();
-	    List<Fitosanitario> fitosanitarios = S_fitosanitario.obtenerTodosLosFitosanitarios();
-
-	    if (ejemplares.isEmpty()) {
-	        System.out.println("No hay ejemplares de plantas disponibles en el sistema.");
-	        gestionMensajesmenu();
-	        return;
-	    }
-	    
-	    if (fitosanitarios.isEmpty()) {
-	        System.out.println("No hay fitosanitarios disponibles en el sistema.");
-	        gestionMensajesmenu();
-	        return;
-	    }
 
 	    System.out.println("Selecciona el ejemplar al que deseas aplicar un fitosanitario:");
-	    int index = 1;
+	    eligeEjemplar();
 	    
-	    for (Ejemplar e : ejemplares) {
-	        System.out.println(index + " - " + e.getNombre());
-	        index++;
-	    }
-
-	    Ejemplar ejemplarSeleccionado = null;
-	    try {
-	        int seleccion = sc.nextInt();
-	        sc.nextLine();
-
-	        if (seleccion < 1 || seleccion > ejemplares.size()) {
-	            System.out.println("Selección no válida.");
-	            return;
-	        }
-
-	        // Obtengo el ejemplar seleccionado
-	        ejemplarSeleccionado = ejemplares.get(seleccion - 1);
-	    } catch (InputMismatchException e) {
-	        System.out.println("Solo se permiten ingresar números, inténtalo de nuevo.");
-	        sc.nextLine();
-	        return;
-	    }
+	    sc.nextLine();
 	    
-	    System.out.println("Selecciona el fitosanitario que deseas aplicar al ejemplar " + ejemplarSeleccionado.getNombre() + ":");
-	    index = 1;  // Reinicio el índice
-	    for (Fitosanitario f : fitosanitarios) {
-	        System.out.println(index + " - " + f.getNombre());
-	        index++;
-	    }
-
-	    Fitosanitario fitosanitarioSeleccionado = null;
-	    try {
-	        int seleccion = sc.nextInt();
-	        sc.nextLine();
-
-	        if (seleccion < 1 || seleccion > fitosanitarios.size()) {
-	            System.out.println("Selección no válida.");
-	            return;
-	        }
-
-	        // Obtengo el fitosanitario seleccionado
-	        fitosanitarioSeleccionado = fitosanitarios.get(seleccion - 1);
-	    } catch (InputMismatchException e) {
-	        System.out.println("Solo se permiten ingresar números, inténtalo de nuevo.");
-	        sc.nextLine();
-	        return;
-	    }
-
-	    fitosanitarioSeleccionado.getEjemplares().add(ejemplarSeleccionado);
-
-	    S_fitosanitario.aplicarFitosanitarioAejemplar(fitosanitarioSeleccionado);
+	    System.out.println("Selecciona el fitosanitario que deseas aplicar al ejemplar " + ejemplar.getNombre() + ":");
+	    eligeFitosanitario();
 	    
-	    String nombreEjemplar = ejemplarSeleccionado.getNombre();
+	    sc.nextLine();
 
-	    System.out.println("El fitosanitario " + fitosanitarioSeleccionado.getNombre() +
+	    fitosanitario.getEjemplares().add(ejemplar);
+
+	    S_fitosanitario.aplicarFitosanitarioAejemplar(fitosanitario);
+	    
+	    String nombreEjemplar = ejemplar.getNombre();
+
+	    System.out.println("El fitosanitario " + fitosanitario.getNombre() +
 	                       " ha sido aplicado al ejemplar " + nombreEjemplar + ".");
 	    
 	    String nh = "NH_" + nombreEjemplar;
@@ -496,16 +389,16 @@ public class InvernaderoFachadaPersonal {
 	    Historial historialEjemplar = new Historial();
 	    historialEjemplar.setNh(nh);
 	    historialEjemplar.setActualizado(actualizado);
-	    historialEjemplar.setEjemplar(ejemplarSeleccionado);
+	    historialEjemplar.setEjemplar(ejemplar);
 	    
 	    S_historial.guardarHistorial(historialEjemplar);
 	    
 	    Mensaje mensajeHistorial = new Mensaje();
         mensajeHistorial.setFechahora(new Date()); // Fecha actual
-        mensajeHistorial.setMensaje("Se aplica " +  fitosanitarioSeleccionado.getNombre() + " por " + facade.nombreusuario 
+        mensajeHistorial.setMensaje("Se aplica " +  fitosanitario.getNombre() + " por " + facade.nombreusuario 
                                      + " a fecha " + new Date());
         
-        mensajeHistorial.setEjemplar(ejemplarSeleccionado);
+        mensajeHistorial.setEjemplar(ejemplar);
         mensajeHistorial.setHistorial(historialEjemplar);
         Persona personaActual = new Persona();
         personaActual.setId(facade.obtenerPersonaActual());
@@ -522,45 +415,25 @@ public class InvernaderoFachadaPersonal {
 	// MÉTODOS PARA LA GESTIÓN DE MENSAJES
 
 	private void realizarAnotaciones() {
-	    List<Ejemplar> ejemplares = S_ejemplar.obtenerTodosLosEjemplares();
-
-	    if (ejemplares.isEmpty()) {
-	        System.out.println("No hay ejemplares de plantas disponibles en el sistema.");
-	        gestionMensajesmenu();
-	        return;
-	    }
-
-	    System.out.println("Selecciona el ejemplar del que deseas realizar una anotación:");
-	    int index = 1;
-	    for (Ejemplar e : ejemplares) {
-	        System.out.println(index + " - " + e.getNombre());
-	        index++;
-	    }
+		
+		System.out.println("Selecciona el ejemplar del que deseas realizar una anotación:");
+		eligeEjemplar();
 
 	    try {
-	        int seleccion = sc.nextInt();
-	        sc.nextLine();
+	    	 sc.nextLine(); 
 
-	        if (seleccion < 1 || seleccion > ejemplares.size()) {
-	            System.out.println("Selección no válida.");
-	            return;
-	        }
+	         System.out.println("Escribe la anotación sobre el ejemplar:");
+	         String anotacionUsuario = sc.nextLine().trim();
 
-	        // Obtengo el ejemplar seleccionado
-	        Ejemplar ejemplarSeleccionado = ejemplares.get(seleccion - 1);
-
-	        System.out.println("Escribe la anotación sobre el ejemplar:");
-	        String anotacionUsuario = sc.nextLine().trim();
-
-	        if (anotacionUsuario.isEmpty()) {
-	            System.out.println("La anotación no puede estar vacía.");
-	            return;
-	        }
+	         if (anotacionUsuario.isEmpty()) {
+	             System.out.println("La anotación no puede estar vacía. Inténtalo de nuevo.");
+	             realizarAnotaciones();
+	         }
 	        
 	        Mensaje anotacion = new Mensaje();
 	        anotacion.setFechahora(new Date());
 	        anotacion.setMensaje(anotacionUsuario);
-	        anotacion.setEjemplar(ejemplarSeleccionado);
+	        anotacion.setEjemplar(ejemplar);
 
 	        // Obtengo la persona actual desde la fachada
 	        Persona personaActual = new Persona();
@@ -570,11 +443,7 @@ public class InvernaderoFachadaPersonal {
 	        // Guardo el mensaje en la base de datos
 	        S_mensaje.guardarMensaje(anotacion);
 
-	        System.out.println("Anotación registrada con éxito para el ejemplar: " + ejemplarSeleccionado.getNombre());
-	        gestionMensajesmenu();
-	    } catch (InputMismatchException e) {
-	        System.out.println("Solo se permiten ingresar números, inténtalo de nuevo.");
-	        sc.nextLine(); // Consumir el salto de línea incorrecto
+	        System.out.println("Anotación registrada con éxito para el ejemplar: " + ejemplar.getNombre());
 	    } catch (Exception e) {
 	        System.out.println("Ocurrió un error al registrar la anotación: " + e.getMessage());
 	    }
@@ -599,59 +468,24 @@ public class InvernaderoFachadaPersonal {
 	//FILTROS PARA MOSTRAR ANOTACIONES EN ESPECÍFICO
 
 	private void filtrarAnotacionesporPersona() {
-		List<Persona> listaPersonas = S_persona.listarPersonas();
 
 		System.out.println("Selecciona la persona de la que quieres ver las anotaciones:");
-		int index = 1;
-		for (Persona p : listaPersonas) {
-			System.out.println(index + " - " + p.getNombre());
-			index++;
+		
+		eligePersona();
+
+		long idPersona = personas.getId();
+
+		List<Mensaje> anotacionesporPersona = S_mensaje.buscarPorPersonaId(idPersona);
+		for (Mensaje m : anotacionesporPersona) {
+			System.out.println(m.toString());
 		}
-
-		// Obtener la selección del usuario
-		try {
-			int seleccion = sc.nextInt();
-			if (seleccion < 1 || seleccion > listaPersonas.size()) {
-				System.err.println("Selección no válida. Por favor, elige un número entre 1 y " + listaPersonas.size() + ".");
-				filtrarAnotacionesmenu();
-			}
-
-			// Obtener el ejemplar seleccionado
-			Persona personas = (Persona) listaPersonas.toArray()[seleccion - 1];
-			long idPersona = personas.getId();
-
-			List<Mensaje> anotacionesporPersona = S_mensaje.buscarPorPersonaId(idPersona);
-			for (Mensaje m : anotacionesporPersona) {
-				System.out.println(m.toString());
-			}
-			filtrarAnotacionesmenu();
-
-		} catch (InputMismatchException e) {
-			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
-			sc.nextLine();
-		}
+		filtrarAnotacionesmenu();
 	}
 
-	private void filtrarAnotacionesporTipoPlanta() {
-		List<Planta> listaPlantas = S_planta.listarPlantas();
+	protected void filtrarAnotacionesporTipoPlanta() {
 
-		System.out.println("Selecciona el tipo de planta de la que quieres ver anotaciones:");
-		int index = 1;
-		for (Planta p : listaPlantas) {
-			System.out.println(index + " - " + p.getNombreComun());
-			index++;
-		}
-
-		try {
-			// Obtener la selección del usuario
-			int seleccion = sc.nextInt();
-			if (seleccion < 1 || seleccion > listaPlantas.size()) {
-				System.out.println("Selección no válida.");
-				filtrarAnotacionesmenu();
-			}
-
-			// Obtener la planta seleccionada
-			Planta planta = (Planta) listaPlantas.toArray()[seleccion - 1];
+		    System.out.println("Selecciona el tipo de planta de la que quieres ver anotaciones:");
+		    eligePlanta();
 			String codigo_planta = planta.getCodigo();
 
 			// Obtener todos los ejemplares que tengan el código de la planta seleccionada
@@ -673,6 +507,113 @@ public class InvernaderoFachadaPersonal {
 				}
 				filtrarAnotacionesmenu();
 			}
+	}
+
+	//UBICAR EJEMPLARES EN LOCALIZACION
+	
+	private void ubicarEjemplarEnLocalizacion() {
+
+		System.out.println("Selecciona el ejemplar que deseas ubicar en una localización:");
+		eligeEjemplar();
+	}
+	
+	
+	//METODOS PARA ELEGIR UNO/VARIOS DE LA LISTA
+	
+	protected void eligePersona() {
+		List<Persona> listaPersonas = S_persona.listarPersonas();
+
+		int index = 1;
+		for (Persona p : listaPersonas) {
+			System.out.println(index + " - " + p.getNombre());
+			index++;
+		}
+
+		// Obtener la selección del usuario
+		try {
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaPersonas.size()) {
+				System.err.println("Selección no válida. Por favor, elige un número entre 1 y " + listaPersonas.size() + ".");
+				filtrarAnotacionesmenu();
+			}
+
+			// Obtener el ejemplar seleccionado
+			personas = (Persona) listaPersonas.toArray()[seleccion - 1];
+		} catch (InputMismatchException e) {
+			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+			sc.nextLine();
+		}
+	}
+
+	private void eligeEjemplar() {
+		List<Ejemplar> listaEjemplares = S_ejemplar.obtenerTodosLosEjemplares();
+
+		int index = 1;
+		for (Ejemplar e : listaEjemplares) {
+			System.out.println(index + " - " + e.getNombre());
+			index++;
+		}
+
+		try {
+			// Obtengo la selección del usuario
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaEjemplares.size()) {
+				System.out.println("Selección no válida.");
+				menu();
+			}
+
+			// Obtengo la planta seleccionada
+			ejemplar = (Ejemplar) listaEjemplares.toArray()[seleccion - 1];
+		} catch (InputMismatchException e) {
+			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+			sc.nextLine();
+		}
+	}
+
+	protected void eligePlanta() {
+		List<Planta> listaPlantas = S_planta.listarPlantas();
+
+		int index = 1;
+		for (Planta p : listaPlantas) {
+			System.out.println(index + " - " + p.getNombreComun());
+			index++;
+		}
+
+		try {
+			// Obtengo la selección del usuario
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaPlantas.size()) {
+				System.out.println("Selección no válida.");
+				filtrarAnotacionesmenu();
+			}
+
+			// Actualizo la planta seleccionada en el atributo de la clase
+			planta = listaPlantas.get(seleccion - 1);
+		} catch (InputMismatchException e) {
+			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+			sc.nextLine();
+		}
+	}
+	
+	private void eligeFitosanitario() {
+		List<Fitosanitario> listaFitosanitarios = S_fitosanitario.obtenerTodosLosFitosanitarios();
+
+		int index = 1;
+		for (Fitosanitario f : listaFitosanitarios) {
+			System.out.println(index + " - " + f.getNombre());
+			index++;
+		}
+
+		try {
+			// Obtengo la selección del usuario
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaFitosanitarios.size()) {
+				System.out.println("Selección no válida.");
+				menu();
+			}
+
+			// Obtengo el fitosanitario seleccionado
+			fitosanitario = (Fitosanitario) listaFitosanitarios.toArray()[seleccion - 1];
 		} catch (InputMismatchException e) {
 			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
 			sc.nextLine();

@@ -28,7 +28,7 @@ public class ServicioLocalizacionImpl implements ServicioLocalizacion{
 
 	@Override
 	public List<Localizacion> obtenerLocalizacionPorNumSeccion(int numSeccion) {
-		return localizacion_R.findLocalizacionByNumSeccion(numSeccion);
+		return null;
 	}
 
 	@Override
