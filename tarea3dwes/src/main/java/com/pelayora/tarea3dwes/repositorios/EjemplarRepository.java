@@ -19,6 +19,12 @@ import jakarta.transaction.Transactional;
 //--------------------------------------------------------
 
 public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
+	
+	@Query("SELECT e FROM Ejemplar e WHERE e.localizacion IS NULL")
+    List<Ejemplar> findLocalizacionesLibres();
+	
+	@Query("SELECT e FROM Ejemplar e WHERE e.localizacion IS NOT NULL")
+    List<Ejemplar> findLocalizacionesOcupadas();
 
     @Query("SELECT e FROM Ejemplar e WHERE e.nombre = :nombre")
     List<Ejemplar> findEjemplaresByNombre(@Param("nombre") String nombre);

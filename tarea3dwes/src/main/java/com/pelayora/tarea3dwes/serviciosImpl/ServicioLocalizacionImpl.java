@@ -10,6 +10,8 @@ import com.pelayora.tarea3dwes.repositorios.CredencialesRepository;
 import com.pelayora.tarea3dwes.repositorios.LocalizacionRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioLocalizacion;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ServicioLocalizacionImpl implements ServicioLocalizacion{
 	
@@ -30,6 +32,7 @@ public class ServicioLocalizacionImpl implements ServicioLocalizacion{
 	public List<Localizacion> obtenerLocalizacionPorNumSeccion(int numSeccion) {
 		return null;
 	}
+	
 
 	@Override
 	public List<Localizacion> obtenerTodasLasLocalizacion() {
@@ -40,6 +43,11 @@ public class ServicioLocalizacionImpl implements ServicioLocalizacion{
 	public void eliminarLocalizacion(Long id) {
 		localizacion_R.deleteById(id);
 		
+	}
+
+	@Override
+	public List<Localizacion> obtenerLocalizacionesSinEjemplar() {
+		return localizacion_R.findLocalizacionesSinEjemplar();
 	}
 
 }

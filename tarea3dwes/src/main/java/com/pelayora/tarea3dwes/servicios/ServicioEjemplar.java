@@ -23,6 +23,8 @@ public interface ServicioEjemplar {
     List<Ejemplar> obtenerEjemplarPorPlanta(String codigo);
     List<Ejemplar> obtenerEjemplarByNombre(String nombre);
     List<Ejemplar> obtenerEjemplarPorLocalizacion(Localizacion localizacion);
+    List<Ejemplar> obtenerLocalizacionesLibres();
+    List<Ejemplar> obtenerLocalizacionesOcupadas();
     List<Ejemplar> obtenerTodosLosEjemplares();
     void eliminarEjemplar(Long id);
 }

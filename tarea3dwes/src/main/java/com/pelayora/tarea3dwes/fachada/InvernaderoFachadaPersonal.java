@@ -81,11 +81,12 @@ public class InvernaderoFachadaPersonal {
 			System.out.println("\t\t\t\t1 - GESTIÓN DE EJEMPLARES");
 			System.out.println("\t\t\t\t2 - GESTIÓN DE FITOSANITARIOS");
 			System.out.println("\t\t\t\t3 - GESTIÓN DE MENSAJES");
-			System.out.println("\t\t\t\t4 - Ubicar Ejemplar en localizacion");
-			System.out.println("\t\t\t\t5 - CERRAR SESIÓN");
-			System.out.println("\t\t\t\t6 - SALIR DEL PROGRAMA");
+			System.out.println("\t\t\t\t4 - Ubicar Ejemplar en una localizacion");
+			System.out.println("\t\t\t\t5 - Desubicar Ejemplar de su localizacion");
+			System.out.println("\t\t\t\t6 - CERRAR SESIÓN");
+			System.out.println("\t\t\t\t7 - SALIR DEL PROGRAMA");
 
-			opcion = Utilidades.obtenerOpcionUsuario(6);
+			opcion = Utilidades.obtenerOpcionUsuario(7);
 
 			switch (opcion) {
 			case 1: {
@@ -102,9 +103,13 @@ public class InvernaderoFachadaPersonal {
 				menu();
 			}
 			case 5: {
-				facade.iniciosesion();
+				desubicarEjemplarEnLocalizacion();
+				menu();
 			}
 			case 6: {
+				facade.iniciosesion();
+			}
+			case 7: {
 				Utilidades.salirdelprograma();
 			}
 			}
@@ -524,42 +529,61 @@ public class InvernaderoFachadaPersonal {
 			}
 	}
 
-	//UBICAR EJEMPLARES EN LOCALIZACION
+	//UBICAR, DESUBICAR, REUBICAR EJEMPLARES EN LOCALIZACION
 	
 	private void ubicarEjemplarEnLocalizacion() {
 		try {
 			System.out.println("Selecciona el ejemplar que deseas ubicar en una localización:");
-			eligeEjemplar();
+			eligeEjemplarSinLocalizacion();
 			sc.nextLine();
 
 			System.out.println("Selecciona la localización donde vas a ubicar el ejemplar (" + ejemplar.getNombre() + "):");
-			eligeLocalizacion();
+			eligeLocalizacionSinEjemplar();
 
 			// Verifico si la localización ya tiene un ejemplar asignado
 			if (!S_ejemplar.obtenerEjemplarPorLocalizacion(localizacion).isEmpty()) {
 				System.out.println("La localización ya tiene un ejemplar ubicado en ella.");
 			}
+			ejemplar.setLocalizacion(localizacion);
+			S_ejemplar.modificarEjemplar(ejemplar);
+			Mensaje mensajeubicadoEjemplar = new Mensaje();
+			mensajeubicadoEjemplar.setFechahora(new Date()); // Fecha actual
+			mensajeubicadoEjemplar.setMensaje("Ejemplar " + ejemplar.getNombre() + " se ubica en " + localizacion.getNumSeccion() + " de la seccion ");
+			mensajeubicadoEjemplar.setEjemplar(ejemplar);
+			Persona personaActual = new Persona();
+			personaActual.setId(facade.obtenerPersonaActual());
+			mensajeubicadoEjemplar.setPersona(personaActual);
 
-			if (ejemplar.getLocalizacion() == null) {
-				ejemplar.setLocalizacion(localizacion);
-				S_ejemplar.modificarEjemplar(ejemplar);
-				Mensaje mensajeubicadoEjemplar = new Mensaje();
-				mensajeubicadoEjemplar.setFechahora(new Date()); // Fecha actual
-				mensajeubicadoEjemplar.setMensaje("Ejemplar " +  ejemplar.getNombre() + " se ubica en " + localizacion.getNumSeccion() + " de la seccion ");   
-				mensajeubicadoEjemplar.setEjemplar(ejemplar);
-		        Persona personaActual = new Persona();
-		        personaActual.setId(facade.obtenerPersonaActual());
-		        mensajeubicadoEjemplar.setPersona(personaActual);
-		        
-		        // Guardo el mensaje
-		        S_mensaje.guardarMensaje(mensajeubicadoEjemplar);
-				System.out.println("Se ha ubicado el ejemplar: " + ejemplar.getNombre() + " en la localización " + localizacion.getMesa());
-			} else {
-				System.out.println("Este ejemplar ya está ubicado en una localización.");
-			}
+			// Guardo el mensaje
+			S_mensaje.guardarMensaje(mensajeubicadoEjemplar);
+			System.out.println("Se ha ubicado el ejemplar: " + ejemplar.getNombre() + " en la localización " + localizacion.getNumSeccion());
 		} catch (DataIntegrityViolationException e) {
 			System.out.println("Error: La localización ya tiene un ejemplar ubicado en ella. Por favor, selecciona otra localización.");
 		}
+	}
+	
+	private void desubicarEjemplarEnLocalizacion() {
+		System.out.println("Selecciona el ejemplar que deseas desubicar en una localización:");
+		eligeEjemplarConLocalizacion();
+		sc.nextLine();
+
+		Localizacion localizacion = ejemplar.getLocalizacion();
+
+		ejemplar.setLocalizacion(null);
+		S_ejemplar.modificarEjemplar(ejemplar);
+
+		Mensaje mensajeubicadoEjemplar = new Mensaje();
+		mensajeubicadoEjemplar.setFechahora(new Date()); // Fecha actual
+		mensajeubicadoEjemplar.setMensaje("Ejemplar " + ejemplar.getNombre() + " se ha desubicado de " + localizacion.getNumSeccion() + " de la sección.");
+		mensajeubicadoEjemplar.setEjemplar(ejemplar);
+
+		Persona personaActual = new Persona();
+		personaActual.setId(facade.obtenerPersonaActual());
+		mensajeubicadoEjemplar.setPersona(personaActual);
+
+		// Guardo el mensaje
+		S_mensaje.guardarMensaje(mensajeubicadoEjemplar);
+		System.out.println("Se ha desubicado el ejemplar: " + ejemplar.getNombre() + " de la localización " + localizacion.getNumSeccion());
 	}
 
 
@@ -593,6 +617,56 @@ public class InvernaderoFachadaPersonal {
 
 	private void eligeEjemplar() {
 		List<Ejemplar> listaEjemplares = S_ejemplar.obtenerTodosLosEjemplares();
+
+		int index = 1;
+		for (Ejemplar e : listaEjemplares) {
+			System.out.println(index + " - " + e.getNombre());
+			index++;
+		}
+
+		try {
+			// Obtengo la selección del usuario
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaEjemplares.size()) {
+				System.out.println("Selección no válida.");
+				menu();
+			}
+
+			// Obtengo el ejemplar seleccionado
+			ejemplar = (Ejemplar) listaEjemplares.toArray()[seleccion - 1];
+		} catch (InputMismatchException e) {
+			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+			sc.nextLine();
+		}
+	}
+	
+	private void eligeEjemplarSinLocalizacion() {
+		List<Ejemplar> listaEjemplares = S_ejemplar.obtenerLocalizacionesLibres();
+
+		int index = 1;
+		for (Ejemplar e : listaEjemplares) {
+			System.out.println(index + " - " + e.getNombre());
+			index++;
+		}
+
+		try {
+			// Obtengo la selección del usuario
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaEjemplares.size()) {
+				System.out.println("Selección no válida.");
+				menu();
+			}
+
+			// Obtengo el ejemplar seleccionado
+			ejemplar = (Ejemplar) listaEjemplares.toArray()[seleccion - 1];
+		} catch (InputMismatchException e) {
+			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+			sc.nextLine();
+		}
+	}
+	
+	private void eligeEjemplarConLocalizacion() {
+		List<Ejemplar> listaEjemplares = S_ejemplar.obtenerLocalizacionesOcupadas();
 
 		int index = 1;
 		for (Ejemplar e : listaEjemplares) {
@@ -666,8 +740,13 @@ public class InvernaderoFachadaPersonal {
 		}
 	}
 	
-	private void eligeLocalizacion() {
-		List<Localizacion> listaLocalizaciones = S_localizacion.obtenerTodasLasLocalizacion();
+	private void eligeLocalizacionSinEjemplar() {
+		List<Localizacion> listaLocalizaciones = S_localizacion.obtenerLocalizacionesSinEjemplar();
+		
+		if (listaLocalizaciones.isEmpty()) {
+	        System.out.println("No hay localizaciones sin ocupar.");
+	        menu();
+	    }
 
 		int index = 1;
 		for (Localizacion l : listaLocalizaciones) {

@@ -10,7 +10,7 @@ import com.pelayora.tarea3dwes.modelo.Localizacion;
 @Repository
 public interface LocalizacionRepository extends JpaRepository<Localizacion, Long> {
 	
-	/*@Query("SELECT l FROM Localizacion l WHERE l.numseccion = :numseccion")
-	List<Localizacion> findLocalizacionByNumSeccion(@Param("numSeccion") int numSeccion);*/
+	@Query("SELECT l FROM Localizacion l LEFT JOIN Ejemplar e ON l.id_localizacion = e.localizacion.id_localizacion WHERE e.localizacion.id_localizacion IS NULL")
+	List<Localizacion> findLocalizacionesSinEjemplar();
 
 }

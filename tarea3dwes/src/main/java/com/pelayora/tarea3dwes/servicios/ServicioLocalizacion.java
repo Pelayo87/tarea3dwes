@@ -11,6 +11,7 @@ public interface ServicioLocalizacion {
 	Localizacion guardarLocalizacion(Localizacion localizacion);
     Optional<Localizacion> obtenerLocalizacionPorId(Long id);
     List<Localizacion> obtenerLocalizacionPorNumSeccion(int numSeccion);
+    List<Localizacion> obtenerLocalizacionesSinEjemplar();
     List<Localizacion> obtenerTodasLasLocalizacion();
     void eliminarLocalizacion(Long id);	
 

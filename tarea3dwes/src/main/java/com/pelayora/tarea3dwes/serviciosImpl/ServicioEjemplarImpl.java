@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.modelo.Localizacion;
 import com.pelayora.tarea3dwes.repositorios.EjemplarRepository;
@@ -38,7 +40,18 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
     public List<Ejemplar> obtenerEjemplarPorLocalizacion(Localizacion localizacion) {
         return ejemplar_R.findByLocalizacion(localizacion);
     }
-
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Ejemplar> obtenerLocalizacionesLibres() {
+        return ejemplar_R.findLocalizacionesLibres();
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Ejemplar> obtenerLocalizacionesOcupadas() {
+        return ejemplar_R.findLocalizacionesOcupadas();
+    }
     
     @Override
     public List<Ejemplar> obtenerTodosLosEjemplares() {
