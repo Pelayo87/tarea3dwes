@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
+import com.pelayora.tarea3dwes.modelo.Localizacion;
 import com.pelayora.tarea3dwes.repositorios.EjemplarRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 
@@ -17,15 +18,27 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
     public Ejemplar guardarEjemplar(Ejemplar ejemplar) {
         return ejemplar_R.save(ejemplar);
     }
+    
+    @Override
+    public Ejemplar modificarEjemplar(Ejemplar ejemplar) {
+        return ejemplar_R.save(ejemplar);
+    }
 
     @Override
     public Optional<Ejemplar> obtenerEjemplarPorId(Long id) {
         return ejemplar_R.findById(id);
     }
     
-    public List<Ejemplar> findEjemplarByNombre(String nombre){
+    @Override
+    public List<Ejemplar> obtenerEjemplarByNombre(String nombre){
     	return ejemplar_R.findEjemplaresByNombre(nombre);
     }
+    
+    @Override
+    public List<Ejemplar> obtenerEjemplarPorLocalizacion(Localizacion localizacion) {
+        return ejemplar_R.findByLocalizacion(localizacion);
+    }
+
     
     @Override
     public List<Ejemplar> obtenerTodosLosEjemplares() {

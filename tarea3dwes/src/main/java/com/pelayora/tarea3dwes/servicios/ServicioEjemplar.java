@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
+import com.pelayora.tarea3dwes.modelo.Localizacion;
 
 //--------------------------------------------------------
 //Autor: Pelayo Rodríguez Álvarez
@@ -14,13 +15,14 @@ import com.pelayora.tarea3dwes.modelo.Ejemplar;
 //y eliminar ejemplares del sistema.
 //--------------------------------------------------------
 
-
 @Service
 public interface ServicioEjemplar {
-	
-	Ejemplar guardarEjemplar(Ejemplar ejemplar);
+    Ejemplar guardarEjemplar(Ejemplar ejemplar);
+    Ejemplar modificarEjemplar(Ejemplar ejemplar);
     Optional<Ejemplar> obtenerEjemplarPorId(Long id);
     List<Ejemplar> obtenerEjemplarPorPlanta(String codigo);
+    List<Ejemplar> obtenerEjemplarByNombre(String nombre);
+    List<Ejemplar> obtenerEjemplarPorLocalizacion(Localizacion localizacion);
     List<Ejemplar> obtenerTodosLosEjemplares();
-    void eliminarEjemplar(Long id);	
+    void eliminarEjemplar(Long id);
 }

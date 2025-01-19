@@ -48,11 +48,9 @@ public class InvernaderoFachadaPrincipal {
 		switch (opcion) {
 		case 1: {
 			login();
-			break;
 		}
 		case 2: {
 			facadeInvitado.invitado();
-			break;
 		}
 		case 3: {
 			Utilidades.salirdelprograma();

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
+import com.pelayora.tarea3dwes.modelo.Localizacion;
 
 import jakarta.transaction.Transactional;
 
@@ -17,7 +18,6 @@ import jakarta.transaction.Transactional;
 //Descripción: Repositorio de Ejemplares.
 //--------------------------------------------------------
 
-@Repository
 public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 
     @Query("SELECT e FROM Ejemplar e WHERE e.nombre = :nombre")
@@ -29,4 +29,7 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
     int actualizarNombreEjemplar(@Param("id") Long id, @Param("nombre") String nombre);
 
     List<Ejemplar> findByPlanta_Codigo(String codigoPlanta);
+    
+    List<Ejemplar> findByLocalizacion(Localizacion localizacion);
+
 }

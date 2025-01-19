@@ -151,7 +151,7 @@ public class InvernaderoFachadaAdmin {
 			switch (opcion) {
 			case 1: {
 				registrarPersona();
-				break;
+				menuadminpersonas();
 			}
 			}
 		} while (opcion != 2);
@@ -169,6 +169,7 @@ public class InvernaderoFachadaAdmin {
 			switch (opcion) {
 			case 1: {
 				mostrarDatosClientes();
+				menuadminclientes();
 			}
 			}
 		} while (opcion != 2);
@@ -188,15 +189,15 @@ public class InvernaderoFachadaAdmin {
 			switch (opcion) {
 			case 1: {
 				S_fitosanitario.guardarFitosanitario(null);
-				menuadmin();
+				menuadminfitosanitarios();
 			}
 			case 2: {
 				S_fitosanitario.modificarFitosanitario(null);
-				menuadmin();
+				menuadminfitosanitarios();
 			}
 			case 3: {
 				facade.iniciosesion();
-				break;
+				menuadminfitosanitarios();
 			}
 			case 4: {
 				Utilidades.salirdelprograma();
@@ -218,7 +219,7 @@ public class InvernaderoFachadaAdmin {
 			switch (opcion) {
 			case 1: {
 				registrarEnfermedad();
-				menuadmin();
+				menuadminenfermedades();
 			}
 			case 2:{
 				menuadmin();
@@ -239,10 +240,11 @@ public class InvernaderoFachadaAdmin {
 		switch (opcion) {
 		case 1: {
 			S_parasitos.guardarParasitos(null);
-			menuadmin();
+			menuadminparasitos();
 		}
 		case 2: {
 			S_parasitos.modificarParasitos(null);
+			menuadminparasitos();
 		}
 		case 3: {
 			menuadmin();

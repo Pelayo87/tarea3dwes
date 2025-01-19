@@ -47,7 +47,7 @@ public class Ejemplar {
     private Historial historial;
 	
 	@OneToOne
-    @JoinColumn(name = "id_localizacion")
+    @JoinColumn(name = "id_localizacion", unique=true)
     private Localizacion localizacion;
 
 	public Ejemplar() {
@@ -119,6 +119,22 @@ public class Ejemplar {
 
 	public void setHistorial(Historial historial) {
 		this.historial = historial;
+	}
+
+	public Long getId_ejemplar() {
+		return id_ejemplar;
+	}
+
+	public void setId_ejemplar(Long id_ejemplar) {
+		this.id_ejemplar = id_ejemplar;
+	}
+
+	public Localizacion getLocalizacion() {
+		return localizacion;
+	}
+
+	public void setLocalizacion(Localizacion localizacion) {
+		this.localizacion = localizacion;
 	}
 
 	@Override

@@ -12,11 +12,13 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import com.pelayora.tarea3dwes.modelo.*;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 import com.pelayora.tarea3dwes.servicios.ServicioHistorial;
+import com.pelayora.tarea3dwes.servicios.ServicioLocalizacion;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
@@ -37,6 +39,7 @@ public class InvernaderoFachadaPersonal {
 	private Persona personas;
 	private Ejemplar ejemplar;
 	private Fitosanitario fitosanitario;
+	private Localizacion localizacion;
 
 	// FECHA ACTUAL Y FORMATEADA
 	Date fechaActual = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
@@ -46,6 +49,9 @@ public class InvernaderoFachadaPersonal {
 
 	@Autowired
     private ServicioEjemplar S_ejemplar;
+	
+	@Autowired
+    private ServicioLocalizacion S_localizacion;
 	
 	@Autowired
     private ServicioFitosanitario S_fitosanitario;
@@ -93,6 +99,7 @@ public class InvernaderoFachadaPersonal {
 			}
 			case 4: {
 				ubicarEjemplarEnLocalizacion();
+				menu();
 			}
 			case 5: {
 				facade.iniciosesion();
@@ -109,10 +116,11 @@ public class InvernaderoFachadaPersonal {
 			System.out.println("\t\t\t\t1 - AÑADIR NUEVO EJEMPLAR");
 			System.out.println("\t\t\t\t2 - FILTRAR EJEMPLAR/ES");
 			System.out.println("\t\t\t\t3 - VER MENSAJES DE UN EJEMPLAR");
-			System.out.println("\t\t\t\t4 - CERRAR SESIÓN");
-			System.out.println("\t\t\t\t5 - SALIR DEL PROGRAMA");
+			System.out.println("\t\t\t\t4 - VOLVER ATRÁS");
+			System.out.println("\t\t\t\t5 - CERRAR SESIÓN");
+			System.out.println("\t\t\t\t6 - SALIR DEL PROGRAMA");
 
-			opcion = Utilidades.obtenerOpcionUsuario(5);
+			opcion = Utilidades.obtenerOpcionUsuario(6);
 
 			switch (opcion) {
 			case 1: {
@@ -127,9 +135,12 @@ public class InvernaderoFachadaPersonal {
 				gestionEjemplaresmenu();
 			}
 			case 4: {
-				facade.iniciosesion();
+				menu();
 			}
 			case 5: {
+				facade.iniciosesion();
+			}
+			case 6: {
 				Utilidades.salirdelprograma();
 			}
 			}
@@ -139,20 +150,24 @@ public class InvernaderoFachadaPersonal {
 		int opcion = -1;
 			System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE FITOSANITARIOS" + " [Usuario actual:" +facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - APLICAR FITOSANITARIO A UN EJEMPLAR");
-			System.out.println("\t\t\t\t2 - CERRAR SESIÓN");
-			System.out.println("\t\t\t\t3 - SALIR DEL PROGRAMA");
+			System.out.println("\t\t\t\t2 - VOLVER ATRÁS");
+			System.out.println("\t\t\t\t3 - CERRAR SESIÓN");
+			System.out.println("\t\t\t\t4 - SALIR DEL PROGRAMA");
 
-			opcion = Utilidades.obtenerOpcionUsuario(3);
+			opcion = Utilidades.obtenerOpcionUsuario(4);
 
 			switch (opcion) {
 			case 1: {
 				aplicarFitosaniarioAEjemplar();
 				gestionFitosanitariosmenu();
 			}
-			case 4: {
+			case 2: {
+				menu();
+			}
+			case 3: {
 				facade.iniciosesion();
 			}
-			case 5: {
+			case 4: {
 				Utilidades.salirdelprograma();
 			}
 			}
@@ -512,11 +527,42 @@ public class InvernaderoFachadaPersonal {
 	//UBICAR EJEMPLARES EN LOCALIZACION
 	
 	private void ubicarEjemplarEnLocalizacion() {
+		try {
+			System.out.println("Selecciona el ejemplar que deseas ubicar en una localización:");
+			eligeEjemplar();
+			sc.nextLine();
 
-		System.out.println("Selecciona el ejemplar que deseas ubicar en una localización:");
-		eligeEjemplar();
+			System.out.println("Selecciona la localización donde vas a ubicar el ejemplar (" + ejemplar.getNombre() + "):");
+			eligeLocalizacion();
+
+			// Verifico si la localización ya tiene un ejemplar asignado
+			if (!S_ejemplar.obtenerEjemplarPorLocalizacion(localizacion).isEmpty()) {
+				System.out.println("La localización ya tiene un ejemplar ubicado en ella.");
+			}
+
+			if (ejemplar.getLocalizacion() == null) {
+				ejemplar.setLocalizacion(localizacion);
+				S_ejemplar.modificarEjemplar(ejemplar);
+				Mensaje mensajeubicadoEjemplar = new Mensaje();
+				mensajeubicadoEjemplar.setFechahora(new Date()); // Fecha actual
+				mensajeubicadoEjemplar.setMensaje("Ejemplar " +  ejemplar.getNombre() + " se ubica en " + localizacion.getNumSeccion() + " de la seccion ");   
+				mensajeubicadoEjemplar.setEjemplar(ejemplar);
+		        Persona personaActual = new Persona();
+		        personaActual.setId(facade.obtenerPersonaActual());
+		        mensajeubicadoEjemplar.setPersona(personaActual);
+		        
+		        // Guardo el mensaje
+		        S_mensaje.guardarMensaje(mensajeubicadoEjemplar);
+				System.out.println("Se ha ubicado el ejemplar: " + ejemplar.getNombre() + " en la localización " + localizacion.getMesa());
+			} else {
+				System.out.println("Este ejemplar ya está ubicado en una localización.");
+			}
+		} catch (DataIntegrityViolationException e) {
+			System.out.println("Error: La localización ya tiene un ejemplar ubicado en ella. Por favor, selecciona otra localización.");
+		}
 	}
-	
+
+
 	
 	//METODOS PARA ELEGIR UNO/VARIOS DE LA LISTA
 	
@@ -537,7 +583,7 @@ public class InvernaderoFachadaPersonal {
 				filtrarAnotacionesmenu();
 			}
 
-			// Obtener el ejemplar seleccionado
+			// Obtengo la persona seleccionada
 			personas = (Persona) listaPersonas.toArray()[seleccion - 1];
 		} catch (InputMismatchException e) {
 			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
@@ -562,7 +608,7 @@ public class InvernaderoFachadaPersonal {
 				menu();
 			}
 
-			// Obtengo la planta seleccionada
+			// Obtengo el ejemplar seleccionado
 			ejemplar = (Ejemplar) listaEjemplares.toArray()[seleccion - 1];
 		} catch (InputMismatchException e) {
 			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
@@ -614,6 +660,31 @@ public class InvernaderoFachadaPersonal {
 
 			// Obtengo el fitosanitario seleccionado
 			fitosanitario = (Fitosanitario) listaFitosanitarios.toArray()[seleccion - 1];
+		} catch (InputMismatchException e) {
+			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+			sc.nextLine();
+		}
+	}
+	
+	private void eligeLocalizacion() {
+		List<Localizacion> listaLocalizaciones = S_localizacion.obtenerTodasLasLocalizacion();
+
+		int index = 1;
+		for (Localizacion l : listaLocalizaciones) {
+			System.out.println(index + " - " + l.getMesa());
+			index++;
+		}
+
+		try {
+			// Obtengo la selección del usuario
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaLocalizaciones.size()) {
+				System.out.println("Selección no válida.");
+				menu();
+			}
+
+			// Obtengo la localizacion seleccionada
+			localizacion = (Localizacion) listaLocalizaciones.toArray()[seleccion - 1];
 		} catch (InputMismatchException e) {
 			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
 			sc.nextLine();
