@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Localizacion;
+import com.pelayora.tarea3dwes.modelo.Seccion;
 import com.pelayora.tarea3dwes.repositorios.CredencialesRepository;
 import com.pelayora.tarea3dwes.repositorios.LocalizacionRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioLocalizacion;
@@ -33,7 +34,10 @@ public class ServicioLocalizacionImpl implements ServicioLocalizacion{
 		return null;
 	}
 	
-
+	public List<Localizacion> obtenerLocalizacionesPorSeccion(Seccion seccion) {
+        return localizacion_R.findBySeccion(seccion);
+    }
+	
 	@Override
 	public List<Localizacion> obtenerTodasLasLocalizacion() {
 		return localizacion_R.findAll();

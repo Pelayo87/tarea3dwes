@@ -35,6 +35,12 @@ public class Seccion {
 		super();
 	}
 
+	public Seccion(String nombre, double area) {
+		super();
+		this.nombre = nombre;
+		this.area = area;
+	}
+
 	public Seccion(String nombre, double area, List<Localizacion> localizaciones) {
 		super();
 		this.nombre = nombre;

@@ -2,6 +2,7 @@ package com.pelayora.tarea3dwes.fachada;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioEnfermedad;
 import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
+import com.pelayora.tarea3dwes.servicios.ServicioLocalizacion;
 import com.pelayora.tarea3dwes.servicios.ServicioParasitos;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
+import com.pelayora.tarea3dwes.servicios.ServicioSeccion;
 import com.pelayora.tarea3dwes.util.Utilidades;
 
 @Component
@@ -27,6 +30,8 @@ public class InvernaderoFachadaAdmin {
 	
 	Scanner sc = new Scanner(System.in);
 	Persona usuarioActual;
+	
+	private Seccion seccion;
 
     @Autowired
     private ServicioPlanta S_planta;
@@ -48,6 +53,12 @@ public class InvernaderoFachadaAdmin {
     
     @Autowired
     private ServicioParasitos S_parasitos;
+    
+    @Autowired
+    private ServicioLocalizacion S_localizacion;
+    
+    @Autowired
+    private ServicioSeccion S_seccion;
 
 	public void menuadmin() {
 		int opcion = -1;
@@ -60,10 +71,11 @@ public class InvernaderoFachadaAdmin {
 		System.out.println("\t\t\t\t6 - GESTIÓN DE FITOSANITARIOS");
 		System.out.println("\t\t\t\t7 - GESTIÓN DE ENFERMEDADES");
 		System.out.println("\t\t\t\t8 - GESTIÓN DE PARÁSITOS");
-		System.out.println("\t\t\t\t9 - CERRAR SESIÓN");
-		System.out.println("\t\t\t\t10 - SALIR DEL PROGRAMA");
+		System.out.println("\t\t\t\t9 - GESTIÓN DE LOCALIZACIONES Y SECCIONES");
+		System.out.println("\t\t\t\t10 - CERRAR SESIÓN");
+		System.out.println("\t\t\t\t11 - SALIR DEL PROGRAMA");
 
-		opcion = Utilidades.obtenerOpcionUsuario(10);
+		opcion = Utilidades.obtenerOpcionUsuario(11);
 
 		switch (opcion) {
 		case 1: {
@@ -93,9 +105,12 @@ public class InvernaderoFachadaAdmin {
 			menuadminparasitos();
 		}
 		case 9: {
+			menuadminlocalizacionesysecciones();
+		}
+		case 10: {
 			facade.iniciosesion();
 		}			
-		case 10: {
+		case 11: {
 			Utilidades.salirdelprograma();
 		}
 		}
@@ -251,6 +266,41 @@ public class InvernaderoFachadaAdmin {
 		}
 		}
 	}
+	
+	public void menuadminlocalizacionesysecciones() {
+		int opcion = -1;
+		System.out.println("\n\n\n\n\n\t\t\t\tGESTIÓN DE LOCALIZACIONES Y SECCIONES" + " [Usuario actual:" + facade.nombreusuario + "]\n");
+		System.out.println("\t\t\t\t1 - AÑADIR SECCIÓN");
+		System.out.println("\t\t\t\t2 - MODIFICAR SECCION");
+		System.out.println("\t\t\t\t3 - AÑADIR LOCALIZACION/ES A SECCIÓN");
+		System.out.println("\t\t\t\t4 - MODIFICAR LOCALIZACION/ES DE UNA SECCIÓN");
+		System.out.println("\t\t\t\t5 - VOLVER ATRÁS");
+
+		opcion = Utilidades.obtenerOpcionUsuario(5);
+
+		switch (opcion) {
+		case 1: {
+			añadirSeccion();
+			menuadminlocalizacionesysecciones();
+		}
+		case 2: {
+			S_seccion.guardarSeccion(null);
+			menuadminlocalizacionesysecciones();
+		}
+		case 3: {
+			añadirLocalizacionASeccion();
+			menuadminlocalizacionesysecciones();
+		}
+		
+		case 4: {
+			S_seccion.guardarSeccion(null);
+			menuadminlocalizacionesysecciones();
+		}
+		case 5: {
+			menuadmin();
+		}
+		}
+	}
 
 	// METODÓS PARA LA GESTIÓN DE PERSONAS Y CLIENTES
 
@@ -306,6 +356,8 @@ public class InvernaderoFachadaAdmin {
 		menuadminclientes();
 	}
 	
+	// METODÓS PARA LA GESTIÓN DE ENFERMEDADES Y PARÁSITOS
+	
 	private void registrarEnfermedad() {
 	    Enfermedad enfermedadGuardada = S_enfermedad.guardarEnfermedad(null);
 
@@ -358,5 +410,163 @@ public class InvernaderoFachadaAdmin {
 	        registrarEnfermedad();
 	    }
 	}
+	
+	// METODÓS PARA LA GESTIÓN DE LOCALIZACIONES Y SECCIONES
+	
+	private void añadirSeccion() {
+
+		seccion = S_seccion.guardarSeccion(null);
+		
+		// Validación para la primera localización de la sección
+		System.out.println("Inserta la primera localización de la sección " + seccion.getNombre() + " :");
+
+		// Validación del tipo de mesa
+		char mesa = ' ';
+		boolean mesaValida = false;
+		do {
+		    System.out.print("Ingrese el tipo de mesa (carácter): ");
+		    String inputMesa = sc.nextLine().trim();
+		    if (inputMesa.isEmpty() || inputMesa.length() != 1) {
+		        System.err.println("Debe ingresar un solo carácter para el tipo de mesa.");
+		    } else {
+		        mesa = inputMesa.charAt(0);
+		        mesaValida = true;
+		    }
+		} while (!mesaValida);
+
+		// Validación de si es exterior (S/N)
+		boolean exterior = false;
+		boolean exteriorValido = false;
+		do {
+		    System.out.print("¿Es exterior? (S/N): ");
+		    String inputExterior = sc.nextLine().trim().toUpperCase();
+		    if (inputExterior.isEmpty()) {
+		        System.err.println("La respuesta no puede estar vacía. Por favor, ingrese S o N.");
+		    } else if (inputExterior.equals("S")) {
+		        exterior = true;
+		        exteriorValido = true;
+		    } else if (inputExterior.equals("N")) {
+		        exterior = false;
+		        exteriorValido = true;
+		    } else {
+		        System.err.println("Por favor, ingrese S para exterior o N para no exterior.");
+		    }
+		} while (!exteriorValido);
+
+		Localizacion localizacion = new Localizacion();
+		localizacion.setNumSeccion(1);
+		localizacion.setMesa(mesa);
+		localizacion.setExterior(exterior);
+		localizacion.setSeccion(seccion);
+
+		Localizacion localizacionGuardada = S_localizacion.guardarLocalizacion(localizacion);
+
+		if (localizacionGuardada != null) {
+			System.out.println("Localización añadida correctamente a la seccion " + seccion.getNombre());
+		} else {
+			System.err.println("Error al añadir la localización.");
+		}
+	}
+	
+	private void añadirLocalizacionASeccion() {
+	    eligeSeccion();
+
+	    // Validación del tipo de mesa
+	    char mesa = ' ';
+	    boolean mesaValida = false;
+	    do {
+	        System.out.print("Ingrese el tipo de mesa (carácter): ");
+	        String inputMesa = sc.nextLine().trim();
+	        if (inputMesa.isEmpty() || inputMesa.length() != 1) {
+	            System.err.println("Debe ingresar un solo carácter para el tipo de mesa.");
+	        } else {
+	            mesa = inputMesa.charAt(0);
+	            mesaValida = true;
+	        }
+	    } while (!mesaValida);
+
+	    // Validación de si es exterior (S/N)
+	    boolean exterior = false;
+	    boolean exteriorValido = false;
+	    do {
+	        System.out.print("¿Es exterior? (S/N): ");
+	        String inputExterior = sc.nextLine().trim().toUpperCase();
+	        if (inputExterior.isEmpty()) {
+	            System.err.println("La respuesta no puede estar vacía. Por favor, ingrese S o N.");
+	        } else if (inputExterior.equals("S")) {
+	            exterior = true;
+	            exteriorValido = true;
+	        } else if (inputExterior.equals("N")) {
+	            exterior = false;
+	            exteriorValido = true;
+	        } else {
+	            System.err.println("Por favor, ingrese S para exterior o N para no exterior.");
+	        }
+	    } while (!exteriorValido);
+
+	    int numSeccion = 1;
+	    List<Localizacion> localizaciones = S_localizacion.obtenerLocalizacionesPorSeccion(seccion);
+	    if (!localizaciones.isEmpty()) {
+	        Localizacion ultimaLocalizacion = localizaciones.get(localizaciones.size() - 1);
+	        numSeccion = ultimaLocalizacion.getNumSeccion() + 1;
+	    }
+
+	    // Crear nueva localización
+	    Localizacion localizacion = new Localizacion();
+	    localizacion.setNumSeccion(numSeccion);
+	    localizacion.setMesa(mesa);
+	    localizacion.setExterior(exterior);
+	    localizacion.setSeccion(seccion);
+
+	    // Guardar la nueva localización
+	    S_localizacion.guardarLocalizacion(localizacion);
+
+	    String respuesta = "";
+	    boolean respuestaValida = false;
+	    do {
+	        System.out.print("¿Desea añadir más localizaciones en la sección " + seccion.getNombre() + "?" + " (S/N): ");
+	        respuesta = sc.nextLine().trim().toUpperCase();
+	        if (respuesta.isEmpty()) {
+	            System.err.println("La respuesta no puede estar vacía. Por favor, ingrese S o N.");
+	        } else if (respuesta.equals("S") || respuesta.equals("N")) {
+	            respuestaValida = true;
+	        } else {
+	            System.err.println("Por favor, ingrese S o N. La respuesta debe ser solo 'S' o 'N'.");
+	        }
+	    } while (!respuestaValida);
+
+	    if (respuesta.equals("S")) {
+	        añadirLocalizacionASeccion();
+	    }
+	}
+
+	
+	//METODOS PARA ELEGIR UNO/VARIOS DE LA LISTA
+	
+	private void eligeSeccion() {
+		List<Seccion> listaSecciones = S_seccion.obtenerTodasLasSecciones();
+
+		int index = 1;
+		for (Seccion s : listaSecciones) {
+			System.out.println(index + " - " + s.getNombre());
+			index++;
+		}
+
+		try {
+			// Obtengo la selección del usuario
+			int seleccion = sc.nextInt();
+			if (seleccion < 1 || seleccion > listaSecciones.size()) {
+				System.out.println("Selección no válida.");
+				menuadminlocalizacionesysecciones();
+			}
+
+			// Obtengo la seccion seleccionada
+			seccion = (Seccion) listaSecciones.toArray()[seleccion - 1];
+		} catch (InputMismatchException e) {
+			System.err.println("Solo se permiten ingresar números, inténtalo de nuevo.");
+			sc.nextLine();
+		}
+	}
+
 
 }
