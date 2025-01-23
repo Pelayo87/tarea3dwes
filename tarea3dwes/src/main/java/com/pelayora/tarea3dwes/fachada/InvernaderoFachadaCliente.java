@@ -1,15 +1,12 @@
 package com.pelayora.tarea3dwes.fachada;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.pelayora.tarea3dwes.modelo.Cliente;
 import com.pelayora.tarea3dwes.modelo.Persona;
 import com.pelayora.tarea3dwes.modelo.Planta;
@@ -34,7 +31,7 @@ public class InvernaderoFachadaCliente {
 	
 	public void menuCliente() {
 		int opcion = -1;
-			System.out.println("\n\n\n\n\n\t\t\t\tPERSONAL VIVERO" + " [Usuario actual:" + facade.nombreusuario + "]\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tCLIENTE VIVERO" + " [Usuario actual:" + facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - GESTIÓN DE MIS PLANTAS FAVORITAS");
 			System.out.println("\t\t\t\t2 - CERRAR SESIÓN");
 			System.out.println("\t\t\t\t3 - SALIR DEL PROGRAMA");
@@ -57,7 +54,7 @@ public class InvernaderoFachadaCliente {
 	
 	public void gestionPlantasFavoritas() {
 		int opcion = -1;
-			System.out.println("\n\n\n\n\n\t\t\t\tPERSONAL VIVERO" + " [Usuario actual:" + facade.nombreusuario + "]\n");
+			System.out.println("\n\n\n\n\n\t\t\t\tCLIENTE VIVERO" + " [Usuario actual:" + facade.nombreusuario + "]\n");
 			System.out.println("\t\t\t\t1 - AÑADIR PLANTAS FAVORITAS");
 			System.out.println("\t\t\t\t1 - VER MIS PLANTAS FAVORITAS");
 			System.out.println("\t\t\t\t3 - CERRAR SESIÓN");
