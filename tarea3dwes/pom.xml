@@ -60,9 +60,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.asturmatch</groupId>
-			<artifactId>proyectoasturmatch</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 	</dependencies>
 
