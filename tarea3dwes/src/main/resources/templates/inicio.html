@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INICIO</title>
+    <link rel="stylesheet" href="css/vivero.css">
+    <link rel="stylesheet" href="css/vivero-invitado.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/inicio.css">
+</head>
+
+<body>
+	<header>
+		<div class="logo">VIVERO CIFP LA LABORAL</div>
+		<nav>
+			<a href="#">INICIO</a> <a href="#">PLANTAS</a> <a href="#">EJEMPLARES</a>
+			<a href="#">FITOSANITARIOS</a> <a href="#">MENSAJES</a>
+		</nav>
+		<div class="invitado-desplegable">
+			<div class="circulo-perfil">
+				<img src="img/fotoperfil-invitado.png"
+					alt="Foto de perfil del admin">
+			</div>
+			<div class="invitado-desplegable-informacion">
+				<strong>INVITADO</strong> 
+				<a href="/iniciosesion-registrarse?action=login">Iniciar Sesión</a> 
+				<a href="/iniciosesion-registrarse?action=register">Registrarse</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="contenedor-inicio">
+        <h1>VIVERO</h1>
+        <h3>Bienvenido al vivero del CIFP La Laboral</h3>
+        <p>Explora nuestra colección única de plantas y descubre cómo embellecer tus espacios con la naturaleza.</p>
+    </div>
+
+        <div class="contenedor-listadoplantas">
+            <h2>Plantas</h2>
+            <p>
+                En nuestro vivero encontrarás una amplia variedad de plantas, desde especies exóticas hasta las más
+                nativas.
+                Ideales para transformar tu hogar o jardín en un espacio lleno de vida y color.
+            </p>
+		<table class="tabla-plantas">
+			<thead>
+				<tr>
+					<th>Nombre Común</th>
+					<th>Nombre Científico</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="planta : ${plantas}">
+					<td th:text="${planta.nombreComun}"></td>
+					<td th:text="${planta.nombreCientifico}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+    </div>
+    <footer>
+        <div class="footer">
+            <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
+            <p class="telefono">+34 634 23 36 87</p>
+            <div class="redes-sociales">
+                <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
+                <a href="#"><img src="img/x.png" alt="X" /></a>
+                <a href="#"><img src="img/instagram.png" alt="Instagram" /></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

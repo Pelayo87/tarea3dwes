@@ -26,7 +26,7 @@ public class Principal implements CommandLineRunner {
 		System.out.println("--Bienvenido al sistema del invernadero (DWES)--");
 		
 		 try {
-	            String url = "http://localhost:8080/anadirpersonal";
+	            String url = "http://localhost:8080/inicio";
 	            System.out.println("\n\t\t\t\033[1;36mLink de Entrada --> " + url + "\033[0m");
 	            
 	            // Intenta abrir el navegador mediante el sistema operativo
