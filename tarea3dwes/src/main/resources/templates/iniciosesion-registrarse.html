@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -11,43 +11,41 @@
 
 <body>
 
-    <!-- Página de inicio de sesión -->
-    <div class="container" id="login">
+    <div class="container" id="login" th:if="${!mostrarRegistro}">
         <h2>Iniciar Sesión</h2>
-        <form>
-            <label for="username">Nombre de usuario</label>
-            <input type="text" id="username" name="username" placeholder="Ingresa tu nombre de usuario" required>
+        <form th:action="@{/login}" method="post">
+            <label for="usuario">Nombre de usuario</label>
+            <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu nombre de usuario" required>
 
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+            <label for="contrasena">Contraseña</label>
+            <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" required>
 
             <button type="submit">Iniciar Sesión</button>
         </form>
         <div class="link">
-            <p>¿No tienes una cuenta? <a href="#register">Regístrate</a></p>
+            <p>¿No tienes una cuenta? <a th:href="@{/iniciosesion-registrarse(action='registro')}">Regístrate</a></p>
         </div>
     </div>
 
-    <!-- Página de registro -->
-    <div class="container" id="register" style="display: none;">
-        <h2>Registrarse(Nuevo Cliente)</h2>
-        <form>
-            <label for="name">Nombre Completo</label>
-            <input type="text" id="name" name="name" placeholder="Ingresa tu nombre completo" required>
+    <div class="container" id="registro" th:if="${mostrarRegistro}">
+        <h2>Registrarse (Nuevo Cliente)</h2>
+        <form th:action="@{/registro}" method="post">
+            <label for="nombre">Nombre Completo</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
 
-            <label for="email-register">Correo Electrónico</label>
-            <input type="email" id="email-register" name="email" placeholder="Ingresa tu correo" required>
+            <label for="nif_nie">NIF/NIE</label>
+            <input type="text" id="nif_nie" name="nif_nie" placeholder="Ingresa tu NIF o NIE, Ej:(12345678A/X1234567T)" required>
 
-            <label for="username-register">Nombre de usuario</label>
-            <input type="text" id="username-register" name="username" placeholder="Ingresa tu nombre de usuario" required>
+            <label for="usuario">Nombre de usuario</label>
+            <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu nombre de usuario" required>
 
-            <label for="password-register">Contraseña</label>
-            <input type="password" id="password-register" name="password" placeholder="Crea una contraseña" required>
+            <label for="contrasena">Contraseña</label>
+            <input type="password" id="contrasena" name="contrasena" placeholder="Crea una contraseña" required>
 
             <button type="submit">Registrarse</button>
         </form>
         <div class="link">
-            <p>¿Ya tienes una cuenta? <a href="#login">Inicia Sesión</a></p>
+            <p>¿Ya tienes una cuenta? <a th:href="@{/iniciosesion-registrarse(action='login')}">Inicia Sesión</a></p>
         </div>
     </div>
 
@@ -57,6 +55,8 @@
         <div class="footer">
             <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
             <p class="telefono">+34 634 23 36 87</p>
+            <p class="email">contacto@viverolaboral.com</p>
+            
             <div class="redes-sociales">
                 <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
                 <a href="#"><img src="img/x.png" alt="X" /></a>
@@ -68,5 +68,4 @@
     <script src="js/iniciosesion-registrarse.js"></script>
 
 </body>
-
 </html>

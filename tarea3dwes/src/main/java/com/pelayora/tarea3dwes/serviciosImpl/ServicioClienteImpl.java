@@ -34,7 +34,7 @@ public class ServicioClienteImpl implements ServicioCliente{
 
 	@Override
 	public Cliente guardarCliente(Cliente cliente) {
-		String nombreCliente;
+		/*String nombreCliente;
 		String nif_nieCliente;
 
 		// Validación del nombre del Cliente
@@ -62,9 +62,7 @@ public class ServicioClienteImpl implements ServicioCliente{
 				System.err.println("El NIF/NIE no puede estar vacío. Inténtelo de nuevo.");
 			} else if (!validacionFormatoNifNie.matcher(nif_nieCliente).matches()) {
 		        System.err.println("El NIF/NIE es inválido. Debe tener un formato correcto. Inténtelo de nuevo.");
-			/*} else if (cliente_R.existsByNifNie(nif_nieCliente)) {
-				System.err.println("El NIF/NIE '" + nif_nieCliente + "' ya está en uso. Inténtelo de nuevo.");
-			*/} else {
+		    } else {
 				nif_nieCorrecto = true;
 			}
 		} while (!nif_nieCorrecto);
@@ -74,9 +72,9 @@ public class ServicioClienteImpl implements ServicioCliente{
 		nuevoCliente.setNombre(nombreCliente);
 		nuevoCliente.setNif_nie(nif_nieCliente);
 		nuevoCliente.getFechaNacimiento();
-		nuevoCliente.setFechaRegistro(LocalDate.now());
+		nuevoCliente.setFechaRegistro(LocalDate.now());*/
 		
-		return cliente_R.save(nuevoCliente);
+		return cliente_R.save(cliente);
 	}
 
 	@Override

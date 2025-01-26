@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
@@ -22,10 +24,29 @@ public class ViveroController {
     }
 	
 	@GetMapping("/iniciosesion-registrarse")
-	public String iniciarSesion_Registrarse(Model model) {
-	    model.addAttribute("mensaje", "Iniciar sesión / Registrarse");
+	public String mostrarFormulario(@RequestParam(value = "action", required = false) String action, Model model) {
+	    if ("registro".equals(action)) {
+	        model.addAttribute("mostrarRegistro", true);
+	    } else {
+	        model.addAttribute("mostrarRegistro", false);
+	    }
 	    return "iniciosesion-registrarse";
 	}
+	
+	@GetMapping("/inicio-cliente")
+    public String inicioViveroCliente(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
+        model.addAttribute("mensaje", "Página inicial del vivero");
+        model.addAttribute("UsuarioActual", nombreUsuario);
+        model.addAttribute("plantas", S_planta.listarPlantas());
+        return "inicio-cliente";
+    }
+	
+	@GetMapping("/anadirpersonal")
+    public String anadirPersonal(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
+        model.addAttribute("mensaje", "Añadir personal al vivero");
+        model.addAttribute("UsuarioActual", nombreUsuario);
+        return "añadirpersonal";
+    }
 	
 	// Método para obtener la primera letra
     private String obtenerPrimeraLetra(String nombre) {

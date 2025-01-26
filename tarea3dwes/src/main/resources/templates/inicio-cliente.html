@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inicio - Vivero La Laboral</title>
+<link rel="stylesheet" href="css/vivero.css">
+<link rel="stylesheet" href="css/vivero-cliente.css">
+<link rel="stylesheet" href="css/inicio-cliente.css">
+<link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+	<header>
+		<div class="logo">VIVERO CIFP LA LABORAL</div>
+		<nav>
+			<a href="#">INICIO</a> <a href="#">VER PLANTAS FAVORITAS</a> <a
+				href="#">CONTACTO</a>
+		</nav>
+		<div class="cliente-desplegable">
+			<div class="circulo-perfil">
+				<img src="img/fotoperfil-invitado.png"
+					alt="Foto de perfil del admin">
+			</div>
+			<div class="cliente-desplegable-informacion">
+				<strong th:text="'Usuario(cliente) : ' + ${UsuarioActual}"></strong> 
+				<a href="/inicio">Cerrar sesión</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="container">
+		<h1 th:text="'BIENVENIDO: ' + ${UsuarioActual} + ' al Vivero CIFP'"></h1>
+
+		<section class="destacados">
+			<h2>Catálogo de Plantas</h2>
+			<div class="grid-plantas">
+				<div class="planta-card" th:each="planta : ${plantas}">
+					<h3 th:text="${planta.nombreComun}">Nombre Común</h3>
+					<p th:text="${planta.nombreCientifico}">Nombre Científico</p>
+					<button type="submit">Añadir a favoritos</button>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	   <section class="novedades">
+            <h2>Últimas Novedades</h2>
+            <div class="noticias">
+                <article>
+                    <h3>Nuevo Invernadero</h3>
+                    <p>Hemos inaugurado un nuevo espacio para plantas tropicales.</p>
+                </article>
+                <article>
+                    <h3>Nuevos Ejemplares</h3>
+                    <p>Ampliamos nuestra colección con ejemplares de plantas exóticas de Asia.</p>
+                </article>
+            </div>
+        </section>
+        
+		<section class="servicios">
+			<h2>Nuestros Servicios</h2>
+			<div class="servicios-grid">
+				<div class="servicio">
+					<img src="img/asesoramiento.png" alt="Asesoramiento">
+					<h3>Asesoramiento Personalizado</h3>
+				</div>
+				<div class="servicio">
+					<img src="img/entrega.png" alt="Entrega">
+					<h3>Entrega a Domicilio</h3>
+				</div>
+				<div class="servicio">
+					<img src="img/mantenimiento.png" alt="Mantenimiento">
+					<h3>Mantenimiento de Jardines</h3>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<footer>
+		<div class="footer">
+			<div class="footer-info">
+				<p class="direccion">C. Luis Moya Blanco, Periurbano - Rural,
+					33203 Gijón, Asturias</p>
+				<p class="telefono">+34 634 23 36 87</p>
+				<p class="email">contacto@viverolaboral.com</p>
+			</div>
+			<div class="horario">
+				<h4>Horario</h4>
+				<p>Lunes a Viernes: 9:00 - 20:00</p>
+				<p>Sábados: 10:00 - 14:00</p>
+			</div>
+			<div class="redes-sociales">
+				<a href="#"><img src="img/facebook.png" alt="Facebook" /></a> <a
+					href="#"><img src="img/x.png" alt="X" /></a> <a href="#"><img
+					src="img/instagram.png" alt="Instagram" /></a>
+			</div>
+		</div>
+	</footer>
+	
+</body>
+</html>

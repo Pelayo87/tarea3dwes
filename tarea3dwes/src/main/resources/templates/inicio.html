@@ -15,8 +15,11 @@
 	<header>
 		<div class="logo">VIVERO CIFP LA LABORAL</div>
 		<nav>
-			<a href="#">INICIO</a> <a href="#">PLANTAS</a> <a href="#">EJEMPLARES</a>
-			<a href="#">FITOSANITARIOS</a> <a href="#">MENSAJES</a>
+			<a href="inicio.html">INICIO</a>
+            <a href="#" onclick="alert('Como invitado no tiene acceso a estas funcionalidades, Inicia Sesion o Registrate')">PLANTAS</a>
+            <a href="#" onclick="alert('Como invitado no tiene acceso a estas funcionalidades, Inicia Sesion o Registrate')">EJEMPLARES</a>
+            <a href="#" onclick="alert('Como invitado no tiene acceso a estas funcionalidades, Inicia Sesion o Registrate')">FITOSANITARIOS</a>
+            <a href="#" onclick="alert('Como invitado no tiene acceso a estas funcionalidades, Inicia Sesion o Registrate')">MENSAJES</a>
 		</nav>
 		<div class="invitado-desplegable">
 			<div class="circulo-perfil">
@@ -26,7 +29,7 @@
 			<div class="invitado-desplegable-informacion">
 				<strong>INVITADO</strong> 
 				<a href="/iniciosesion-registrarse?action=login">Iniciar Sesión</a> 
-				<a href="/iniciosesion-registrarse?action=register">Registrarse</a>
+				<a href="/iniciosesion-registrarse?action=registro">Registrarse</a>
 			</div>
 		</div>
 	</header>
@@ -59,17 +62,26 @@
 			</tbody>
 		</table>
 	</div>
-    </div>
+	
     <footer>
         <div class="footer">
-            <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
-            <p class="telefono">+34 634 23 36 87</p>
-            <div class="redes-sociales">
-                <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
-                <a href="#"><img src="img/x.png" alt="X" /></a>
-                <a href="#"><img src="img/instagram.png" alt="Instagram" /></a>
-            </div>
+          <div class="footer-info">
+              <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
+              <p class="telefono">+34 634 23 36 87</p>
+              <p class="email">contacto@viverolaboral.com</p>
+          </div>
+          <div class="horario">
+              <h4>Horario</h4>
+              <p>Lunes a Viernes: 9:00 - 20:00</p>
+              <p>Sábados: 10:00 - 14:00</p>
+          </div>
+          <div class="redes-sociales">
+            <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
+            <a href="#"><img src="img/x.png" alt="X" /></a>
+            <a href="#"><img src="img/instagram.png" alt="Instagram" /></a>
+          </div>
         </div>
     </footer>
+    
 </body>
 </html>

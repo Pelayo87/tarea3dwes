@@ -1,28 +1,31 @@
-const urlParams = new URLSearchParams(window.location.search);
-const action = urlParams.get('action');
-const loginContainer = document.getElementById('login');
-const registerContainer = document.getElementById('register');
-const links = document.querySelectorAll('.link a');
+document.addEventListener("DOMContentLoaded", () => {
+    const loginContainer = document.getElementById('login');
+    const registroContainer = document.getElementById('registro');
+    const links = document.querySelectorAll('.link a');
 
-links.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = link.getAttribute('href').substring(1);
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = link.getAttribute('href').substring(1);
 
-        if (target === 'register') {
-            loginContainer.style.display = 'none';
-            registerContainer.style.display = 'block';
-        } else {
-            loginContainer.style.display = 'block';
-            registerContainer.style.display = 'none';
-        }
+            if (target === 'registro') {
+                loginContainer.style.display = 'none';
+                registroContainer.style.display = 'block';
+            } else {
+                loginContainer.style.display = 'block';
+                registroContainer.style.display = 'none';
+            }
+        });
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const action = urlParams.get('action');
+    if (action === 'registro') {
+        loginContainer.style.display = 'none';
+        registroContainer.style.display = 'block';
+    } else {
+        loginContainer.style.display = 'block';
+        registroContainer.style.display = 'none';
+    }
 });
 
-if (action === 'register') {
-    loginContainer.style.display = 'none';
-    registerContainer.style.display = 'block';
-} else {
-    loginContainer.style.display = 'block';
-    registerContainer.style.display = 'none';
-}

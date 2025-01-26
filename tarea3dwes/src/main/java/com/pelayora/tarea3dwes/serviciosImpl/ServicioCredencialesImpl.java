@@ -65,7 +65,7 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
 
     @Override
     public Credenciales guardarCredenciales(Credenciales credenciales) {
-    	String nombreUsuario;
+    	/*String nombreUsuario;
 	    String password;
 
 	    // Validación nombre de usuario
@@ -106,7 +106,7 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
 	            passwordCorrecto = true;
 	        }
 
-	    } while (!passwordCorrecto);
+	    } while (!passwordCorrecto);*/
         return credencialesRepository.save(credenciales);
     }
 
