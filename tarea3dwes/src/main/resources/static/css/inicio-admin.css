@@ -1,0 +1,134 @@
+.contenido-principal {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+.bienvenida {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #2c5e1e, #4a8c3c);
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bienvenida h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.estadisticas {
+    margin-bottom: 3rem;
+}
+
+.estadisticas h2 {
+    color: #2c5e1e;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.tarjetas-estadisticas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.tarjeta {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+}
+
+.tarjeta h3 {
+    color: #2c5e1e;
+    margin-bottom: 0.5rem;
+}
+
+.tarjeta .numero {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4a8c3c;
+}
+
+.acciones-rapidas {
+    margin-bottom: 3rem;
+}
+
+.acciones-rapidas h2 {
+    color: #2c5e1e;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.botones-accion {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.boton {
+    display: block;
+    padding: 1rem;
+    background: #4a8c3c;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+    background: #2c5e1e;
+}
+
+.informacion-adicional {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin: 2rem 0;
+}
+
+.informacion-adicional h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2em;
+}
+
+.lista-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.info-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+}
+
+.info-item h3 {
+    color: #27ae60;
+    margin-bottom: 1rem;
+    font-size: 1.4em;
+}
+
+.info-item p {
+    color: #666;
+    line-height: 1.6;
+}

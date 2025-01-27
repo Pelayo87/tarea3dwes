@@ -32,10 +32,17 @@ public class ViveroController {
 	    }
 	    return "iniciosesion-registrarse";
 	}
+
+    @GetMapping("/inicio-admin")
+    public String inicioViveroAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
+        model.addAttribute("mensaje", "Página inicial del vivero(Usuario administrador)");
+        model.addAttribute("UsuarioActual", nombreUsuario);
+        return "inicio-admin";
+    }
 	
 	@GetMapping("/inicio-cliente")
     public String inicioViveroCliente(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
-        model.addAttribute("mensaje", "Página inicial del vivero");
+        model.addAttribute("mensaje", "Página inicial del vivero(Usuario cliente)");
         model.addAttribute("UsuarioActual", nombreUsuario);
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "inicio-cliente";

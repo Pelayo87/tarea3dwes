@@ -20,7 +20,7 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 
 	@Override
 	public Planta guardarPlanta(Planta planta) {
-		String codigo;
+		/*String codigo;
 		String nombrecomun;
 		String nombrecientifico;
 
@@ -69,8 +69,8 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 			}
 		} while (!nombreCientificoCorrecto);
 
-		Planta nuevaplanta = new Planta(codigo, nombrecomun, nombrecientifico);
-		return planta_R.saveAndFlush(nuevaplanta);
+		Planta nuevaplanta = new Planta(codigo, nombrecomun, nombrecientifico);*/
+		return planta_R.saveAndFlush(planta);
 	}
 
 	@Override

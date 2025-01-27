@@ -35,7 +35,7 @@ public class SesionController {
 	            model.addAttribute("nombreUsuario", usuario);
 	            model.addAttribute("Usuario" , Usuarioautenticado);
 	            if ("admin".equalsIgnoreCase(usuario) && "admin".equals(contrasena)) {
-	                return "redirect:/anadirpersonal";
+	                return "redirect:/inicio-admin";
 	            } else {
 	                return "redirect:/inicio-cliente";
 	            }
