@@ -3,7 +3,6 @@ package com.pelayora.tarea3dwes.serviciosImpl;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Planta;
@@ -15,7 +14,6 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 	@Autowired
 	private PlantaRepository planta_R;
 
-	private static final Pattern LETTERS_ONLY_PATTERN = Pattern.compile("^[a-zA-Z]+$");
 	Scanner sc = new Scanner(System.in);
 
 	@Override

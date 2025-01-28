@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador Vivero CIFP La Laboral</title>
+    <link rel="stylesheet" href="css/vivero.css">
+    <link rel="stylesheet" href="css/vivero-admin.css">
+    <link rel="stylesheet" href="css/ejemplares-admin.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">VIVERO CIFP LA LABORAL</div>
+        <nav>
+            <a href="/inicio-admin">INICIO</a>
+            <a href="/plantas-admin">PLANTAS</a>
+            <a href="#">FITOSANITARIOS</a>
+            <a href="#">MENSAJES</a>
+        </nav>
+        <div class="admin-desplegable">
+            <div class="circulo-perfil">
+                <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
+            </div>
+            <div class="admin-desplegable-informacion">
+                <strong>ADMIN</strong>
+                <a href="/inicio">Cerrar sesión</a>
+                <a href="/anadirpersonal">Añadir personal</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="formularios-ejemplares">
+        <form th:action="@{/ejemplares-admin}" method="post">
+            <h2 class="titulos">AÑADIR EJEMPLAR</h2>
+            <div class="ejemplar">
+                <select id="selectAnadirEjemplar" name="planta" class="select" required>
+                    <option value="">Selecciona una planta</option>
+                    <option th:each="planta : ${plantas}" th:value="${planta.codigo}" th:text="${planta.nombreComun}"></option>
+                </select>
+                <button type="submit" class="boton">Añadir Ejemplar</button>
+            </div>
+        </form>
+    
+        <form th:action="@{/ejemplares-admin/eliminar}" method="post">
+            <h2 class="titulos">ELIMINAR EJEMPLAR</h2>
+            <div class="ejemplar">
+                <select id="selectEliminarEjemplar" name="id_ejemplar" class="select" required>
+                    <option value="">Selecciona un ejemplar</option>
+                    <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
+                </select>
+                <button type="submit" class="boton">Eliminar Ejemplar</button>
+            </div>
+        </form>        
+    </div>
+    
+
+    <div class="contenedor-listadoejemplares">
+        <h2 class="titulos">LISTADO DE EJEMPLARES</h2>
+        <p>
+            Gestiona y visualiza todos los ejemplares disponibles en nuestro vivero. Cada ejemplar es único y
+            representa una instancia específica de nuestras plantas, con sus propias características y estado
+            de crecimiento particular.
+        </p>
+        <table class="tabla-ejemplares">
+            <thead>
+                <tr>
+                    <th>Planta</th>
+                    <th>Nombre Ejemplar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ejemplar : ${ejemplares}">
+                    <td th:text="${ejemplar.planta.nombreComun}"></td>
+                    <td th:text="${ejemplar.nombre}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <div class="footer">
+            <div class="footer-info">
+                <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
+                <p class="telefono">+34 634 23 36 87</p>
+                <p class="email">contacto@viverolaboral.com</p>
+            </div>
+            <div class="horario">
+                <h4>Horario</h4>
+                <p>Lunes a Viernes: 9:00 - 20:00</p>
+                <p>Sábados: 10:00 - 14:00</p>
+            </div>
+            <div class="redes-sociales">
+                <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
+                <a href="#"><img src="img/x.png" alt="X" /></a>
+                <a href="#"><img src="img/instagram.png" alt="Instagram" /></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

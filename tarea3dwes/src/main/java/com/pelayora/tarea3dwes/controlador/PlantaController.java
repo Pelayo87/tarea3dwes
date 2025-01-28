@@ -81,7 +81,7 @@ public class PlantaController {
     
     @GetMapping("/plantas-adminEliminar")
     public String PlantasAdminEliminar(@ModelAttribute("nombreUsuario") String nombreUsuario, 
-                                      Model model) {
+                                       Model model) {
         try {
             model.addAttribute("mensaje", "Borrar planta (Usuario administrador)");
             model.addAttribute("UsuarioActual", nombreUsuario);

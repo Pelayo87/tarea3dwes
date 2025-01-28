@@ -2,7 +2,6 @@ package com.pelayora.tarea3dwes.fachada;
 
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
