@@ -42,19 +42,19 @@
             <div class="tarjetas-estadisticas">
                 <div class="tarjeta">
                     <h3>Total Plantas</h3>
-                    <p class="numero">150</p>
+                    <p class="numero" th:text="${totalPlantas}"></p>
                 </div>
                 <div class="tarjeta">
                     <h3>Ejemplares</h3>
-                    <p class="numero">432</p>
+                    <p class="numero" th:text="${totalEjemplares}"></p>
                 </div>
                 <div class="tarjeta">
                     <h3>Fitosanitarios</h3>
-                    <p class="numero">45</p>
+                    <p class="numero" th:text="${totalFitosanitarios}"></p>
                 </div>
                 <div class="tarjeta">
                     <h3>Mensajes</h3>
-                    <p class="numero">12</p>
+                    <p class="numero" th:text="${totalMensajes}"></p>
                 </div>
             </div>
         </section>
@@ -63,12 +63,12 @@
             <h2>Acciones Rápidas Con Plantas</h2>
             <div class="botones-accion">
                 <a href="/plantas-adminAnadir" class="boton">Añadir Nueva Planta</a>
-                <a href="#" class="boton">Modificar Planta</a>
-                <a href="#" class="boton">Borrar Planta</a>
-                <a href="#" class="boton">Ver Plantas del Vivero</a>
+                <a href="/plantas-adminModificar" class="boton">Modificar Planta</a>
+                <a href="/plantas-adminEliminar" class="boton">Eliminar Planta</a>
             </div>
         </section>
 
+     <div class="contenedor-principal">
         <section class="informacion-adicional">
             <h2>Información Importante</h2>
             <div class="lista-info">
@@ -81,8 +81,32 @@
                     <p>Es importante mantener actualizado el inventario y la información sobre las plantas para un correcto funcionamiento.</p>
                 </div>
             </div>
-        </section>    
-    </main>
+        </section> 
+        
+        <div class="contenedor-listadoplantas">
+            <h2>Plantas</h2>
+            <p>
+                En nuestro vivero encontrarás una amplia variedad de plantas, desde especies exóticas hasta las más
+                nativas.
+                Ideales para transformar tu hogar o jardín en un espacio lleno de vida y color.
+            </p>
+		<table class="tabla-plantas">
+			<thead>
+				<tr>
+					<th>Nombre Común</th>
+					<th>Nombre Científico</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="planta : ${plantas}">
+					<td th:text="${planta.nombreComun}"></td>
+					<td th:text="${planta.nombreCientifico}"></td>
+				</tr>
+			</tbody>
+		</table>
+	  </div>  
+	 </div> 
+   </main>
 
     <footer>
         <div class="footer">

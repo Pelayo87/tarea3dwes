@@ -98,4 +98,9 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 		}
 	}
 
+	@Override
+	public long contadorMensajes() {
+		return mensajeRepository.contarMensajes();
+	}
+
 }

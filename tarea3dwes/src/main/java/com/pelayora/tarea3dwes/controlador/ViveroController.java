@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
+import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
+import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
 @Controller
@@ -15,6 +19,15 @@ public class ViveroController {
 	
 	@Autowired
 	private ServicioPlanta S_planta;
+	
+	@Autowired
+	private ServicioEjemplar S_ejemplar;
+	
+	@Autowired
+	private ServicioFitosanitario S_fitosanitario;
+	
+	@Autowired
+	private ServicioMensaje S_mensaje;
 	
 	@GetMapping("/inicio")
     public String inicioVivero(Model model) {
@@ -37,6 +50,15 @@ public class ViveroController {
     public String inicioViveroAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         model.addAttribute("mensaje", "Página inicial del vivero(Usuario administrador)");
         model.addAttribute("UsuarioActual", nombreUsuario);
+        long totalPlantas = S_planta.contadorPlantas();
+        model.addAttribute("totalPlantas", totalPlantas);
+        long totalEjemplares = S_ejemplar.contadorEjemplares();
+        model.addAttribute("totalEjemplares", totalEjemplares);
+        long totalFitosanitarios = S_fitosanitario.contadorFitosanitarios();
+        model.addAttribute("totalFitosanitarios", totalFitosanitarios);
+        long totalMensajes = S_mensaje.contadorMensajes();
+        model.addAttribute("totalMensajes", totalMensajes);
+        model.addAttribute("plantas", S_planta.listarPlantas());
         return "inicio-admin";
     }
 	

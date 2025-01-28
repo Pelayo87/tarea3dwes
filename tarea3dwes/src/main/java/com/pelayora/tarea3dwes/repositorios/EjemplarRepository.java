@@ -37,5 +37,8 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
     List<Ejemplar> findByPlanta_Codigo(String codigoPlanta);
     
     List<Ejemplar> findByLocalizacion(Localizacion localizacion);
+    
+    @Query("SELECT COUNT(e) FROM Ejemplar e")
+    long contarEjemplares();
 
 }

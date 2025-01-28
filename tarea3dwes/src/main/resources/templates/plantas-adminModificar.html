@@ -33,7 +33,7 @@
     <div class="container">
         <h1>MODIFICAR PLANTA</h1>
         <div class="form-container">
-            <form th:action="@{/plantas-adminAnadir}" th:object="${planta}" method="post">
+            <form th:action="@{/plantas-adminModificar}" th:object="${planta}" method="post">
                 <label for="codigo">Código:</label>
                 <input type="text" id="codigo" name="codigo" th:value="${codigo}" placeholder="Ingresa el código" pattern="[A-Za-z0-9]+" required autocomplete="off">
     
@@ -43,10 +43,11 @@
                 <label for="nombreCientifico">Nombre Científico:</label>
                 <input type="text" id="nombreCientifico" name="nombreCientifico" th:value="${nombreCientifico}" placeholder="Ingresa el nombre científico" required autocomplete="off">
     
-                <button type="submit" class="btn-submit">AÑADIR PLANTA</button>
+                <button type="submit" class="btn-submit">MODIFICAR PLANTA</button>
             </form>
         </div>
-    </div>    
+    </div>   
+    
 
     <footer>
         <div class="footer">

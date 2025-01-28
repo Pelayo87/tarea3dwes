@@ -11,6 +11,9 @@ public interface FitosanitarioRepository extends JpaRepository<Fitosanitario, Lo
 	
 	@Query("SELECT COUNT(f) > 0 FROM Fitosanitario f WHERE f.id_fitosanitario = :id_fitosanitario")
     boolean existeId(@Param("id_fitosanitario") Long id);	
+	
+	@Query("SELECT COUNT(f) FROM Fitosanitario f")
+    long contarFitosanitarios();
 }
 
 

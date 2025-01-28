@@ -15,5 +15,6 @@ public interface ServicioFitosanitario {
     List<Fitosanitario> obtenerFitosanitariosPorNombre(String nombre);
     List<Fitosanitario> obtenerTodosLosFitosanitarios();
     void eliminarFitosanitario(Long id);	
+    long contadorFitosanitarios();
 }
 

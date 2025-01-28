@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir Planta(Admin)</title>
+    <title>Eliminar Planta(Admin)</title>
     <link rel="stylesheet" href="css/vivero.css">
     <link rel="stylesheet" href="css/vivero-admin.css">
-    <link rel="stylesheet" href="css/plantas-admin.css">
+    <link rel="stylesheet" href="css/plantas-adminAñadir.css">
     <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
@@ -29,29 +29,17 @@
             </div>
         </div>
     </header>
-    
-        <div class="cards-container">
-            <div class="card anadir">
-                <img src="img/anadir-planta.png" alt="Añadir planta">
-                <h2>Añadir Planta</h2>
-                <p>Agrega nuevas especies a nuestro catálogo de plantas. Incluye toda la información relevante sobre la planta.</p>
-                <a href="/plantas-adminAnadir" class="card-button">Añadir Nueva Planta</a>
-            </div>
-    
-            <div class="card modificar">
-                <img src="img/modificar-planta.png" alt="Modificar planta">
-                <h2>Modificar Planta</h2>
-                <p>Actualiza la información de las plantas existentes, como nombre, común o científico.</p>
-                <a href="/plantas-adminModificar" class="card-button">Modificar Planta</a>
-            </div>
-    
-            <div class="card eliminar">
-                <img src="img/eliminar-planta.png" alt="Eliminar planta">
-                <h2>Eliminar Planta</h2>
-                <p>Elimina plantas del catálogo que ya no estén disponibles.</p>
-                <a href="/plantas-adminEliminar" class="card-button">Eliminar Planta</a>
-            </div>
+
+    <div class="container">
+        <h1>ELIMINAR PLANTA</h1>
+        <div class="form-container">
+            <form th:action="@{/plantas-adminEliminar}" th:object="${planta}" method="post">
+                <label for="codigo">Código:</label>
+                <input type="text" id="codigo" name="codigo" th:value="${codigo}" placeholder="Ingresa el código" pattern="[A-Za-z0-9]+" required autocomplete="off">
+                <button type="submit" class="btn-submit">ELIMINAR PLANTA</button>
+            </form>
         </div>
+    </div>   
     
 
     <footer>

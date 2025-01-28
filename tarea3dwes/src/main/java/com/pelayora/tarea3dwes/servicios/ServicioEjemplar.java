@@ -27,4 +27,5 @@ public interface ServicioEjemplar {
     List<Ejemplar> obtenerLocalizacionesOcupadas();
     List<Ejemplar> obtenerTodosLosEjemplares();
     void eliminarEjemplar(Long id);
+    long contadorEjemplares();
 }

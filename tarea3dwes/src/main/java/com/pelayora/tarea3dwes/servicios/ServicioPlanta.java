@@ -19,8 +19,9 @@ import com.pelayora.tarea3dwes.modelo.Planta;
 public interface ServicioPlanta {
 	
 	Planta guardarPlanta(Planta planta);
-	Planta modificarPlanta(String codigo);
+	Planta modificarPlanta(Planta planta);
     Optional<Planta> buscarPlantaPorId(String codigo);
     List<Planta> listarPlantas();
+    long contadorPlantas();
     void eliminarPlanta(String codigo);
 }

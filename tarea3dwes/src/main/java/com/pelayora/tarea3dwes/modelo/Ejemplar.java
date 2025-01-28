@@ -32,7 +32,7 @@ public class Ejemplar {
 	@Column(name = "nombrecomun", length = 50)
 	private String nombre;
 	
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.REMOVE)
 	@JoinColumn(name="id_planta")
 	private Planta planta;
 	

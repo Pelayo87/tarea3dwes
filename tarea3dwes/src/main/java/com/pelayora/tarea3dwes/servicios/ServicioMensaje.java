@@ -24,4 +24,5 @@ public interface ServicioMensaje {
 	List<Mensaje> buscarPorEjemplarId(long ejemplarId);
 	Mensaje guardarMensaje(Mensaje mensaje);
 	void eliminarMensaje(long id);
+	long contadorMensajes();
 }
