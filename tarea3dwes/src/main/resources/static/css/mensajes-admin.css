@@ -4,67 +4,12 @@ body {
     background-color:#4a8c3c;
 }
 
-.formularios-ejemplares {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    flex-wrap: wrap;
-}
-
-.card {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-}
-
 .titulos {
     font-size: 1.8rem;
     color: #333;
     font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
-}
-
-.ejemplar {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.select {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-    background: #fff;
-    transition: border-color 0.3s ease;
-}
-
-.select:focus {
-    border-color: #45a049;
-    outline: none;
-}
-
-.boton {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    background: #45a049;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.boton:hover {
-    background: #218838;
 }
 
 .filtro-formulario {
@@ -143,7 +88,7 @@ body {
     color: white;
 }
 
-.tabla-ejemplares, .tabla-mensajesejemplares {
+.tabla-mensajes {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -155,26 +100,22 @@ body {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
-.tabla-ejemplares th,
-.tabla-ejemplares td,
-.tabla-mensajesejemplares th,
-.tabla-mensajesejemplares td {
+
+.tabla-mensajes th,
+.tabla-mensajes td {
     padding: 15px;
     text-align: center;
 }
 
-.tabla-ejemplares thead,
-.tabla-mensajesejemplares thead {
+.tabla-mensajes thead {
     background: #2ecc71;
 }
 
-.tabla-ejemplares tr,
-.tabla-mensajesejemplares tr {
+.tabla-mensajes tr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.tabla-ejemplares tbody tr:hover,
-.tabla-mensajesejemplares tbody tr:hover {
+.tabla-mensajes tbody tr:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: scale(1.02);
     transition: transform 0.2s ease;

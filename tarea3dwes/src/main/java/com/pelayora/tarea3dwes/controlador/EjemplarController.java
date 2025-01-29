@@ -35,6 +35,7 @@ public class EjemplarController {
     @GetMapping("/ejemplares-admin")
     public String EjemplaresAdmin(
             @RequestParam(value = "nombreComun", required = false) String nombreComun,
+            @RequestParam(value = "nombre", required = false) String nombre,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
             Model model) {
 
@@ -47,6 +48,14 @@ public class EjemplarController {
             model.addAttribute("mensaje", "Filtrado por planta: " + nombreComun);
         } else {
             model.addAttribute("ejemplares", S_ejemplar.obtenerTodosLosEjemplares());
+        }
+
+        if (nombre != null && !nombre.isEmpty()) {
+            List<Mensaje> mensajesFiltrados = S_mensaje.obtenerMensajePorNombreEjemplar(nombre);
+            model.addAttribute("mensajes", mensajesFiltrados);
+            model.addAttribute("mensaje", "Filtrado por ejemplar: " + nombre);
+        } else {
+            model.addAttribute("mensajes", S_mensaje.listarMensajes());
         }
 
         model.addAttribute("plantas", S_planta.listarPlantas());

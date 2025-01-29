@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.modelo.Mensaje;
 import com.pelayora.tarea3dwes.repositorios.MensajeRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
@@ -101,6 +102,11 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 	@Override
 	public long contadorMensajes() {
 		return mensajeRepository.contarMensajes();
+	}
+
+	@Override
+	public List<Mensaje> obtenerMensajePorNombreEjemplar(String nombre) {
+		return mensajeRepository.findByEjemplarNombre(nombre);
 	}
 
 }

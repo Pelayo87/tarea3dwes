@@ -7,7 +7,7 @@
     <title>Administrador Vivero CIFP La Laboral</title>
     <link rel="stylesheet" href="css/vivero.css">
     <link rel="stylesheet" href="css/vivero-admin.css">
-    <link rel="stylesheet" href="css/fitosanitarios-admin.css">
+    <link rel="stylesheet" href="css/mensajes-admin.css">
     <link rel="stylesheet" href="css/footer.css">
 </head>
 
@@ -17,7 +17,7 @@
         <nav>
             <a href="/inicio-admin">INICIO</a>
             <a href="/plantas-admin">PLANTAS</a>
-            <a href="/ejemplares-admin">EJEMPLARES</a>
+            <a href="/fitosanitarios-admin">FITOSANITARIOS</a>
             <a href="/mensajes-admin">MENSAJES</a>
         </nav>
         <div class="admin-desplegable">
@@ -32,46 +32,40 @@
         </div>
     </header>
 
-	<form th:action="@{/fitosanitarios-admin}" method="post">
-		<h2 class="titulos">APLICAR FITOSANITARIO</h2>
-		<div class="ejemplar">
-			<select id="selectAplicarEjemplar" name="ejemplar" class="select" required>
-				<option value="">Selecciona el ejemplar</option>
-				<option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
-			</select>
+    <div class="contenedor-listado">
+        <h2 class="titulos">LISTADO DE MENSAJES/ANOTACIONES</h2>
+        <p>Aquí puedes ver y gestionar todos los mensajes relacionados con los ejemplares del vivero. 
+            Los usuarios pueden consultar sobre ejemplares en específico.
+        </p>
 
-			<select id="selectAplicarFitosanitario" name="fitosanitario" class="select" required>
-				<option value="">Selecciona el fitosanitario</option>
-				<option th:each="fitosanitario : ${fitosanitarios}" th:value="${fitosanitario.id_fitosanitario}" th:text="${fitosanitario.nombre}"></option>
-			</select>
+            <form method="GET" action="/mensajes-admin" class="filtro-formulario">
+                <label for="nombre" class="filtro-label">Filtrar por ejemplar (nombre):</label> 
+                    <select name="nombre" id="nombre" class="filtro-select">
+                    <option value="">-- Seleccionar ejemplar --</option>
+                    <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.nombre}" th:text="${ejemplar.nombre}"></option>
+                </select>
+                <button type="submit" class="filtro-button">Filtrar</button>
+            </form>
 
-			<button type="submit" class="boton">Aplicar Fitosanitario</button>
-		</div>
-	</form>
-
-
-	<div class="contenedor-listadofitosanitarios">
-	<h2 class="titulos">LISTADO DE FITOSANITARIOS</h2>
-	<p>Gestiona y visualiza todos los fitosanitarios disponibles en nuestro vivero. Cada fitosanitario está diseñado para tratar las
-	   necesidades específicas de nuestras plantas, asegurando su salud y protección contra plagas y enfermedades. Cada uno tiene
-	   características particulares en cuanto a su composición, uso y aplicación.
-	</p>
-
-		<table class="tabla-fitosanitarios">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Marca</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="fitosanitario : ${fitosanitarios}">
-                <td th:text="${fitosanitario.nombre}"></td>
-                <td th:text="${fitosanitario.marca}"></td>
-            </tr>
-        </tbody>
-     </table>
-    </div>
+            <table class="tabla-mensajes">
+            <thead>
+                <tr>
+                    <th>Fecha/Hora</th>
+                    <th>Mensaje</th>
+                    <th>Ejemplar</th>
+                    <th>Persona</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mensaje : ${mensajes}">
+                    <td th:text="${mensaje.fechahora}"></td>
+                    <td th:text="${mensaje.mensaje}"></td>
+                    <td th:text="${mensaje.ejemplar.nombre}"></td>
+                    <td th:text="${mensaje.persona.nombre}"></td>
+                </tr>
+            </tbody>
+         </table>
+        </div>
 
 
 	<footer>
