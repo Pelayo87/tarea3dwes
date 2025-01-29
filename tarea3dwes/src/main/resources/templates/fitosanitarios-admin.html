@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador Vivero CIFP La Laboral</title>
+    <link rel="stylesheet" href="css/vivero.css">
+    <link rel="stylesheet" href="css/vivero-admin.css">
+    <link rel="stylesheet" href="css/fitosanitarios-admin.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">VIVERO CIFP LA LABORAL</div>
+        <nav>
+            <a href="/inicio-admin">INICIO</a>
+            <a href="/plantas-admin">PLANTAS</a>
+            <a href="/ejemplares-admin">EJEMPLARES</a>
+            <a href="#">MENSAJES</a>
+        </nav>
+        <div class="admin-desplegable">
+            <div class="circulo-perfil">
+                <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
+            </div>
+            <div class="admin-desplegable-informacion">
+                <strong>ADMIN</strong>
+                <a href="/inicio">Cerrar sesión</a>
+                <a href="/anadirpersonal">Añadir personal</a>
+            </div>
+        </div>
+    </header>
+
+	<form th:action="@{/fitosanitarios-admin}" method="post">
+		<h2 class="titulos">APLICAR FITOSANITARIO</h2>
+		<div class="ejemplar">
+			<select id="selectAplicarEjemplar" name="ejemplar" class="select" required>
+				<option value="">Selecciona el ejemplar</option>
+				<option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
+			</select>
+
+			<select id="selectAplicarFitosanitario" name="fitosanitario" class="select" required>
+				<option value="">Selecciona el fitosanitario</option>
+				<option th:each="fitosanitario : ${fitosanitarios}" th:value="${fitosanitario.id_fitosanitario}" th:text="${fitosanitario.nombre}"></option>
+			</select>
+
+			<button type="submit" class="boton">Aplicar Fitosanitario</button>
+		</div>
+	</form>
+
+
+	<div class="contenedor-listadofitosanitarios">
+	<h2 class="titulos">LISTADO DE FITOSANITARIOS</h2>
+	<p>Gestiona y visualiza todos los fitosanitarios disponibles en nuestro vivero. Cada fitosanitario está diseñado para tratar las
+	   necesidades específicas de nuestras plantas, asegurando su salud y protección contra plagas y enfermedades. Cada uno tiene
+	   características particulares en cuanto a su composición, uso y aplicación.
+	</p>
+
+		<table class="tabla-fitosanitarios">
+        <thead>
+            <tr>
+                <th>Planta</th>
+                <th>Nombre Ejemplar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="fitosanitario : ${fitosanitarios}">
+                <td th:text="${fitosanitario.nombre}"></td>
+                <td th:text="${fitosanitario.marca}"></td>
+            </tr>
+        </tbody>
+     </table>
+    </div>
+
+
+	<footer>
+        <div class="footer">
+            <div class="footer-info">
+                <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
+                <p class="telefono">+34 634 23 36 87</p>
+                <p class="email">contacto@viverolaboral.com</p>
+            </div>
+            <div class="horario">
+                <h4>Horario</h4>
+                <p>Lunes a Viernes: 9:00 - 20:00</p>
+                <p>Sábados: 10:00 - 14:00</p>
+            </div>
+            <div class="redes-sociales">
+                <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
+                <a href="#"><img src="img/x.png" alt="X" /></a>
+                <a href="#"><img src="img/instagram.png" alt="Instagram" /></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

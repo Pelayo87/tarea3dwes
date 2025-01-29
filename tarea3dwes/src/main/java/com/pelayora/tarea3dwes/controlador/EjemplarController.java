@@ -89,6 +89,52 @@ public class EjemplarController {
 
         return "redirect:/ejemplares-admin";
     }
+    
+    @PostMapping("/ejemplares-admin/modificar")
+    public String modificarEjemplar(@RequestParam("planta") String codigoPlanta,
+            @RequestParam("id_ejemplar") Long id_ejemplar,
+            @ModelAttribute("nombreUsuario") String nombreUsuario,
+            @ModelAttribute("id_Persona") long id_persona,
+            Model model) {
+
+        Optional<Ejemplar> ejemplarOpt = S_ejemplar.obtenerEjemplarPorId(id_ejemplar);
+        Optional<Planta> plantaOpt = S_planta.buscarPlantaPorId(codigoPlanta);
+
+        if (!ejemplarOpt.isPresent()) {
+            model.addAttribute("error", "Ejemplar no encontrado");
+            return "redirect:/ejemplares-admin";
+        }
+        
+        if (!plantaOpt.isPresent()) {
+            model.addAttribute("error", "Planta no encontrada");
+            return "redirect:/ejemplares-admin";
+        }
+
+        Ejemplar ejemplar = ejemplarOpt.get();
+        Planta planta = plantaOpt.get();
+        
+        ejemplar.setPlanta(planta);
+
+        String nombreEjemplar = planta.getCodigo() + "_" + id_ejemplar;
+        ejemplar.setNombre(nombreEjemplar);
+
+        S_ejemplar.modificarEjemplar(ejemplar);
+
+        // Creo un mensaje de registro
+        Mensaje mensajeInicial = new Mensaje();
+        mensajeInicial.setFechahora(new Date());
+        mensajeInicial.setMensaje("Ejemplar actualizado por " + nombreUsuario + " el " + new Date());
+        mensajeInicial.setEjemplar(ejemplar);
+
+        Persona personaActual = new Persona();
+        personaActual.setId(id_persona);
+        mensajeInicial.setPersona(personaActual);
+
+        S_mensaje.guardarMensaje(mensajeInicial);
+
+        return "redirect:/ejemplares-admin";
+    }
+
 
     @PostMapping("/ejemplares-admin/eliminar")
     public String eliminarEjemplar(@RequestParam("id_ejemplar") Long id_ejemplar, 

@@ -17,7 +17,7 @@
         <nav>
             <a href="/inicio-admin">INICIO</a>
             <a href="/plantas-admin">PLANTAS</a>
-            <a href="#">FITOSANITARIOS</a>
+            <a href="/fitosanitarios-admin">FITOSANITARIOS</a>
             <a href="#">MENSAJES</a>
         </nav>
         <div class="admin-desplegable">
@@ -43,8 +43,27 @@
                 <button type="submit" class="boton">Añadir Ejemplar</button>
             </div>
         </form>
-    
-        <form th:action="@{/ejemplares-admin/eliminar}" method="post">
+
+		<form th:action="@{/ejemplares-admin/modificar}" method="post">
+			<h2 class="titulos">MODIFICAR EJEMPLAR</h2>
+			<div class="ejemplar">
+			
+				<select id="selectModificarEjemplar" name="id_ejemplar" class="select" required>
+					<option value="">Selecciona el ejemplar a modificar</option>
+					<option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
+				</select>
+
+				<select id="selectNuevaPlantaEjemplar" name="planta" class="select" required>
+					<option value="">Selecciona la nueva planta del ejemplar</option>
+					<option th:each="planta : ${plantas}" th:value="${planta.codigo}" th:text="${planta.nombreComun}"></option>
+				</select>
+
+				<button type="submit" class="boton">Modificar Ejemplar</button>
+			</div>
+		</form>
+
+
+		<form th:action="@{/ejemplares-admin/eliminar}" method="post">
             <h2 class="titulos">ELIMINAR EJEMPLAR</h2>
             <div class="ejemplar">
                 <select id="selectEliminarEjemplar" name="id_ejemplar" class="select" required>
@@ -87,8 +106,8 @@
                 <td th:text="${ejemplar.nombre}"></td>
             </tr>
         </tbody>
-    </table>
-</div>
+     </table>
+    </div>
 
 
 	<footer>

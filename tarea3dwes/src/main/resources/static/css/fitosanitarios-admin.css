@@ -1,0 +1,120 @@
+body {
+    line-height: 1.6;
+    padding: 0;
+    background-color:#4a8c3c;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px auto;
+    width: 50%;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.titulos {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.formulario-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-size: 1rem;
+    color: #555;
+}
+
+.select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+.select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.boton {
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    align-items:center;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #45a049;
+}
+
+.contenedor-listadofitosanitarios {
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-listadofitosanitarios p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.tabla-fitosanitarios {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #6ab04c;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-fitosanitarios th,
+.tabla-fitosanitarios td {
+    padding: 15px;
+    text-align: center;
+}
+
+.tabla-fitosanitarios thead {
+    background: #2ecc71;
+}
+
+.tabla-fitosanitarios tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tabla-fitosanitarios tbody tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
