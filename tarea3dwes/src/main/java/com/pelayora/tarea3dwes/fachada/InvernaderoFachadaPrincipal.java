@@ -70,7 +70,6 @@ public class InvernaderoFachadaPrincipal {
 		if (autenticado) {
 			Optional<Credenciales> credencialesAutenticadas = S_credenciales.buscarPorUsuario(nombreusuario);
 			if (credencialesAutenticadas.isPresent()) {
-				if (credencialesAutenticadas.isPresent()) {
 					Credenciales credenciales = credencialesAutenticadas.get();
 
 					// Verificar si la persona(empleado) asociada es nulo
@@ -99,7 +98,6 @@ public class InvernaderoFachadaPrincipal {
 						facadePersonal.menu();
 					}
 				}
-			}
 		} else {
 			System.out.println("Nombre de usuario o contraseña incorrectos.");
 			iniciosesion();

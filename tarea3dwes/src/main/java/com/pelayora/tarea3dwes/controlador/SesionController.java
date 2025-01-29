@@ -1,21 +1,20 @@
 package com.pelayora.tarea3dwes.controlador;
 
 import java.time.LocalDate;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.pelayora.tarea3dwes.modelo.Cliente;
 import com.pelayora.tarea3dwes.modelo.Credenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 
 @Controller
-@SessionAttributes("nombreUsuario")
+@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente"})
 public class SesionController {
 
 	    @Autowired
@@ -23,6 +22,9 @@ public class SesionController {
 	    
 	    @Autowired
 	    private ServicioCliente S_cliente;
+	    
+	    protected long id_Cliente;
+	    protected long id_Persona;
 
 	    @PostMapping("/login")
 	    public String login(
@@ -32,7 +34,25 @@ public class SesionController {
 	        boolean Usuarioautenticado = S_credenciales.autenticar(new Credenciales(usuario, contrasena));
 
 	        if (Usuarioautenticado) {
+	        	Optional<Credenciales> credencialesAutenticadas = S_credenciales.buscarPorUsuario(usuario);
+	        	
+	        	Credenciales credenciales = credencialesAutenticadas.get();
+
+				if (credenciales.getPersona() != null) {
+					id_Persona = credenciales.getPersona().getId();
+				} else {
+					id_Persona = -1;
+				}
+
+				if (credenciales.getCliente() != null) {
+					id_Cliente = credenciales.getCliente().getId_cliente();
+				} else {
+					id_Cliente = -1;
+				}
+	        	
 	            model.addAttribute("nombreUsuario", usuario);
+	            model.addAttribute("id_Persona", id_Persona);
+	            model.addAttribute("id_Cliente", id_Cliente);
 	            model.addAttribute("Usuario" , Usuarioautenticado);
 	            if ("admin".equalsIgnoreCase(usuario) && "admin".equals(contrasena)) {
 	                return "redirect:/inicio-admin";

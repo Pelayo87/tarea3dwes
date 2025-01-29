@@ -1,5 +1,7 @@
 package com.pelayora.tarea3dwes.controlador;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
+import com.pelayora.tarea3dwes.modelo.Mensaje;
+import com.pelayora.tarea3dwes.modelo.Persona;
 import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
+import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
 @Controller
-@SessionAttributes("nombreUsuario")
+@SessionAttributes({"nombreUsuario", "id_Persona"})
 public class EjemplarController {
 
     @Autowired
@@ -23,19 +28,36 @@ public class EjemplarController {
 
     @Autowired
     private ServicioPlanta S_planta;
+    
+    @Autowired
+    private ServicioMensaje S_mensaje;
 
     @GetMapping("/ejemplares-admin")
-    public String EjemplaresAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
+    public String EjemplaresAdmin(
+            @RequestParam(value = "nombreComun", required = false) String nombreComun,
+            @ModelAttribute("nombreUsuario") String nombreUsuario,
+            Model model) {
+
         model.addAttribute("mensaje", "Gestión de ejemplares (Usuario administrador)");
         model.addAttribute("UsuarioActual", nombreUsuario);
-        model.addAttribute("ejemplares", S_ejemplar.obtenerTodosLosEjemplares());
+
+        if (nombreComun != null && !nombreComun.isEmpty()) {
+            List<Ejemplar> ejemplaresFiltrados = S_ejemplar.obtenerEjemplarPorNombrePlanta(nombreComun);
+            model.addAttribute("ejemplares", ejemplaresFiltrados);
+            model.addAttribute("mensaje", "Filtrado por planta: " + nombreComun);
+        } else {
+            model.addAttribute("ejemplares", S_ejemplar.obtenerTodosLosEjemplares());
+        }
+
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "ejemplares-admin";
     }
 
+
     @PostMapping("/ejemplares-admin")
     public String añadirEjemplar(@RequestParam("planta") String codigoPlanta,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
+            @ModelAttribute("id_Persona") long id_persona,
             Model model) {
 
         Optional<Planta> plantaOpt = S_planta.buscarPlantaPorId(codigoPlanta);
@@ -52,6 +74,18 @@ public class EjemplarController {
         String nombreEjemplar = planta.getCodigo() + "_" + nuevoEjemplar.getId();
         nuevoEjemplar.setNombre(nombreEjemplar);
         S_ejemplar.modificarEjemplar(nuevoEjemplar);
+        
+        Mensaje mensajeInicial = new Mensaje();
+        mensajeInicial.setFechahora(new Date());
+        mensajeInicial.setMensaje("Registro realizado por " + nombreUsuario + " el " + new Date());
+
+        mensajeInicial.setEjemplar(nuevoEjemplar);
+        Persona personaActual = new Persona();
+        personaActual.setId(id_persona);
+        mensajeInicial.setPersona(personaActual);
+
+        // Guardo el mensaje
+        S_mensaje.guardarMensaje(mensajeInicial);
 
         return "redirect:/ejemplares-admin";
     }
@@ -59,15 +93,50 @@ public class EjemplarController {
     @PostMapping("/ejemplares-admin/eliminar")
     public String eliminarEjemplar(@RequestParam("id_ejemplar") Long id_ejemplar, 
                                 @ModelAttribute("nombreUsuario") String nombreUsuario,
+                                @ModelAttribute("id_Persona") long id_persona,
                                 Model model) {
-        Optional<Ejemplar> ejemplar = S_ejemplar.obtenerEjemplarPorId(id_ejemplar);
+        try {
+    	Optional<Ejemplar> ejemplar = S_ejemplar.obtenerEjemplarPorId(id_ejemplar);
         if (!ejemplar.isPresent()) {
             model.addAttribute("error", "Ejemplar no encontrado");
             return "redirect:/ejemplares-admin";
         }
 
         S_ejemplar.eliminarEjemplar(id_ejemplar);
+        
+        Mensaje mensajeBorrarEjemplar = new Mensaje();
+        mensajeBorrarEjemplar.setFechahora(new Date());
+        mensajeBorrarEjemplar.setMensaje("Ejemplar: " + ejemplar + " eliminado por " + nombreUsuario + " el " + new Date());
+        Persona personaActual = new Persona();
+        personaActual.setId(id_persona);
+        mensajeBorrarEjemplar.setPersona(personaActual);
+        
+        }catch(Exception e) {
+        	model.addAttribute("error", "Error al borrar el ejemplar");
+        	return "redirect:/ejemplares-admin";
+        }
+
         return "redirect:/ejemplares-admin";
     }
+    
+    @PostMapping("/ejemplares-admin/filtrarportipoplanta")
+    public String filtrarEjemplarPorTipoDePlanta(
+            @RequestParam("tipoPlanta") String tipoPlanta,
+            @ModelAttribute("nombreUsuario") String nombreUsuario,
+            Model model) {
 
+        List<Ejemplar> ejemplaresTipoPlanta = S_ejemplar.obtenerEjemplarPorPlanta(tipoPlanta);
+
+        if (ejemplaresTipoPlanta.isEmpty()) {
+            model.addAttribute("error", "No hay ejemplares para el tipo de planta seleccionado.");
+        } else {
+            model.addAttribute("ejemplares", ejemplaresTipoPlanta);
+        }
+
+        model.addAttribute("mensaje", "Filtrado por tipo de planta: " + tipoPlanta);
+        model.addAttribute("UsuarioActual", nombreUsuario);
+        model.addAttribute("plantas", S_planta.listarPlantas());
+
+        return "ejemplares-admin";
+    }
 }

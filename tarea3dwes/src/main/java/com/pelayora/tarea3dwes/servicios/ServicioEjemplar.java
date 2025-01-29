@@ -28,4 +28,5 @@ public interface ServicioEjemplar {
     List<Ejemplar> obtenerTodosLosEjemplares();
     void eliminarEjemplar(Long id);
     long contadorEjemplares();
+    List<Ejemplar> obtenerEjemplarPorNombrePlanta(String nombreComun);
 }

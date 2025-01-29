@@ -55,31 +55,43 @@
             </div>
         </form>        
     </div>
-    
 
-    <div class="contenedor-listadoejemplares">
-        <h2 class="titulos">LISTADO DE EJEMPLARES</h2>
-        <p>
-            Gestiona y visualiza todos los ejemplares disponibles en nuestro vivero. Cada ejemplar es único y
-            representa una instancia específica de nuestras plantas, con sus propias características y estado
-            de crecimiento particular.
-        </p>
-        <table class="tabla-ejemplares">
-            <thead>
-                <tr>
-                    <th>Planta</th>
-                    <th>Nombre Ejemplar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="ejemplar : ${ejemplares}">
-                    <td th:text="${ejemplar.planta.nombreComun}"></td>
-                    <td th:text="${ejemplar.nombre}"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <footer>
+
+	<div class="contenedor-listadoejemplares">
+    <h2 class="titulos">LISTADO DE EJEMPLARES</h2>
+    <p>
+        Gestiona y visualiza todos los ejemplares disponibles en nuestro vivero. Cada ejemplar es único y
+        representa una instancia específica de nuestras plantas, con sus propias características y estado
+        de crecimiento particular.
+    </p>
+
+		<form method="GET" action="/ejemplares-admin" class="filtro-formulario">
+			<label for="nombreComun" class="filtro-label">Filtrar por planta (nombre común):</label> 
+				<select name="nombreComun" id="nombreComun" class="filtro-select">
+				<option value="">-- Seleccionar planta --</option>
+				<option th:each="planta : ${plantas}" th:value="${planta.nombreComun}" th:text="${planta.nombreComun}"></option>
+			</select>
+			<button type="submit" class="filtro-button">Filtrar</button>
+		</form>
+
+		<table class="tabla-ejemplares">
+        <thead>
+            <tr>
+                <th>Planta</th>
+                <th>Nombre Ejemplar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ejemplar : ${ejemplares}">
+                <td th:text="${ejemplar.planta.nombreComun}"></td>
+                <td th:text="${ejemplar.nombre}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+	<footer>
         <div class="footer">
             <div class="footer-info">
                 <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
