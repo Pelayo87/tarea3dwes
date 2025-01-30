@@ -17,8 +17,8 @@
         <nav>
             <a href="/inicio-admin">INICIO</a>
             <a href="/plantas-admin">PLANTAS</a>
-            <a href="/fitosanitarios-admin">FITOSANITARIOS</a>
-            <a href="/mensajes-admin">MENSAJES</a>
+            <a href="/ejemplares-admin">EJEMPLARES</a>
+            <a href="/fitosanitarios-admin">FITOSANITARIOS</a>      
         </nav>
         <div class="admin-desplegable">
             <div class="circulo-perfil">
@@ -38,14 +38,35 @@
             Los usuarios pueden consultar sobre ejemplares en específico.
         </p>
 
-            <form method="GET" action="/mensajes-admin" class="filtro-formulario">
-                <label for="nombre" class="filtro-label">Filtrar por persona (nombre):</label> 
-                    <select name="nombre" id="nombre" class="filtro-select">
+        <form method="GET" action="/mensajes-admin" class="filtro-formulario">
+            <div class="filtro-grupo">
+                <label for="nombre" class="filtro-label">Filtrar por persona (nombre):</label>
+                <select name="nombre" id="nombre" class="filtro-select">
                     <option value="">-- Seleccionar persona --</option>
                     <option th:each="persona : ${personas}" th:value="${persona.nombre}" th:text="${persona.nombre}"></option>
                 </select>
-                <button type="submit" class="filtro-button">Filtrar</button>
-            </form>
+            </div>
+        
+            <div class="filtro-grupo">
+                <label for="fechaInicio" class="filtro-label">Fecha desde:</label>
+                <input type="date" name="fechaInicio" id="fechaInicio" class="filtro-input">
+        
+                <label for="fechaFin" class="filtro-label">Fecha hasta:</label>
+                <input type="date" name="fechaFin" id="fechaFin" class="filtro-input">
+            </div>
+        
+            <div class="filtro-grupo">
+                <label for="planta" class="filtro-label">Filtrar por tipo de planta (nombre común):</label>
+                <select name="planta" id="planta" class="filtro-select">
+                    <option value="">-- Seleccionar planta --</option>
+                    <option th:each="planta : ${plantas}" th:value="${planta.nombreComun}" th:text="${planta.nombreComun}">
+                    </option>
+                </select>
+            </div>
+        
+            <button type="submit" class="filtro-button">Filtrar</button>
+        </form>
+        
 
             <table class="tabla-mensajes">
             <thead>
@@ -53,6 +74,7 @@
                     <th>Fecha/Hora</th>
                     <th>Mensaje</th>
                     <th>Persona</th>
+                    <th>Planta</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,6 +82,7 @@
                     <td th:text="${mensaje.fechahora}"></td>
                     <td th:text="${mensaje.mensaje}"></td>
                     <td th:text="${mensaje.persona.nombre}"></td>
+                    <td th:text="${mensaje.ejemplar.planta.nombreComun}"></td>
                 </tr>
             </tbody>
          </table>

@@ -37,6 +37,14 @@ form {
     gap: 8px;
 }
 
+.ejemplar-fitosanitario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+}
+
 label {
     font-size: 1rem;
     color: #555;
@@ -49,6 +57,7 @@ label {
     border: 1px solid #ddd;
     width: 100%;
     transition: border-color 0.3s ease;
+    margin-bottom: 15px;
 }
 
 .select:focus {
@@ -59,13 +68,14 @@ label {
 .boton {
     padding: 12px 20px;
     background-color: #4CAF50;
-    align-items:center;
+    align-items: center;
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 .boton:hover {

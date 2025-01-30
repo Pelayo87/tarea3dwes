@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.modelo.Mensaje;
 
 //--------------------------------------------------------
@@ -27,5 +25,8 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long>{
     
     @Query("SELECT m FROM Mensaje m WHERE m.persona.nombre = :nombre")
     List<Mensaje> findByPersonaNombre(@Param("nombre") String nombre);
+
+    @Query("SELECT m FROM Mensaje m WHERE m.ejemplar.planta.nombreComun = :nombreComun")
+    List<Mensaje> findByTipoPlanta(@Param("nombreComun") String nombreComun);
 
 }

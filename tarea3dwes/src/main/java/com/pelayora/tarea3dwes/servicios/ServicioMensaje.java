@@ -29,4 +29,5 @@ public interface ServicioMensaje {
 	long contadorMensajes();
 	List<Mensaje> obtenerMensajePorNombreEjemplar(String nombre);
 	List<Mensaje> obtenerMensajePorNombrePersona(String nombre);
+	List<Mensaje> obtenerMensajePorTipoPlanta(String nombreComun);
 }

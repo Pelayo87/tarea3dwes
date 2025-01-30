@@ -33,8 +33,9 @@
     </header>
 
 	<form th:action="@{/fitosanitarios-admin}" method="post">
+        <img src="img/aplicarfitosanitario.png" alt="Aplicar Fitosanitario">
 		<h2 class="titulos">APLICAR FITOSANITARIO</h2>
-		<div class="ejemplar">
+		<div class="ejemplar-fitosanitario">
 			<select id="selectAplicarEjemplar" name="ejemplar" class="select" required>
 				<option value="">Selecciona el ejemplar</option>
 				<option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>

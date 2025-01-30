@@ -11,12 +11,9 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.modelo.Mensaje;
 import com.pelayora.tarea3dwes.repositorios.MensajeRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
@@ -112,6 +109,11 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 	@Override
 	public List<Mensaje> obtenerMensajePorNombrePersona(String nombre) {
 		return mensajeRepository.findByPersonaNombre(nombre);
+	}
+
+	@Override
+	public List<Mensaje> obtenerMensajePorTipoPlanta(String nombreComun) {
+		return mensajeRepository.findByTipoPlanta(nombreComun);
 	}
 
 }
