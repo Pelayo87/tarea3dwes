@@ -32,9 +32,9 @@ public class MensajeController {
         model.addAttribute("UsuarioActual", nombreUsuario);
 
         if (nombre != null && !nombre.isEmpty()) {
-            List<Mensaje> mensajesFiltrados = S_mensaje.obtenerMensajePorNombreEjemplar(nombre);
+            List<Mensaje> mensajesFiltrados = S_mensaje.obtenerMensajePorNombrePersona(nombre);
             model.addAttribute("mensajes", mensajesFiltrados);
-            model.addAttribute("mensaje", "Filtrado por ejemplar: " + nombre);
+            model.addAttribute("mensaje", "Filtrado por persona: " + nombre);
         } else {
             model.addAttribute("mensajes", S_mensaje.listarMensajes());
         }

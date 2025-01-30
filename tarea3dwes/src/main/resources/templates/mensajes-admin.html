@@ -39,10 +39,10 @@
         </p>
 
             <form method="GET" action="/mensajes-admin" class="filtro-formulario">
-                <label for="nombre" class="filtro-label">Filtrar por ejemplar (nombre):</label> 
+                <label for="nombre" class="filtro-label">Filtrar por persona (nombre):</label> 
                     <select name="nombre" id="nombre" class="filtro-select">
-                    <option value="">-- Seleccionar ejemplar --</option>
-                    <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.nombre}" th:text="${ejemplar.nombre}"></option>
+                    <option value="">-- Seleccionar persona --</option>
+                    <option th:each="persona : ${personas}" th:value="${persona.nombre}" th:text="${persona.nombre}"></option>
                 </select>
                 <button type="submit" class="filtro-button">Filtrar</button>
             </form>
@@ -52,7 +52,6 @@
                 <tr>
                     <th>Fecha/Hora</th>
                     <th>Mensaje</th>
-                    <th>Ejemplar</th>
                     <th>Persona</th>
                 </tr>
             </thead>
@@ -60,7 +59,6 @@
                 <tr th:each="mensaje : ${mensajes}">
                     <td th:text="${mensaje.fechahora}"></td>
                     <td th:text="${mensaje.mensaje}"></td>
-                    <td th:text="${mensaje.ejemplar.nombre}"></td>
                     <td th:text="${mensaje.persona.nombre}"></td>
                 </tr>
             </tbody>

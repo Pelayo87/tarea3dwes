@@ -109,4 +109,9 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 		return mensajeRepository.findByEjemplarNombre(nombre);
 	}
 
+	@Override
+	public List<Mensaje> obtenerMensajePorNombrePersona(String nombre) {
+		return mensajeRepository.findByPersonaNombre(nombre);
+	}
+
 }

@@ -28,4 +28,5 @@ public interface ServicioMensaje {
 	void eliminarMensaje(long id);
 	long contadorMensajes();
 	List<Mensaje> obtenerMensajePorNombreEjemplar(String nombre);
+	List<Mensaje> obtenerMensajePorNombrePersona(String nombre);
 }

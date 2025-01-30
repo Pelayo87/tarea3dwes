@@ -18,7 +18,7 @@ import jakarta.annotation.PostConstruct;
 public class ServicioCredencialesImpl implements ServicioCredenciales {
 
 	@Autowired
-    private CredencialesRepository credencialesRepository;
+    private CredencialesRepository credenciales_R;
 
     @Autowired
     private PersonaRepository personaRepository;
@@ -27,23 +27,23 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
 
     @Override
     public List<Credenciales> listarCredenciales() {
-        return credencialesRepository.findAll();
+        return credenciales_R.findAll();
     }
 
     @Override
     public Optional<Credenciales> buscarPorId(long id) {
-        return credencialesRepository.findById(id);
+        return credenciales_R.findById(id);
     }
 
     @Override
     public Optional<Credenciales> buscarPorUsuario(String usuario) {
-        return credencialesRepository.findByUsuario(usuario);
+        return credenciales_R.findByUsuario(usuario);
     }
     
     @PostConstruct
     public void crearAdminSiNoExiste() {
         // Verificar si ya existe el administrador
-        Optional<Credenciales> admin = credencialesRepository.findByUsuario("admin");
+        Optional<Credenciales> admin = credenciales_R.findByUsuario("admin");
         if (admin.isEmpty()) {
             // Crear un nuevo usuario administrador
             Persona personaAdmin = new Persona();
@@ -56,7 +56,7 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
             credencialesAdmin.setPassword("admin");
             credencialesAdmin.setPersona(personaAdmin);
 
-            credencialesRepository.save(credencialesAdmin);
+            credenciales_R.save(credencialesAdmin);
             System.out.println("Administrador creado con éxito.");
         } else {
             System.out.println("El usuario administrador ya existe.");
@@ -107,12 +107,12 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
 	        }
 
 	    } while (!passwordCorrecto);*/
-        return credencialesRepository.save(credenciales);
+        return credenciales_R.save(credenciales);
     }
 
     @Override
     public void eliminarCredenciales(long id) {
-        credencialesRepository.deleteById(id);
+        credenciales_R.deleteById(id);
     }
     
     @Override
@@ -121,5 +121,4 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
         return credencialesDB.isPresent() && 
                credencialesDB.get().getPassword().equals(credenciales.getPassword());
     }
-
 }
