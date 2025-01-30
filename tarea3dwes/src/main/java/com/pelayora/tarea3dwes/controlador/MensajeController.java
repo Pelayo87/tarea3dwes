@@ -25,9 +25,6 @@ public class MensajeController {
 
     @Autowired
     private ServicioPlanta S_planta;
-
-    @Autowired
-    private ServicioEjemplar S_ejemplar;
     
     @Autowired
     private ServicioMensaje S_mensaje;
@@ -52,9 +49,7 @@ public class MensajeController {
         List<Mensaje> mensajesFiltrados = S_mensaje.listarMensajes();
 
         if (nombre != null && !nombre.isEmpty()) {
-            mensajesFiltrados = mensajesFiltrados.stream()
-                    .filter(m -> m.getPersona() != null && m.getPersona().getNombre().equals(nombre))
-                    .collect(Collectors.toList());
+            mensajesFiltrados = S_mensaje.obtenerMensajePorNombrePersona(nombre);
             model.addAttribute("mensaje", "Filtrado por persona: " + nombre);
         }
 
@@ -77,11 +72,7 @@ public class MensajeController {
         }
 
         if (planta != null && !planta.isEmpty()) {
-            mensajesFiltrados = mensajesFiltrados.stream()
-                    .filter(m -> m.getEjemplar() != null &&
-                            m.getEjemplar().getPlanta() != null &&
-                            m.getEjemplar().getPlanta().getNombreComun().equals(planta))
-                    .collect(Collectors.toList());
+            mensajesFiltrados = S_mensaje.obtenerMensajePorTipoPlanta(planta);
             model.addAttribute("mensaje", "Filtrado por tipo de planta: " + planta);
         }
 

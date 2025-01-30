@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -9,52 +9,90 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: #333;
+    min-height: 100vh;
 }
 
-form-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-form {
+.titulo-form {
+    color: #2c3e50;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-bottom: 1rem;
+}
+
+.formulario{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
-label {
-    font-weight: bold;
-    color: #34495e;
+.datos-plantas {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.datos-plantas label {
+    display: block;
     margin-bottom: 0.5rem;
+    color: #34495e;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
-input {
-    padding: 0.8rem;
+.datos-plantas input {
+    width: 100%;
+    padding: 12px;
     border: 2px solid #e0e0e0;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    background: #fff;
 }
 
-input:focus {
+.datos-plantas input:focus {
+    border-color: #1add78;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
     outline: none;
-    border-color: #3498db;
+}
+
+.datos-plantas input::placeholder {
+    color: #95a5a6;
 }
 
 .btn-submit {
-    background-color: #2ecc71;
+    background: linear-gradient(45deg, #1ce43a, #18e471);
     color: white;
-    padding: 1rem;
+    padding: 15px 30px;
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    font-weight: bold;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     margin-top: 1rem;
 }
 
 .btn-submit:hover {
-    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(20, 240, 5, 0.4);
+    background: linear-gradient(45deg, #1ce43a, #18e471);
+}
+
+.btn-submit span {
+    letter-spacing: 1px;
 }
