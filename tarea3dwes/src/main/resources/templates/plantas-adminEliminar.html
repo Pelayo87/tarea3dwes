@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/vivero-admin.css">
     <link rel="stylesheet" href="css/plantas-adminFormularios.css">
     <link rel="stylesheet" href="css/footer.css">
+    <script src="js/error-mensaje.js"></script>
 </head>
 <body>
     <header>
@@ -39,11 +40,12 @@
                     <input type="text" id="codigo" name="codigo" th:value="${codigo}" placeholder="Ingresa el código" pattern="[A-Za-z0-9]+" required autocomplete="off">
                 </div>
                 <button type="submit" class="btn-submit">ELIMINAR PLANTA</button>
-                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
             </form>
         </div>
-    </div>   
-    
+    </div> 
+
+    <div id="error" th:text="${error}" style="display: none;"></div>
+    <div id="mensaje" th:text="${success}" style="display: none;"></div>    
 
     <footer>
         <div class="footer">
@@ -64,8 +66,6 @@
           </div>
         </div>
     </footer>
-    
-    <script src="js/error.js"></script>
     
 </body>
 </html>

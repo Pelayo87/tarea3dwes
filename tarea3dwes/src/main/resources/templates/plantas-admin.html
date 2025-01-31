@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/vivero-admin.css">
     <link rel="stylesheet" href="css/plantas-admin.css">
     <link rel="stylesheet" href="css/footer.css">
+    <script src="js/error-mensaje.js"></script>
 </head>
 <body>
     <header>
@@ -52,7 +53,9 @@
                 <a href="/plantas-adminEliminar" class="card-button">Eliminar Planta</a>
             </div>
         </div>
-    
+
+        <div id="error" th:text="${error}" style="display: none;"></div>
+        <div id="mensaje" th:text="${success}" style="display: none;"></div>
 
     <footer>
         <div class="footer">

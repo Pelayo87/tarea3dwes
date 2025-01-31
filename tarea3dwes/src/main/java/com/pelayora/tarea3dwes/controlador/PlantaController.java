@@ -47,8 +47,10 @@ public class PlantaController {
         try {
             S_planta.guardarPlanta(planta);
             redirectAttributes.addFlashAttribute("mensaje", "Planta añadida con éxito.");
+            System.out.println("Planta añadida con éxito.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al añadir la planta: " + e.getMessage());
+            System.err.println("Error al añadir la planta: " + e.getMessage());
         }
         return "redirect:/plantas-admin";
     }
@@ -62,6 +64,7 @@ public class PlantaController {
             
         } catch (Exception e) {
             model.addAttribute("error", "Error al obtener los datos de la planta: " + e.getMessage());
+            System.err.println("Error al obtener los datos de la planta: " + e.getMessage());
             return "redirect:/plantas-admin";
         }
         return "plantas-adminModificar";
@@ -76,8 +79,10 @@ public class PlantaController {
         	if (planta_codigo.isPresent()) {
                 S_planta.modificarPlanta(planta);
                 redirectAttributes.addFlashAttribute("mensaje", "Planta modificada con éxito.");
+                System.out.println("Planta modificada con éxito.");
         	} else {
                 redirectAttributes.addFlashAttribute("error", "Planta no encontrada.");
+                System.err.println("Planta no encontrada.");
             }
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al modificar la planta: " + e.getMessage());
@@ -94,36 +99,39 @@ public class PlantaController {
             
         } catch (Exception e) {
             model.addAttribute("error", "Error al obtener los datos de la planta: " + e.getMessage());
+            System.err.println("Error al obtener los datos de la planta: " + e.getMessage());
             return "redirect:/plantas-admin";
         }
         return "plantas-adminEliminar";
     }
 
     @PostMapping("/plantas-adminEliminar")
-    public String eliminarPlanta(@RequestParam("codigo") String codigo, 
-                                   RedirectAttributes redirectAttributes, Model model) {
+    public String eliminarPlanta(@RequestParam("codigo") String codigo, Model model) {
         try {
             Optional<Planta> planta_codigo = S_planta.buscarPlantaPorId(codigo);
             if (planta_codigo.isPresent()) {
                 List<Ejemplar> ejemplares = S_ejemplar.obtenerEjemplarPorPlanta(codigo);
                 if (!ejemplares.isEmpty()) {
-                    redirectAttributes.addFlashAttribute("error", "La planta tiene ejemplares asociados y no puede ser eliminada.");
+                    model.addAttribute("error", "La planta tiene ejemplares asociados y no puede ser eliminada.");
                     System.err.println("La planta tiene ejemplares asociados y no puede ser eliminada.");
+                    return "plantas-adminEliminar";
                 } else {
                     S_planta.eliminarPlanta(codigo);
-                    redirectAttributes.addFlashAttribute("mensaje", "Planta eliminada con éxito.");
-                    System.out.println("Planta eliminada con éxito.");
+                    model.addAttribute("mensaje", "Planta eliminada con éxito.");
+                    System.out.println("Planta eliminada.");
+                    return "plantas-admin";
                 }
             } else {
-                redirectAttributes.addFlashAttribute("error", "Planta no encontrada.");
+                model.addAttribute("error", "Planta no encontrada.");
                 System.err.println("Planta no encontrada.");
+                return "plantas-adminEliminar";
             }
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al eliminar la planta: " + e.getMessage());
+            model.addAttribute("error", "Error al eliminar la planta: " + e.getMessage());
             System.err.println("Error al eliminar la planta: " + e.getMessage());
+            return "plantas-adminEliminar";
         }
-        return "redirect:/plantas-admin";
     }
-
+    
 
 }
