@@ -25,4 +25,5 @@ public interface ServicioPlanta {
     long contadorPlantas();
     void eliminarPlanta(String codigo);
     boolean tieneEjemplaresAsociados(String codigo);
+    boolean existPlantaPorCodigo(String codigo);
 }

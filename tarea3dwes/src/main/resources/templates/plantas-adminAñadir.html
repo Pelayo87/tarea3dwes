@@ -37,21 +37,21 @@
             <form th:action="@{/plantas-adminAnadir}" th:object="${planta}" method="post" class="formulario">
                 <div class="datos-plantas">
                     <label for="codigo">Código:</label>
-                    <input type="text" id="codigo" name="codigo" th:value="${codigo}" placeholder="Ingresa el código" pattern="[A-Za-z0-9]+" required autocomplete="off">
+                    <input type="text" id="codigo" name="codigo" th:field="*{codigo}" placeholder="Ingresa el código" required autocomplete="off">
+                    <span th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" style="color: red;"></span>
                 </div>
-    
                 <div class="datos-plantas">
                     <label for="nombreComun">Nombre Común:</label>
-                    <input type="text" id="nombreComun" name="nombreComun" th:value="${nombreComun}" placeholder="Ingresa el nombre común" required autocomplete="off">
+                    <input type="text" id="nombreComun" name="nombreComun" th:field="*{nombreComun}" placeholder="Ingresa el nombre común" required autocomplete="off">
+                    <span th:if="${#fields.hasErrors('nombreComun')}" th:errors="*{nombreComun}" style="color: red;"></span>
                 </div>
-    
                 <div class="datos-plantas">
                     <label for="nombreCientifico">Nombre Científico:</label>
-                    <input type="text" id="nombreCientifico" name="nombreCientifico" th:value="${nombreCientifico}" placeholder="Ingresa el nombre científico" required autocomplete="off">
+                    <input type="text" id="nombreCientifico" name="nombreCientifico" th:field="*{nombreCientifico}" placeholder="Ingresa el nombre científico" required autocomplete="off">
+                    <span th:if="${#fields.hasErrors('nombreCientifico')}" th:errors="*{nombreCientifico}" style="color: red;"></span>
                 </div>
-    
                 <button type="submit" class="btn-submit">AÑADIR PLANTA</button>
-            </form>
+            </form>            
         </div>
     </div>
 

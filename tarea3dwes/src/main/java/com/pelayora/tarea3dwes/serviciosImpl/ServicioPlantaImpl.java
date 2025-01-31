@@ -51,9 +51,14 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 		planta_R.deleteById(codigo);
 	}
 	
+	@Override
 	public boolean tieneEjemplaresAsociados(String codigo) {
 	    List<Ejemplar> ejemplares = ejemplar_R.findByPlanta_Codigo(codigo);
 	    return !ejemplares.isEmpty();
 	}
+
+	public boolean existPlantaPorCodigo(String codigo) {
+        return planta_R.existPlantaPorCodigo(codigo);
+    }
 
 }

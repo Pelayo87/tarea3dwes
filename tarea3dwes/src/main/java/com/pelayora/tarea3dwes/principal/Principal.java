@@ -1,18 +1,11 @@
 package com.pelayora.tarea3dwes.principal;
 
 import java.time.LocalDate;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.pelayora.tarea3dwes.fachada.InvernaderoFachadaPrincipal;
-
 @Component
 public class Principal implements CommandLineRunner {
-
-	@Autowired
-	public InvernaderoFachadaPrincipal facade;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -29,7 +22,6 @@ public class Principal implements CommandLineRunner {
 	            String url = "http://localhost:8080/inicio";
 	            System.out.println("\n\t\t\t\033[1;36mLink de Entrada --> " + url + "\033[0m");
 	            
-	            // Intenta abrir el navegador mediante el sistema operativo
 	            ProcessBuilder pb = new ProcessBuilder();
 	            String os = System.getProperty("os.name").toLowerCase();
 	            if (os.contains("win")) {
@@ -47,8 +39,5 @@ public class Principal implements CommandLineRunner {
 	            System.out.println("\n\t\t\t\033[1;31mError al intentar abrir el navegador:\033[0m");
 	            e.printStackTrace();
 	        }
-
-
-		facade.iniciosesion();
 	}
 }

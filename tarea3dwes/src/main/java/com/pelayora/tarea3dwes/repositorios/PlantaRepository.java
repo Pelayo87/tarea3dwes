@@ -16,7 +16,7 @@ import com.pelayora.tarea3dwes.modelo.Planta;
 public interface PlantaRepository extends JpaRepository<Planta, String> {
 	
 	@Query("SELECT COUNT(p) > 0 FROM Planta p WHERE p.codigo = :codigo")
-    boolean existeCodigo(@Param("codigo") String codigo);	
+    boolean existPlantaPorCodigo(@Param("codigo") String codigo);	
 	
 	@Query("SELECT COUNT(p) FROM Planta p")
     long contarPlantas();
