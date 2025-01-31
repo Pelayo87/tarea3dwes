@@ -1,5 +1,6 @@
 package com.pelayora.tarea3dwes.controlador;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.modelo.Planta;
+import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
 @Controller
@@ -21,6 +24,9 @@ public class PlantaController {
 
     @Autowired
     private ServicioPlanta S_planta;
+    
+    @Autowired
+    private ServicioEjemplar S_ejemplar;
 
     @GetMapping("/plantas-admin")
     public String PlantasAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
@@ -95,19 +101,29 @@ public class PlantaController {
 
     @PostMapping("/plantas-adminEliminar")
     public String eliminarPlanta(@RequestParam("codigo") String codigo, 
-                               RedirectAttributes redirectAttributes, Model model) {
+                                   RedirectAttributes redirectAttributes, Model model) {
         try {
             Optional<Planta> planta_codigo = S_planta.buscarPlantaPorId(codigo);
             if (planta_codigo.isPresent()) {
-                S_planta.eliminarPlanta(codigo);
-                redirectAttributes.addFlashAttribute("mensaje", "Planta eliminada con éxito.");
+                List<Ejemplar> ejemplares = S_ejemplar.obtenerEjemplarPorPlanta(codigo);
+                if (!ejemplares.isEmpty()) {
+                    redirectAttributes.addFlashAttribute("error", "La planta tiene ejemplares asociados y no puede ser eliminada.");
+                    System.err.println("La planta tiene ejemplares asociados y no puede ser eliminada.");
+                } else {
+                    S_planta.eliminarPlanta(codigo);
+                    redirectAttributes.addFlashAttribute("mensaje", "Planta eliminada con éxito.");
+                    System.out.println("Planta eliminada con éxito.");
+                }
             } else {
                 redirectAttributes.addFlashAttribute("error", "Planta no encontrada.");
+                System.err.println("Planta no encontrada.");
             }
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar la planta: " + e.getMessage());
+            System.err.println("Error al eliminar la planta: " + e.getMessage());
         }
         return "redirect:/plantas-admin";
     }
+
 
 }

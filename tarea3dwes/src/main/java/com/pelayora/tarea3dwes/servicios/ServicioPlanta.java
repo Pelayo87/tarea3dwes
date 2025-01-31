@@ -24,4 +24,5 @@ public interface ServicioPlanta {
     List<Planta> listarPlantas();
     long contadorPlantas();
     void eliminarPlanta(String codigo);
+    boolean tieneEjemplaresAsociados(String codigo);
 }

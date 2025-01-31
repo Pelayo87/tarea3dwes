@@ -5,7 +5,10 @@ import java.util.Optional;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.modelo.Planta;
+import com.pelayora.tarea3dwes.repositorios.EjemplarRepository;
 import com.pelayora.tarea3dwes.repositorios.PlantaRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
@@ -13,6 +16,9 @@ import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 public class ServicioPlantaImpl implements ServicioPlanta {
 	@Autowired
 	private PlantaRepository planta_R;
+	
+	@Autowired
+	private EjemplarRepository ejemplar_R;
 
 	Scanner sc = new Scanner(System.in);
 
@@ -44,4 +50,10 @@ public class ServicioPlantaImpl implements ServicioPlanta {
 	public void eliminarPlanta(String codigo) {		
 		planta_R.deleteById(codigo);
 	}
+	
+	public boolean tieneEjemplaresAsociados(String codigo) {
+	    List<Ejemplar> ejemplares = ejemplar_R.findByPlanta_Codigo(codigo);
+	    return !ejemplares.isEmpty();
+	}
+
 }
