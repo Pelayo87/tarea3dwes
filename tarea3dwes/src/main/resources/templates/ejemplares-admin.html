@@ -13,21 +13,25 @@
 
 <body>
     <header>
-        <div class="logo">VIVERO CIFP LA LABORAL</div>
+        <div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
         <nav>
-            <a href="/inicio-admin">INICIO</a>
-            <a href="/plantas-admin">PLANTAS</a>
-            <a href="/fitosanitarios-admin">FITOSANITARIOS</a>
-            <a href="/mensajes-admin">MENSAJES</a>
+            <a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a>
+            <a href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a>
+            <a href="/fitosanitarios-admin" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
+            <a href="/mensajes-admin" th:text="#{nav.mensajes}">MENSAJES</a>
         </nav>
+        <nav>
+			<a href="?lang=es">Español</a>
+			<a href="?lang=en">English</a>
+		</nav>
         <div class="admin-desplegable">
             <div class="circulo-perfil">
                 <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
             </div>
             <div class="admin-desplegable-informacion">
-                <strong>ADMIN</strong>
-                <a href="/inicio">Cerrar sesión</a>
-                <a href="/anadirpersonal">Añadir personal</a>
+                <strong th:text="#{admin.dropdown.admin}">ADMIN</strong>
+                <a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a>
+                <a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Añadir personal</a>
             </div>
         </div>
     </header>
@@ -145,25 +149,26 @@
             </tbody>
          </table>
         </div>
-
-
+        
 	<footer>
         <div class="footer">
-            <div class="footer-info">
-                <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
-                <p class="telefono">+34 634 23 36 87</p>
-                <p class="email">contacto@viverolaboral.com</p>
-            </div>
-            <div class="horario">
-                <h4>Horario</h4>
-                <p>Lunes a Viernes: 9:00 - 20:00</p>
-                <p>Sábados: 10:00 - 14:00</p>
-            </div>
-            <div class="redes-sociales">
-                <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
-                <a href="#"><img src="img/x.png" alt="X" /></a>
-                <a href="#"><img src="img/instagram.png" alt="Instagram" /></a>
-            </div>
+          <div class="footer-info">
+              <p class="direccion" th:text="#{footer.direccion}">
+                C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias
+              </p>
+              <p class="telefono" th:text="#{footer.telefono}">+34 634 23 36 87</p>
+              <p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
+          </div>
+          <div class="horario">
+              <h4 th:text="#{footer.horario.titulo}">Horario</h4>
+              <p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes: 9:00 - 20:00</p>
+              <p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
+          </div>
+          <div class="redes-sociales">
+            <a href="#"><img src="img/facebook.png" th:alt="#{social.facebook}" alt="Facebook" /></a>
+            <a href="#"><img src="img/x.png" th:alt="#{social.x}" alt="X" /></a>
+            <a href="#"><img src="img/instagram.png" th:alt="#{social.instagram}" alt="Instagram" /></a>
+          </div>
         </div>
     </footer>
     

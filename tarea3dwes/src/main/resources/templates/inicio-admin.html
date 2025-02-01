@@ -1,132 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador Vivero CIFP La Laboral</title>
-    <link rel="stylesheet" href="css/vivero.css">
-    <link rel="stylesheet" href="css/vivero-admin.css">
-    <link rel="stylesheet" href="css/inicio-admin.css">
-    <link rel="stylesheet" href="css/footer.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administrador Vivero CIFP La Laboral</title>
+<link rel="stylesheet" href="css/vivero.css">
+<link rel="stylesheet" href="css/vivero-admin.css">
+<link rel="stylesheet" href="css/inicio-admin.css">
+<link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
-    <header>
-        <div class="logo">VIVERO CIFP LA LABORAL</div>
-        <nav>
-            <a href="/inicio-admin">INICIO</a>
-            <a href="/plantas-admin">PLANTAS</a>
-            <a href="/ejemplares-admin">EJEMPLARES</a>
-            <a href="/fitosanitarios-admin">FITOSANITARIOS</a>
-            <a href="/mensajes-admin">MENSAJES</a>
-        </nav>
-        <div class="admin-desplegable">
-            <div class="circulo-perfil">
-                <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
-            </div>
-            <div class="admin-desplegable-informacion">
-                <strong>ADMIN</strong>
-                <a href="/inicio">Cerrar sesión</a>
-                <a href="/anadirpersonal">Añadir personal</a>
-            </div>
-        </div>
-    </header>
+	<header>
+		<div class="logo" th:text="#{header.logo}">VIVERO CIFP LA
+			LABORAL</div>
+		<nav>
+			<a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a> <a
+				href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a> <a
+				href="/ejemplares-admin" th:text="#{nav.ejemplares}">EJEMPLARES</a>
+			<a href="/fitosanitarios-admin" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
+			<a href="/mensajes-admin" th:text="#{nav.mensajes}">MENSAJES</a>
+		</nav>
+		<nav>
+			<a href="?lang=es">Español</a> <a href="?lang=en">English</a>
+		</nav>
+		<div class="admin-desplegable">
+			<div class="circulo-perfil">
+				<img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
+			</div>
+			<div class="admin-desplegable-informacion">
+				<strong th:text="#{admin.dropdown.admin}">ADMIN</strong> <a
+					href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a>
+				<a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Añadir
+					personal</a>
+			</div>
+		</div>
+	</header>
 
-    <main class="contenido-principal">
-        <section class="bienvenida">
-            <h1>Panel de Administración</h1>
-            <p>Bienvenido al sistema de gestión del Vivero CIFP La Laboral</p>
-        </section>
+	<main class="contenido-principal">
+		<section class="bienvenida">
+			<h1 th:text="#{admin.panel.title}">Panel de Administración</h1>
+			<p th:text="#{admin.panel.welcome}">Bienvenido al sistema de
+				gestión del Vivero CIFP La Laboral</p>
+		</section>
 
-        <section class="estadisticas">
-            <h2>Resumen General</h2>
-            <div class="tarjetas-estadisticas">
-                <div class="tarjeta">
-                    <h3>Total Plantas</h3>
-                    <p class="numero" th:text="${totalPlantas}"></p>
-                </div>
-                <div class="tarjeta">
-                    <h3>Ejemplares</h3>
-                    <p class="numero" th:text="${totalEjemplares}"></p>
-                </div>
-                <div class="tarjeta">
-                    <h3>Fitosanitarios</h3>
-                    <p class="numero" th:text="${totalFitosanitarios}"></p>
-                </div>
-                <div class="tarjeta">
-                    <h3>Mensajes</h3>
-                    <p class="numero" th:text="${totalMensajes}"></p>
-                </div>
-            </div>
-        </section>
+		<section class="estadisticas">
+			<h2 th:text="#{admin.stats.title}">Resumen General</h2>
+			<div class="tarjetas-estadisticas">
+				<div class="tarjeta">
+					<h3 th:text="#{admin.stats.totalPlants}">Total Plantas</h3>
+					<p class="numero" th:text="${totalPlantas}"></p>
+				</div>
+				<div class="tarjeta">
+					<h3 th:text="#{admin.stats.specimens}">Ejemplares</h3>
+					<p class="numero" th:text="${totalEjemplares}"></p>
+				</div>
+				<div class="tarjeta">
+					<h3 th:text="#{admin.stats.phytosanitaries}">Fitosanitarios</h3>
+					<p class="numero" th:text="${totalFitosanitarios}"></p>
+				</div>
+				<div class="tarjeta">
+					<h3 th:text="#{admin.stats.messages}">Mensajes</h3>
+					<p class="numero" th:text="${totalMensajes}"></p>
+				</div>
+			</div>
+		</section>
 
-        <section class="acciones-rapidas">
-            <h2>Acciones Rápidas Con Plantas</h2>
-            <div class="botones-accion">
-                <a href="/plantas-adminAnadir" class="boton">Añadir Nueva Planta</a>
-                <a href="/plantas-adminModificar" class="boton">Modificar Planta</a>
-                <a href="/plantas-adminEliminar" class="boton">Eliminar Planta</a>
-            </div>
-        </section>
+		<section class="acciones-rapidas">
+			<h2 th:text="#{admin.quickActions.title}">Acciones Rápidas Con
+				Plantas</h2>
+			<div class="botones-accion">
+				<a href="/plantas-adminAnadir" class="boton"
+					th:text="#{admin.quickActions.addPlant}">Añadir Nueva Planta</a> <a
+					href="/plantas-adminModificar" class="boton"
+					th:text="#{admin.quickActions.modifyPlant}">Modificar Planta</a> <a
+					href="/plantas-adminEliminar" class="boton"
+					th:text="#{admin.quickActions.deletePlant}">Eliminar Planta</a>
+			</div>
+		</section>
 
-     <div class="contenedor-principal">
-        <section class="informacion-adicional">
-            <h2>Información Importante</h2>
-            <div class="lista-info">
-                <div class="info-item">
-                    <h3>Gestión del Vivero</h3>
-                    <p>Desde este panel podrás gestionar todo el inventario de plantas, ejemplares, fitosanitarios y mensajes del vivero.</p>
-                </div>
-                <div class="info-item">
-                    <h3>Mantenimiento</h3>
-                    <p>Es importante mantener actualizado el inventario y la información sobre las plantas para un correcto funcionamiento.</p>
-                </div>
-            </div>
-        </section> 
-        
-        <div class="contenedor-listadoplantas">
-            <h2>Plantas</h2>
-            <p>
-                En nuestro vivero encontrarás una amplia variedad de plantas, desde especies exóticas hasta las más
-                nativas.
-                Ideales para transformar tu hogar o jardín en un espacio lleno de vida y color.
-            </p>
-		<table class="tabla-plantas">
-			<thead>
-				<tr>
-					<th>Nombre Común</th>
-					<th>Nombre Científico</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="planta : ${plantas}">
-					<td th:text="${planta.nombreComun}"></td>
-					<td th:text="${planta.nombreCientifico}"></td>
-				</tr>
-			</tbody>
-		</table>
-	  </div>  
-	 </div> 
-   </main>
+		<div class="contenedor-principal">
+			<section class="informacion-adicional">
+				<h2 th:text="#{admin.info.title}">Información Importante</h2>
+				<div class="lista-info">
+					<div class="info-item">
+						<h3 th:text="#{admin.info.managementTitle}">Gestión del
+							Vivero</h3>
+						<p th:text="#{admin.info.managementDescription}">Desde este
+							panel podrás gestionar todo el inventario de plantas, ejemplares,
+							fitosanitarios y mensajes del vivero.</p>
+					</div>
+					<div class="info-item">
+						<h3 th:text="#{admin.info.maintenanceTitle}">Mantenimiento</h3>
+						<p th:text="#{admin.info.maintenanceDescription}">Es
+							importante mantener actualizado el inventario y la información
+							sobre las plantas para un correcto funcionamiento.</p>
+					</div>
+				</div>
+			</section>
 
-    <footer>
-        <div class="footer">
-          <div class="footer-info">
-              <p class="direccion">C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
-              <p class="telefono">+34 634 23 36 87</p>
-              <p class="email">contacto@viverolaboral.com</p>
-          </div>
-          <div class="horario">
-              <h4>Horario</h4>
-              <p>Lunes a Viernes: 9:00 - 20:00</p>
-              <p>Sábados: 10:00 - 14:00</p>
-          </div>
-          <div class="redes-sociales">
-            <a href="#"><img src="img/facebook.png" alt="Facebook" /></a>
-            <a href="#"><img src="img/x.png" alt="X" /></a>
-            <a href="#"><img src="img/instagram.png" alt="Instagram" /></a>
-          </div>
-        </div>
-    </footer>
-    
+			<div class="contenedor-listadoplantas">
+				<h2 th:text="#{plantas.titulo}">Plantas</h2>
+				<p th:text="#{plantas.descripcion}">En nuestro vivero
+					encontrarás una amplia variedad de plantas, desde especies exóticas
+					hasta las más nativas. Ideales para transformar tu hogar o jardín
+					en un espacio lleno de vida y color.</p>
+				<table class="tabla-plantas">
+					<thead>
+						<tr>
+							<th th:text="#{tabla.columna.nombreComun}">Nombre Común</th>
+							<th th:text="#{tabla.columna.nombreCientifico}">Nombre
+								Científico</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="planta : ${plantas}">
+							<td th:text="${planta.nombreComun}"></td>
+							<td th:text="${planta.nombreCientifico}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<div class="footer">
+			<div class="footer-info">
+				<p class="direccion" th:text="#{footer.direccion}">C. Luis Moya
+					Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
+				<p class="telefono" th:text="#{footer.telefono}">+34 634 23 36
+					87</p>
+				<p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
+			</div>
+			<div class="horario">
+				<h4 th:text="#{footer.horario.titulo}">Horario</h4>
+				<p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes:
+					9:00 - 20:00</p>
+				<p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
+			</div>
+			<div class="redes-sociales">
+				<a href="#"><img src="img/facebook.png"
+					th:alt="#{social.facebook}" alt="Facebook" /></a> <a href="#"><img
+					src="img/x.png" th:alt="#{social.x}" alt="X" /></a> <a href="#"><img
+					src="img/instagram.png" th:alt="#{social.instagram}"
+					alt="Instagram" /></a>
+			</div>
+		</div>
+	</footer>
+
 </body>
 </html>
