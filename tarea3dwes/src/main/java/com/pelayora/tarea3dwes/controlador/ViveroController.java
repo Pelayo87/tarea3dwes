@@ -36,15 +36,11 @@ public class ViveroController {
         return "inicio";
     }
 	
-	@GetMapping("/iniciosesion-registrarse")
-	public String mostrarFormulario(@RequestParam(value = "action", required = false) String action, Model model) {
-	    if ("registro".equals(action)) {
-	        model.addAttribute("mostrarRegistro", true);
-	    } else {
-	        model.addAttribute("mostrarRegistro", false);
-	    }
-	    return "iniciosesion-registrarse";
-	}
+    @GetMapping("/iniciosesion-registrarse")
+    public String mostrarFormulario(@RequestParam(value = "action", required = false) String action, Model model) {
+        model.addAttribute("mostrarRegistro", "registro".equals(action));
+        return "iniciosesion-registrarse";
+    }
 
     @GetMapping("/inicio-admin")
     public String inicioViveroAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
@@ -83,6 +79,5 @@ public class ViveroController {
             return String.valueOf(nombre.charAt(0)).toUpperCase();
         }
         return "";
-    }
-	
+    }	
 }

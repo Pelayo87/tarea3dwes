@@ -61,6 +61,7 @@ public class SesionController {
 	            }
 	        } else {
 	            model.addAttribute("error", "Usuario o contraseña incorrectos.");
+				System.err.println("Usuario o contraseña incorrectos.");
 	            return "iniciosesion-registrarse";
 	        }
 	    }
