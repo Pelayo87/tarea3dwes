@@ -22,29 +22,31 @@
         <nav>
 			<a href="?lang=es">Español</a>
 			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
 		</nav>
         <div class="admin-desplegable">
             <div class="circulo-perfil">
                 <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
             </div>
             <div class="admin-desplegable-informacion">
-                <strong th:text="#{admin.dropdown.admin}">ADMIN</strong>
-                <a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a>
-                <a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Añadir personal</a>
-            </div>
+				<strong th:text="#{admin.dropdown.admin}">ADMIN</strong> <a
+					href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+				<a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+			</div>
         </div>
     </header>
 
     <div class="container">
-        <h1 class="titulo-form">ELIMINAR PLANTA</h1>
+        <h1 class="titulo-form" th:text="#{admin.eliminarPlanta}">ELIMINAR PLANTA</h1>
         <div class="form-container">
             <form th:action="@{/plantas-adminEliminar}" th:object="${planta}" method="post" class="formulario">
                 <div class="datos-plantas">
-                    <label for="codigo">Código:</label>
+                    <label for="codigo" th:text="#{plantas.codigo}">Código:</label>
                     <input type="text" id="codigo" name="codigo" th:value="${codigo}" placeholder="Ingresa el código" pattern="[A-Za-z0-9]+" required autocomplete="off">
                     
                 </div>
-                <button type="submit" class="btn-submit">ELIMINAR PLANTA</button>
+                <button type="submit" class="btn-submit" th:text="#{admin.eliminarPlanta}">ELIMINAR PLANTA</button>
             </form>
         </div>
     </div> 
@@ -56,7 +58,7 @@
         <div class="footer">
           <div class="footer-info">
               <p class="direccion" th:text="#{footer.direccion}">
-                C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias
+                C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijon, Asturias
               </p>
               <p class="telefono" th:text="#{footer.telefono}">+34 634 23 36 87</p>
               <p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>

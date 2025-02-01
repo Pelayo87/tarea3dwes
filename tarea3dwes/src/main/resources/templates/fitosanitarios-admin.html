@@ -23,41 +23,43 @@
         <nav>
 			<a href="?lang=es">Español</a>
 			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
 		</nav>
         <div class="admin-desplegable">
             <div class="circulo-perfil">
                 <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
             </div>
             <div class="admin-desplegable-informacion">
-                <strong th:text="#{admin.dropdown.admin}">ADMIN</strong>
-                <a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a>
-                <a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Añadir personal</a>
-            </div>
+				<strong th:text="#{admin.dropdown.admin}">ADMIN</strong> <a
+					href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+				<a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+			</div>
         </div>
     </header>
 
 	<form th:action="@{/fitosanitarios-admin}" method="post">
         <img src="img/aplicarfitosanitario.png" alt="Aplicar Fitosanitario">
-		<h2 class="titulos">APLICAR FITOSANITARIO</h2>
+		<h2 class="titulos" th:text="#{fitosanitario.aplicar}">APLICAR FITOSANITARIO</h2>
 		<div class="ejemplar-fitosanitario">
 			<select id="selectAplicarEjemplar" name="ejemplar" class="select" required>
-				<option value="">Selecciona el ejemplar</option>
+				<option value="" th:text="#{fitosanitarioAplicar.seleccionar.ejemplar}">Selecciona el ejemplar</option>
 				<option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
 			</select>
 
 			<select id="selectAplicarFitosanitario" name="fitosanitario" class="select" required>
-				<option value="">Selecciona el fitosanitario</option>
+				<option value="" th:text="#{fitosanitarioAplicar.seleccionar.fitosanitario}">Selecciona el fitosanitario</option>
 				<option th:each="fitosanitario : ${fitosanitarios}" th:value="${fitosanitario.id_fitosanitario}" th:text="${fitosanitario.nombre}"></option>
 			</select>
 
-			<button type="submit" class="boton">Aplicar Fitosanitario</button>
+			<button type="submit" class="boton" th:text="#{fitosanitario.aplicar}">Aplicar Fitosanitario</button>
 		</div>
 	</form>
 
 
 	<div class="contenedor-listadofitosanitarios">
-	<h2 class="titulos">LISTADO DE FITOSANITARIOS</h2>
-	<p>Gestiona y visualiza todos los fitosanitarios disponibles en nuestro vivero. Cada fitosanitario está diseñado para tratar las
+	<h2 class="titulos" th:text="#{fitosanitario.listado.titulo}">LISTADO DE FITOSANITARIOS</h2>
+	<p th:text="#{fitosanitario.listado.descripcion}">Gestiona y visualiza todos los fitosanitarios disponibles en nuestro vivero. Cada fitosanitario está diseñado para tratar las
 	   necesidades específicas de nuestras plantas, asegurando su salud y protección contra plagas y enfermedades. Cada uno tiene
 	   características particulares en cuanto a su composición, uso y aplicación.
 	</p>
@@ -65,8 +67,8 @@
 		<table class="tabla-fitosanitarios">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Marca</th>
+                <th th:text="#{fitosanitario.nombre}">Nombre</th>
+                <th th:text="#{fitosanitario.marca}">Marca</th>
             </tr>
         </thead>
         <tbody>

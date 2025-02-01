@@ -23,16 +23,18 @@
         <nav>
 			<a href="?lang=es">Español</a>
 			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
 		</nav>
         <div class="admin-desplegable">
             <div class="circulo-perfil">
                 <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
             </div>
             <div class="admin-desplegable-informacion">
-                <strong th:text="#{admin.dropdown.admin}">ADMIN</strong>
-                <a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a>
-                <a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Añadir personal</a>
-            </div>
+				<strong th:text="#{admin.dropdown.admin}">ADMIN</strong> <a
+					href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+				<a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+			</div>
         </div>
     </header>
 
@@ -40,13 +42,13 @@
         <div class="card">
             <form th:action="@{/ejemplares-admin}" method="post">
                 <img src="img/anadir-ejemplar.png" alt="Añadir ejemplar">
-                <h2 class="titulos">AÑADIR EJEMPLAR</h2>
+                <h2 class="titulos" th:text="#{admin.anadirEjemplar}">AÑADIR EJEMPLAR</h2>
                 <div class="ejemplar">
                     <select id="selectAnadirEjemplar" name="planta" class="select" required>
-                        <option value="">Selecciona una planta</option>
+                        <option value="" th:text="#{ejemplarAnadir.seleccionar.planta}">Selecciona una planta</option>
                         <option th:each="planta : ${plantas}" th:value="${planta.codigo}" th:text="${planta.nombreComun}"></option>
                     </select>
-                    <button type="submit" class="boton">Añadir Ejemplar</button>
+                    <button type="submit" class="boton" th:text="#{admin.anadirEjemplar}">Añadir Ejemplar</button>
                 </div>
             </form>
         </div>
@@ -54,17 +56,17 @@
         <div class="card">
             <form th:action="@{/ejemplares-admin/modificar}" method="post">
                 <img src="img/modificar-ejemplar.png" alt="Modificar ejemplar">
-                <h2 class="titulos">MODIFICAR EJEMPLAR</h2>
+                <h2 class="titulos" th:text="#{admin.modificarEjemplar}">MODIFICAR EJEMPLAR</h2>
                 <div class="ejemplar">
                     <select id="selectModificarEjemplar" name="id_ejemplar" class="select" required>
-                        <option value="">Selecciona el ejemplar a modificar</option>
+                        <option value="" th:text="#{ejemplarModificar.seleccionar.ejemplar}">Selecciona el ejemplar a modificar</option>
                         <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
                     </select>
                     <select id="selectNuevaPlantaEjemplar" name="planta" class="select" required>
-                        <option value="">Selecciona la nueva planta del ejemplar</option>
+                        <option value="" th:text="#{ejemplarModificar.seleccionar.planta}">Selecciona la nueva planta del ejemplar</option>
                         <option th:each="planta : ${plantas}" th:value="${planta.codigo}" th:text="${planta.nombreComun}"></option>
                     </select>
-                    <button type="submit" class="boton">Modificar Ejemplar</button>
+                    <button type="submit" class="boton" th:text="#{admin.modificarEjemplar}">Modificar Ejemplar</button>
                 </div>
             </form>
         </div>
@@ -72,40 +74,40 @@
         <div class="card">
             <form th:action="@{/ejemplares-admin/eliminar}" method="post">
                 <img src="img/eliminar-ejemplar.png" alt="Eliminar ejemplar">
-                <h2 class="titulos">ELIMINAR EJEMPLAR</h2>
+                <h2 class="titulos" th:text="#{admin.eliminarEjemplar}">ELIMINAR EJEMPLAR</h2>
                 <div class="ejemplar">
                     <select id="selectEliminarEjemplar" name="id_ejemplar" class="select" required>
-                        <option value="">Selecciona un ejemplar</option>
+                        <option value="" th:text="#{ejemplarEliminar.seleccionar.ejemplar}">Selecciona un ejemplar</option>
                         <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
                     </select>
-                    <button type="submit" class="boton">Eliminar Ejemplar</button>
+                    <button type="submit" class="boton" th:text="#{admin.eliminarEjemplar}">Eliminar Ejemplar</button>
                 </div>
             </form>
         </div>
     </div>    
 
 	<div class="contenedor-listado">
-    <h2 class="titulos">LISTADO DE EJEMPLARES</h2>
-    <p>
+    <h2 class="titulos" th:text="#{listado.ejemplares.titulo}">LISTADO DE EJEMPLARES</h2>
+    <p th:text="#{listado.ejemplares.descripcion}">
         Gestiona y visualiza todos los ejemplares disponibles en nuestro vivero. Cada ejemplar es único y
         representa una instancia específica de nuestras plantas, con sus propias características y estado
         de crecimiento particular.
     </p>
 
 		<form method="GET" action="/ejemplares-admin" class="filtro-formulario">
-			<label for="nombreComun" class="filtro-label">Filtrar por planta (nombre común):</label> 
+			<label for="nombreComun" class="filtro-label" th:text="#{filtrar.planta}">Filtrar por planta (nombre común):</label> 
 				<select name="nombreComun" id="nombreComun" class="filtro-select">
-				<option value="">-- Seleccionar planta --</option>
+				<option value="" th:text="#{seleccionar.planta}">-- Seleccionar planta --</option>
 				<option th:each="planta : ${plantas}" th:value="${planta.nombreComun}" th:text="${planta.nombreComun}"></option>
 			</select>
-			<button type="submit" class="filtro-button">Filtrar</button>
+			<button type="submit" class="filtro-button" th:text="#{ejemplares.filtrar}">Filtrar</button>
 		</form>
 
 		<table class="tabla-ejemplares">
         <thead>
             <tr>
-                <th>Planta</th>
-                <th>Nombre Ejemplar</th>
+                <th th:text="#{ejemplares.planta}">Planta</th>
+                <th th:text="#{ejemplares.nombre}">Nombre Ejemplar</th>
             </tr>
         </thead>
         <tbody>
@@ -118,26 +120,26 @@
     </div>
 
     <div class="contenedor-listado">
-        <h2 class="titulos">LISTADO DE MENSAJES DE EJEMPLARES</h2>
-        <p>Aquí puedes ver y gestionar todos los mensajes relacionados con los ejemplares del vivero. 
+        <h2 class="titulos" th:text="#{listado.mensajesejemplares.titulo}">LISTADO DE MENSAJES DE EJEMPLARES</h2>
+        <p th:text="#{listado.mensajesejemplares.descripcion}">Aquí puedes ver y gestionar todos los mensajes relacionados con los ejemplares del vivero. 
             Los usuarios pueden consultar sobre ejemplares en específico.
         </p>
 
             <form method="GET" action="/ejemplares-admin" class="filtro-formulario">
-                <label for="nombre" class="filtro-label">Filtrar por ejemplar (nombre):</label> 
+                <label for="nombre" class="filtro-label" th:text="#{filtrar.ejemplar}">Filtrar por ejemplar (nombre):</label> 
                     <select name="nombre" id="nombre" class="filtro-select">
-                    <option value="">-- Seleccionar ejemplar --</option>
+                    <option value="" th:text="#{seleccionar.ejemplar}">-- Seleccionar ejemplar --</option>
                     <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.nombre}" th:text="${ejemplar.nombre}"></option>
                 </select>
-                <button type="submit" class="filtro-button">Filtrar</button>
+                <button type="submit" class="filtro-button" th:text="#{ejemplares.filtrar}">Filtrar</button>
             </form>
 
             <table class="tabla-mensajesejemplares">
             <thead>
                 <tr>
-                    <th>Fecha/Hora</th>
-                    <th>Mensaje</th>
-                    <th>Ejemplar</th>
+                    <th th:text="#{mensajes.ejemplares.fechahora}">Fecha/Hora</th>
+                    <th th:text="#{mensajes.ejemplares.mensaje}">Mensaje</th>
+                    <th th:text="#{mensajes.ejemplares.ejemplar}">Ejemplar</th>
                 </tr>
             </thead>
             <tbody>

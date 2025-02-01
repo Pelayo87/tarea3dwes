@@ -23,62 +23,64 @@
         <nav>
 			<a href="?lang=es">Español</a>
 			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
 		</nav>
         <div class="admin-desplegable">
             <div class="circulo-perfil">
                 <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
             </div>
             <div class="admin-desplegable-informacion">
-                <strong th:text="#{admin.dropdown.admin}">ADMIN</strong>
-                <a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a>
-                <a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Añadir personal</a>
-            </div>
+				<strong th:text="#{admin.dropdown.admin}">ADMIN</strong> <a
+					href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+				<a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+			</div>
         </div>
     </header>
 
     <div class="contenedor-listado">
-        <h2 class="titulos">LISTADO DE MENSAJES/ANOTACIONES</h2>
-        <p>Aquí puedes ver y gestionar todos los mensajes relacionados con los ejemplares del vivero. 
-            Los usuarios pueden consultar sobre ejemplares en específico.
+        <h2 class="titulos" th:text="#{mensajes.listado.titulo}">LISTADO DE MENSAJES/ANOTACIONES</h2>
+        <p th:text="#{mensajes.listado.descripcion}">Aqui puedes ver y gestionar todos los mensajes relacionados con los ejemplares del vivero. 
+            Los usuarios pueden consultar sobre ejemplares en especifico.
         </p>
 
         <form method="GET" action="/mensajes-admin" class="filtro-formulario">
             <div class="filtro-grupo">
-                <label for="nombre" class="filtro-label">Filtrar por persona (nombre):</label>
+                <label for="nombre" class="filtro-label" th:text="#{filtrar.persona}">Filtrar por persona (nombre):</label>
                 <select name="nombre" id="nombre" class="filtro-select">
-                    <option value="">-- Seleccionar persona --</option>
+                    <option value="" th:text="#{seleccionar.persona}">-- Seleccionar persona --</option>
                     <option th:each="persona : ${personas}" th:value="${persona.nombre}" th:text="${persona.nombre}"></option>
                 </select>
             </div>
         
             <div class="filtro-grupo">
-                <label for="fechaInicio" class="filtro-label">Fecha desde:</label>
+                <label for="fechaInicio" class="filtro-label" th:text="#{fechadesde}">Fecha desde:</label>
                 <input type="date" name="fechaInicio" id="fechaInicio" class="filtro-input">
         
-                <label for="fechaFin" class="filtro-label">Fecha hasta:</label>
+                <label for="fechaFin" class="filtro-label" th:text="#{fechahasta}">Fecha hasta:</label>
                 <input type="date" name="fechaFin" id="fechaFin" class="filtro-input">
             </div>
         
             <div class="filtro-grupo">
-                <label for="planta" class="filtro-label">Filtrar por tipo de planta (nombre común):</label>
+                <label for="planta" class="filtro-label" th:text="#{filtrar.planta}">Filtrar por planta (nombre común):</label>
                 <select name="planta" id="planta" class="filtro-select">
-                    <option value="">-- Seleccionar planta --</option>
+                    <option value="" th:text="#{seleccionar.planta}">-- Seleccionar planta --</option>
                     <option th:each="planta : ${plantas}" th:value="${planta.nombreComun}" th:text="${planta.nombreComun}">
                     </option>
                 </select>
             </div>
         
-            <button type="submit" class="filtro-button">Filtrar</button>
+            <button type="submit" class="filtro-button" th:text="#{filtrar}">Filtrar</button>
         </form>
         
 
             <table class="tabla-mensajes">
             <thead>
                 <tr>
-                    <th>Fecha/Hora</th>
-                    <th>Mensaje</th>
-                    <th>Persona</th>
-                    <th>Planta</th>
+                    <th th:text="#{mensajes.fechahora}">Fecha/Hora</th>
+                    <th th:text="#{mensajes.mensaje}">Mensaje</th>
+                    <th th:text="#{mensajes.persona}">Persona</th>
+                    <th th:text="#{mensajes.planta}">Planta</th>
                 </tr>
             </thead>
             <tbody>

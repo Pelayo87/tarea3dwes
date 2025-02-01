@@ -28,6 +28,8 @@
 		<nav>
 			<a href="?lang=es">Español</a>
 			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
 		</nav>
 
 		<div class="invitado-desplegable">
@@ -36,8 +38,8 @@
 			</div>
 			<div class="invitado-desplegable-informacion">
 				<strong th:text="#{header.invitado}">INVITADO</strong> 
-				<a href="/iniciosesion-registrarse?action=login" th:text="#{header.login}">Iniciar Sesión</a> 
-				<a href="/iniciosesion-registrarse?action=registro" th:text="#{header.register}">Registrarse</a>
+				<a href="/iniciosesion-registrarse?action=login" th:text="#{login}">Iniciar Sesión</a> 
+				<a href="/iniciosesion-registrarse?action=registro" th:text="#{register}">Registrarse</a>
 			</div>
 		</div>
 	</header>
@@ -59,8 +61,8 @@
 		<table class="tabla-plantas">
 			<thead>
 				<tr>
-					<th th:text="#{tabla.columna.nombreComun}">Nombre Común</th>
-					<th th:text="#{tabla.columna.nombreCientifico}">Nombre Científico</th>
+					<th th:text="#{plantas.nombreComun}">Nombre Común</th>
+					<th th:text="#{plantas.nombreCientifico}">Nombre Científico</th>
 				</tr>
 			</thead>
 			<tbody>

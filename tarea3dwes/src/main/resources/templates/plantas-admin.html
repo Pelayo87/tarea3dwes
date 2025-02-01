@@ -22,39 +22,41 @@
         <nav>
 			<a href="?lang=es">Español</a>
 			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
 		</nav>
         <div class="admin-desplegable">
             <div class="circulo-perfil">
                 <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
             </div>
             <div class="admin-desplegable-informacion">
-                <strong th:text="#{admin.dropdown.admin}">ADMIN</strong>
-                <a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a>
-                <a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Añadir personal</a>
-            </div>
+				<strong th:text="#{admin.dropdown.admin}">ADMIN</strong> <a
+					href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+				<a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+			</div>
         </div>
     </header>
     
         <div class="cards-container">
             <div class="card anadir">
                 <img src="img/anadir-planta.png" alt="Añadir planta">
-                <h2>Añadir Planta</h2>
-                <p>Agrega nuevas especies a nuestro catálogo de plantas. Incluye toda la información relevante sobre la planta.</p>
-                <a href="/plantas-adminAnadir" class="card-button">Añadir Nueva Planta</a>
+                <h2 th:text="#{admin.anadirPlanta}">Anadir Planta</h2>
+                <p th:text="#{admin.anadirPlanta.descripcion}">Agrega nuevas especies a nuestro catálogo de plantas. Incluye toda la informacion relevante sobre la planta.</p>
+                <a href="/plantas-adminAnadir" class="card-button" th:text="#{admin.anadirPlanta}">Anadir Planta</a>
             </div>
     
             <div class="card modificar">
                 <img src="img/modificar-planta.png" alt="Modificar planta">
-                <h2>Modificar Planta</h2>
-                <p>Actualiza la información de las plantas existentes, como nombre, común o científico.</p>
-                <a href="/plantas-adminModificar" class="card-button">Modificar Planta</a>
+                <h2 th:text="#{admin.modificarPlanta}">Modificar Planta</h2>
+                <p th:text="#{admin.modificarPlanta.descripcion}">Actualiza la informacion de las plantas existentes, como nombre, comun o cientifico.</p>
+                <a href="/plantas-adminModificar" class="card-button" th:text="#{admin.modificarPlanta}">Modificar Planta</a>
             </div>
     
             <div class="card eliminar">
                 <img src="img/eliminar-planta.png" alt="Eliminar planta">
-                <h2>Eliminar Planta</h2>
-                <p>Elimina plantas del catálogo que ya no estén disponibles.</p>
-                <a href="/plantas-adminEliminar" class="card-button">Eliminar Planta</a>
+                <h2 th:text="#{admin.eliminarPlanta}">Eliminar Planta</h2>
+                <p th:text="#{admin.eliminarPlanta.descripcion}">Elimina plantas del catálogo que ya no esten disponibles.</p>
+                <a href="/plantas-adminEliminar" class="card-button" th:text="#{admin.eliminarPlanta}">Eliminar Planta</a>
             </div>
         </div>
 
