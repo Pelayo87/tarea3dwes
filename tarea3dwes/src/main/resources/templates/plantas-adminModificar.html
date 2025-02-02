@@ -37,32 +37,33 @@
         </div>
     </header>
 
-    <div class="container">
-        <h1 class="titulo-form" th:text="#{admin.modificarPlanta}">MODIFICAR PLANTA</h1>
-        <div class="form-container">
-            <form th:action="@{/plantas-adminModificar}" th:object="${planta}" method="post" class="formulario">
-                <div class="datos-plantas">
-                    <label for="codigo" th:text="#{plantas.codigo}">Código:</label>
-                    <input type="text" id="codigo" name="codigo" th:value="${codigo}" placeholder="Ingresa el código"
-                        pattern="[A-Za-z0-9]+" required autocomplete="off">
-                </div>
-    
-                <div class="datos-plantas">
-                    <label for="nombreComun" th:text="#{plantas.nombreComun}">Nombre Común:</label>
-                    <input type="text" id="nombreComun" name="nombreComun" th:value="${nombreComun}"
-                        placeholder="Ingresa el nombre común" required autocomplete="off">
-                </div>
-    
-                <div class="datos-plantas">
-                    <label for="nombreCientifico" th:text="#{plantas.nombreCientifico}">Nombre Científico:</label>
-                    <input type="text" id="nombreCientifico" name="nombreCientifico" th:value="${nombreCientifico}"
-                        placeholder="Ingresa el nombre científico" required autocomplete="off">
-                </div>
-    
-                <button type="submit" class="btn-submit" th:text="#{admin.modificarPlanta}">MODIFICAR PLANTA</button>
-            </form>
-        </div>
-    </div>
+    <div class="container"> 
+    <h1 class="titulo-form" th:text="#{admin.modificarPlanta}">MODIFICAR PLANTA</h1>
+    <div class="form-container">
+        <form th:action="@{/plantas-adminModificar}" th:object="${planta}" method="post" class="formulario">
+            <div class="datos-plantas">
+                <label for="codigo" th:text="#{plantas.codigo}">Codigo:</label>
+                <input type="text" id="codigo" name="codigo" th:value="${codigo}" 
+                       th:placeholder="#{placeholder.plantas.codigo}" pattern="[A-Za-z0-9]+" required autocomplete="off">
+            </div>
+
+            <div class="datos-plantas">
+                <label for="nombreComun" th:text="#{plantas.nombreComun}">Nombre Comun:</label>
+                <input type="text" id="nombreComun" name="nombreComun" th:value="${nombreComun}"
+                       th:placeholder="#{placeholder.plantas.nombreComun}" required autocomplete="off">
+            </div>
+
+            <div class="datos-plantas">
+                <label for="nombreCientifico" th:text="#{plantas.nombreCientifico}">Nombre Cientifico:</label>
+                <input type="text" id="nombreCientifico" name="nombreCientifico" th:value="${nombreCientifico}" 
+                th:placeholder="#{placeholder.plantas.nombreCientifico}" required autocomplete="off">
+            </div>
+
+            <button type="submit" class="btn-submit" th:text="#{admin.modificarPlanta}">MODIFICAR PLANTA</button>
+        </form>
+      </div>
+   </div>
+
 
     <div id="error" th:text="${error}" style="display: none;"></div>
     <div id="mensaje" th:text="${success}" style="display: none;"></div> 

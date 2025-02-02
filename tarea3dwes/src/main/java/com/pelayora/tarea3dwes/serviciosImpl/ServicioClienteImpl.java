@@ -1,10 +1,7 @@
 package com.pelayora.tarea3dwes.serviciosImpl;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Cliente;
@@ -18,9 +15,6 @@ public class ServicioClienteImpl implements ServicioCliente{
 	
 	@Autowired
 	private ClienteRepository cliente_R;
-	
-	private static final Pattern validacionFormatoNifNie = Pattern.compile("^(?:[XYZ][0-9]{7}|[0-9]{8})[A-Z]$");
-	private Scanner sc = new Scanner(System.in);
 
 	@Override
 	public List<Cliente> listarClientes() {

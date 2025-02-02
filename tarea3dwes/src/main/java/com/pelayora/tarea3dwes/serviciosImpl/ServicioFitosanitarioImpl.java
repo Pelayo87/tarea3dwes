@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Fitosanitario;
-import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.repositorios.FitosanitarioRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 

@@ -22,5 +22,6 @@ public interface ServicioPersona {
     Optional<Persona> buscarPorId(Long id);
     Persona guardarPersona(Persona persona);
     void eliminarPersona(Long id);
+    boolean existPersonaPorEmail(String email);
 	
 }

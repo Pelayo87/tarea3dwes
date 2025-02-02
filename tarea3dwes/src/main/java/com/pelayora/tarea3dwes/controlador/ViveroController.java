@@ -5,9 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
@@ -35,12 +33,6 @@ public class ViveroController {
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "inicio";
     }
-	
-    @GetMapping("/iniciosesion-registrarse")
-    public String mostrarFormulario(@RequestParam(value = "action", required = false) String action, Model model) {
-        model.addAttribute("mostrarRegistro", "registro".equals(action));
-        return "iniciosesion-registrarse";
-    }
 
     @GetMapping("/inicio-admin")
     public String inicioViveroAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
@@ -66,18 +58,11 @@ public class ViveroController {
         return "inicio-cliente";
     }
 	
-	@GetMapping("/anadirpersonal")
-    public String anadirPersonal(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
-        model.addAttribute("mensaje", "Añadir personal al vivero");
-        model.addAttribute("UsuarioActual", nombreUsuario);
-        return "añadirpersonal";
-    }
-	
-	// Método para obtener la primera letra
+	/*// Método para obtener la primera letra
     private String obtenerPrimeraLetra(String nombre) {
         if (nombre != null && !nombre.isEmpty()) {
             return String.valueOf(nombre.charAt(0)).toUpperCase();
         }
         return "";
-    }	
+    }	*/
 }

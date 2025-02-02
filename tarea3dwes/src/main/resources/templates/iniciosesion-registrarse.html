@@ -14,45 +14,55 @@
     <div class="container" id="login" th:unless="${mostrarRegistro}">
         <h2 th:text="#{login}">Iniciar Sesion</h2>
         <form th:action="@{/login}" method="post">
-            <label for="usuario">Nombre de usuario</label>
-            <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu nombre de usuario" required>
+            <label for="usuario" th:text="#{personal.usuario}">Nombre de usuario</label>
+            <input type="text" id="usuario" name="usuario" th:placeholder="#{placeholder.personal.usuario}" required>
 
-            <label for="contrasena">Contraseña</label>
-            <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" required>
+            <label for="contrasena" th:text="#{personal.contrasena}">Contrasena</label>
+            <input type="password" id="contrasena" name="contrasena" th:placeholder="#{placeholder.personal.contrasena}" required>
 
             <button type="submit" th:text="#{login}">Iniciar Sesion</button>
         </form>
         <div class="link">
-            <p>¿No tienes una cuenta? <a th:href="@{/iniciosesion-registrarse(action='registro')}" th:text="#{register}">Registrate</a></p>
+            <p>¿No tienes una cuenta? 
+            <a th:href="@{/iniciosesion-registrarse(action='registro')}" th:text="#{register}">Registrate</a>
+            </p>
         </div>
     </div>
 
     <div id="error" th:text="${error}" style="display: none;"></div>
     <div id="mensaje" th:text="${success}" style="display: none;"></div>
 
-    <div class="container" id="registro" th:if="${mostrarRegistro}">
-        <h2 th:text="#{register}">Registrarse (Nuevo Cliente)</h2>
-        <form th:action="@{/registro}" method="post">
-            <label for="nombre">Nombre Completo</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
+	<div class="container" id="registro" th:if="${mostrarRegistro}">
+		<h2 th:text="#{register}">Registrarse (Nuevo Cliente)</h2>
 
-            <label for="nif_nie">NIF/NIE</label>
-            <input type="text" id="nif_nie" name="nif_nie" placeholder="Ingresa tu NIF o NIE, Ej:(12345678A/X1234567T)" required>
+		<form th:action="@{/registro}" method="post">
+			<label for="nombre" th:text="#{personal.nombreCompleto}">Nombre Completo</label> <input type="text" id="nombre" name="nombre" 
+			th:placeholder="#{placeholder.personal.nombreComun}" required> 
+			<span th:if="${nombreError}" th:text="${nombreError}" style="color: red;"></span>
 
-            <label for="usuario">Nombre de usuario</label>
-            <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu nombre de usuario" required>
+			<label for="nif_nie" th:placeholder="#{personal.nifnie}">NIF/NIE</label> <input type="text" id="nif_nie" name="nif_nie" 
+			th:placeholder="#{placeholder.personal.nifnie}" required>
+			<span th:if="${nifNieError}" th:text="${nifNieError}" style="color: red;"></span>
 
-            <label for="contrasena">Contraseña</label>
-            <input type="password" id="contrasena" name="contrasena" placeholder="Crea una contraseña" required>
+			<label for="usuario" th:text="#{personal.usuario}">Nombre de usuario</label> 
+			<input type="text" id="usuario" name="usuario" th:placeholder="#{placeholder.personal.usuario}" required> 
+			<span th:if="${usuarioError}" th:text="${usuarioError}" style="color: red;"></span>
 
-            <button type="submit" th:text="#{register}">Registrarse</button>
-        </form>
-        <div class="link">
-            <p>¿Ya tienes una cuenta? <a th:href="@{/iniciosesion-registrarse(action='login')}" th:text="#{login}">Inicia Sesion</a></p>
-        </div>
-    </div>
+			<label for="contrasena" th:text="#{personal.contrasena}">Contrasena</label> 
+			<input type="password" id="contrasena" name="contrasena" th:placeholder="#{placeholder.personal.contrasena}" required> 
+			<span th:if="${passwordError}" th:text="${passwordError}" style="color: red;"></span>
 
-    <br>
+			<button type="submit" th:text="#{register}">Registrarse</button>
+		</form>
+
+		<div class="link">
+			<p>¿Ya tienes una cuenta? 
+			<a th:href="@{/iniciosesion-registrarse(action='login')}" th:text="#{login}">Inicia Sesión</a>
+			</p>
+		</div>
+	</div>
+
+	<br>
 
     <footer>
         <div class="footer">

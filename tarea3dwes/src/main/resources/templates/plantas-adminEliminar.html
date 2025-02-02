@@ -42,8 +42,9 @@
         <div class="form-container">
             <form th:action="@{/plantas-adminEliminar}" th:object="${planta}" method="post" class="formulario">
                 <div class="datos-plantas">
-                    <label for="codigo" th:text="#{plantas.codigo}">Código:</label>
-                    <input type="text" id="codigo" name="codigo" th:value="${codigo}" placeholder="Ingresa el código" pattern="[A-Za-z0-9]+" required autocomplete="off">
+                    <label for="codigo" th:text="#{plantas.codigo}">Codigo:</label>
+                    <input type="text" id="codigo" name="codigo" th:value="${codigo}" 
+                    th:placeholder="#{placeholder.plantas.codigo}" pattern="[A-Za-z0-9]+" required autocomplete="off">
                     
                 </div>
                 <button type="submit" class="btn-submit" th:text="#{admin.eliminarPlanta}">ELIMINAR PLANTA</button>

@@ -4,12 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pelayora.tarea3dwes.modelo.Enfermedad;
-import com.pelayora.tarea3dwes.modelo.Fitosanitario;
 import com.pelayora.tarea3dwes.repositorios.EnfermedadRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioEnfermedad;
 
