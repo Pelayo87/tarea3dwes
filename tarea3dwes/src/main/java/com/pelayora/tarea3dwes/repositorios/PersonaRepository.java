@@ -1,5 +1,8 @@
 package com.pelayora.tarea3dwes.repositorios;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +22,7 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
     boolean existePersonaPorEmail(@Param("email") String email);	
 	
 	boolean existsByNombre(String nombre);
+
+	@Query("SELECT p FROM Persona p WHERE p.nombre = :nombre")
+    Optional<Persona> findByNombre(@Param("nombre") String nombre);
 }

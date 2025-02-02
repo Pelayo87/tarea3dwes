@@ -12,6 +12,73 @@ body {
     text-align: center;
 }
 
+form {
+    background: #eaf4e2;
+    border: 2px solid #4c8c4a;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    margin: auto;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+form img {
+    width: 60px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.titulos {
+    color: #2f6130;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.ejemplar-mensajes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.select,
+input[type="text"] {
+    padding: 10px;
+    border: 2px solid #4c8c4a;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #2f6130;
+}
+
+input::placeholder {
+    color: #4c8c4a;
+    opacity: 0.7;
+}
+
+label {
+    font-size: 16px;
+    color: #2f6130;
+    font-weight: bold;
+    text-align: left;
+}
+
+.boton {
+    background-color: #4c8c4a;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.boton:hover {
+    background-color: #2f6130;
+}
+
 .filtro-formulario {
     display: flex;
     flex-direction: column;

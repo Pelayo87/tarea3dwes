@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.pelayora.tarea3dwes.modelo.Credenciales;
 import com.pelayora.tarea3dwes.modelo.Persona;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;

@@ -23,5 +23,6 @@ public interface ServicioPersona {
     Persona guardarPersona(Persona persona);
     void eliminarPersona(Long id);
     boolean existPersonaPorEmail(String email);
+    Optional<Persona> buscarPorNombre(String nombre);
 	
 }

@@ -84,7 +84,7 @@
 				<option value="" th:text="#{seleccionar.planta}">-- Seleccionar planta --</option>
 				<option th:each="planta : ${plantas}" th:value="${planta.nombreComun}" th:text="${planta.nombreComun}"></option>
 			</select>
-			<button type="submit" class="filtro-button" th:text="#{ejemplares.filtrar}">Filtrar</button>
+			<button type="submit" class="filtro-button" th:text="#{filtrar}">Filtrar</button>
 		</form>
 
 		<table class="tabla-ejemplares">
@@ -115,7 +115,7 @@
                     <option value="" th:text="#{seleccionar.ejemplar}">-- Seleccionar ejemplar --</option>
                     <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.nombre}" th:text="${ejemplar.nombre}"></option>
                 </select>
-                <button type="submit" class="filtro-button" th:text="#{ejemplares.filtrar}">Filtrar</button>
+                <button type="submit" class="filtro-button" th:text="#{filtrar}">Filtrar</button>
             </form>
 
             <table class="tabla-mensajesejemplares">

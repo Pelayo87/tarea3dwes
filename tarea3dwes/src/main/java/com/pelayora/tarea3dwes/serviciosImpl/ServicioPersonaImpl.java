@@ -36,4 +36,8 @@ public class ServicioPersonaImpl implements ServicioPersona {
 	public boolean existPersonaPorEmail(String email) {
         return persona_R.existePersonaPorEmail(email);
     }
+
+	public Optional<Persona> buscarPorNombre(String nombre) {
+        return persona_R.findByNombre(nombre);
+    }
 }

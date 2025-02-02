@@ -36,6 +36,24 @@
         </div>
     </header>
 
+        <h2 class="titulos" th:text="#{anotacion.realizar}">REALIZAR ANOTACION</h2>
+    
+        <form th:action="@{/mensajes-personal}" method="post">
+            <img src="img/realizar-anotacion.png" alt="Realizar anotación">
+            <label for="selectRealizarAnotacion" th:text="#{mensajesRealizar.seleccionar.ejemplar}">Selecciona el ejemplar</label>
+            <select id="selectRealizarAnotacion" name="ejemplar" class="select" required>
+                <option value="" th:text="#{mensajesRealizar.seleccionar.ejemplar}">Selecciona el ejemplar</option>
+                <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
+            </select>
+            <span th:if="${ejemplarError}" th:text="${ejemplarError}" style="color: red;"></span>
+    
+            <label for="mensaje" th:text="#{mensaje.anotacion}">Anotación/Mensaje:</label>
+            <input type="text" id="mensaje" name="mensaje" placeholder="Escribe la anotación" required autocomplete="off">
+            <span th:if="${mensajeError}" th:text="${mensajeError}" style="color: red;"></span>
+    
+            <button type="submit" class="boton" th:text="#{anotacion.realizar}">Realizar Anotación</button>
+        </form>
+
     <div class="contenedor-listado">
         <h2 class="titulos" th:text="#{mensajes.listado.titulo}">LISTADO DE MENSAJES/ANOTACIONES</h2>
         <p th:text="#{mensajes.listado.descripcion}">Aqui puedes ver y gestionar todos los mensajes relacionados con los ejemplares del vivero. 
