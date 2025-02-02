@@ -79,5 +79,53 @@ public class MensajeController {
         model.addAttribute("mensajes", mensajesFiltrados);
         return "mensajes-admin";
     }
+    
+    @GetMapping("/mensajes-personal")
+    public String MensajesPersonal(
+            @RequestParam(value = "nombre", required = false) String nombre,
+            @RequestParam(value = "fechaInicio", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
+            @RequestParam(value = "fechaFin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin,
+            @RequestParam(value = "planta", required = false) String planta,
+            @ModelAttribute("nombreUsuario") String nombreUsuario,
+            Model model) {
+
+        model.addAttribute("mensaje", "Gestión de ejemplares (Usuario administrador)");
+        model.addAttribute("UsuarioActual", nombreUsuario);
+        model.addAttribute("plantas", S_planta.listarPlantas());
+        model.addAttribute("personas", S_persona.listarPersonas());
+
+        List<Mensaje> mensajesFiltrados = S_mensaje.listarMensajes();
+
+        if (nombre != null && !nombre.isEmpty()) {
+            mensajesFiltrados = S_mensaje.obtenerMensajePorNombrePersona(nombre);
+            model.addAttribute("mensaje", "Filtrado por persona: " + nombre);
+        }
+
+        if (fechaInicio != null && fechaFin != null) {
+            if (fechaInicio.isAfter(fechaFin)) {
+                model.addAttribute("error", "La fecha de inicio no puede ser posterior a la fecha de fin.");
+            } else {
+                LocalDateTime inicio = fechaInicio.atStartOfDay();
+                LocalDateTime fin = fechaFin.atTime(23, 59, 59);
+
+                mensajesFiltrados = mensajesFiltrados.stream()
+                        .filter(m -> {
+                            LocalDateTime fechaMensaje = m.getFechahora().toInstant().atZone(ZoneId.systemDefault())
+                                    .toLocalDateTime();
+                            return !fechaMensaje.isBefore(inicio) && !fechaMensaje.isAfter(fin);
+                        })
+                        .collect(Collectors.toList());
+                model.addAttribute("mensaje", "Filtrado por fechas: desde " + fechaInicio + " hasta " + fechaFin);
+            }
+        }
+
+        if (planta != null && !planta.isEmpty()) {
+            mensajesFiltrados = S_mensaje.obtenerMensajePorTipoPlanta(planta);
+            model.addAttribute("mensaje", "Filtrado por tipo de planta: " + planta);
+        }
+
+        model.addAttribute("mensajes", mensajesFiltrados);
+        return "mensajes-personal";
+    }
 
 }

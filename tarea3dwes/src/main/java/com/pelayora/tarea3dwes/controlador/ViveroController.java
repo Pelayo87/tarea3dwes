@@ -49,6 +49,22 @@ public class ViveroController {
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "inicio-admin";
     }
+    
+    @GetMapping("/inicio-personal")
+    public String inicioViveroPersonal(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
+        model.addAttribute("mensaje", "Página inicial del vivero(Usuario personal)");
+        model.addAttribute("UsuarioActual", nombreUsuario);
+        long totalPlantas = S_planta.contadorPlantas();
+        model.addAttribute("totalPlantas", totalPlantas);
+        long totalEjemplares = S_ejemplar.contadorEjemplares();
+        model.addAttribute("totalEjemplares", totalEjemplares);
+        long totalFitosanitarios = S_fitosanitario.contadorFitosanitarios();
+        model.addAttribute("totalFitosanitarios", totalFitosanitarios);
+        long totalMensajes = S_mensaje.contadorMensajes();
+        model.addAttribute("totalMensajes", totalMensajes);
+        model.addAttribute("plantas", S_planta.listarPlantas());
+        return "inicio-personal";
+    }
 	
 	@GetMapping("/inicio-cliente")
     public String inicioViveroCliente(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {

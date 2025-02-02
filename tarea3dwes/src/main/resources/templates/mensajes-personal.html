@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Vivero CIFP La Laboral</title>
+    <link rel="stylesheet" href="css/vivero.css">
+    <link rel="stylesheet" href="css/vivero-admin.css">
+    <link rel="stylesheet" href="css/mensajes-admin.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+   <header>
+        <div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
+        <nav>
+            <a href="/inicio-personal" th:text="#{nav.inicio}">INICIO</a>
+            <a href="/ejemplares-personal" th:text="#{nav.ejemplares}">EJEMPLARES</a>
+            <a href="/fitosanitarios-personal" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
+        </nav>
+        <nav>
+			<a href="?lang=es">Español</a>
+			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
+		</nav>
+        <div class="admin-desplegable">
+            <div class="circulo-perfil">
+                <img src="img/fotoperfil-personal.png" alt="Foto de perfil del personal">
+            </div>
+            <div class="admin-desplegable-informacion">
+				<strong th:text="'Personal : ' + ${UsuarioActual}"></strong>  
+				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+			</div>
+        </div>
+    </header>
+
+    <div class="contenedor-listado">
+        <h2 class="titulos" th:text="#{mensajes.listado.titulo}">LISTADO DE MENSAJES/ANOTACIONES</h2>
+        <p th:text="#{mensajes.listado.descripcion}">Aqui puedes ver y gestionar todos los mensajes relacionados con los ejemplares del vivero. 
+            Los usuarios pueden consultar sobre ejemplares en especifico.
+        </p>
+
+        <form method="GET" action="/mensajes-personal" class="filtro-formulario">
+            <div class="filtro-grupo">
+                <label for="nombre" class="filtro-label" th:text="#{filtrar.persona}">Filtrar por persona (nombre):</label>
+                <select name="nombre" id="nombre" class="filtro-select">
+                    <option value="" th:text="#{seleccionar.persona}">-- Seleccionar persona --</option>
+                    <option th:each="persona : ${personas}" th:value="${persona.nombre}" th:text="${persona.nombre}"></option>
+                </select>
+            </div>
+        
+            <div class="filtro-grupo">
+                <label for="fechaInicio" class="filtro-label" th:text="#{fechadesde}">Fecha desde:</label>
+                <input type="date" name="fechaInicio" id="fechaInicio" class="filtro-input">
+        
+                <label for="fechaFin" class="filtro-label" th:text="#{fechahasta}">Fecha hasta:</label>
+                <input type="date" name="fechaFin" id="fechaFin" class="filtro-input">
+            </div>
+        
+            <div class="filtro-grupo">
+                <label for="planta" class="filtro-label" th:text="#{filtrar.planta}">Filtrar por planta (nombre común):</label>
+                <select name="planta" id="planta" class="filtro-select">
+                    <option value="" th:text="#{seleccionar.planta}">-- Seleccionar planta --</option>
+                    <option th:each="planta : ${plantas}" th:value="${planta.nombreComun}" th:text="${planta.nombreComun}">
+                    </option>
+                </select>
+            </div>
+        
+            <button type="submit" class="filtro-button" th:text="#{filtrar}">Filtrar</button>
+        </form>
+        
+
+            <table class="tabla-mensajes">
+            <thead>
+                <tr>
+                    <th th:text="#{mensajes.fechahora}">Fecha/Hora</th>
+                    <th th:text="#{mensajes.mensaje}">Mensaje</th>
+                    <th th:text="#{mensajes.persona}">Persona</th>
+                    <th th:text="#{mensajes.planta}">Planta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mensaje : ${mensajes}">
+                    <td th:text="${mensaje.fechahora}"></td>
+                    <td th:text="${mensaje.mensaje}"></td>
+                    <td th:text="${mensaje.persona.nombre}"></td>
+                    <td th:text="${mensaje.ejemplar != null && mensaje.ejemplar.planta != null ? mensaje.ejemplar.planta.nombreComun : 'No asignado'}"></td>
+                </tr>
+            </tbody>
+         </table>
+        </div>
+
+
+	<footer>
+        <div class="footer">
+          <div class="footer-info">
+              <p class="direccion" th:text="#{footer.direccion}">
+                C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias
+              </p>
+              <p class="telefono" th:text="#{footer.telefono}">+34 634 23 36 87</p>
+              <p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
+          </div>
+          <div class="horario">
+              <h4 th:text="#{footer.horario.titulo}">Horario</h4>
+              <p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes: 9:00 - 20:00</p>
+              <p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
+          </div>
+          <div class="redes-sociales">
+            <a href="#"><img src="img/facebook.png" th:alt="#{social.facebook}" alt="Facebook" /></a>
+            <a href="#"><img src="img/x.png" th:alt="#{social.x}" alt="X" /></a>
+            <a href="#"><img src="img/instagram.png" th:alt="#{social.instagram}" alt="Instagram" /></a>
+          </div>
+        </div>
+    </footer>
+
+</body>
+</html>

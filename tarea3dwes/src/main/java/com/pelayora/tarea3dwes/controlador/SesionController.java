@@ -67,8 +67,10 @@ public class SesionController {
 	            model.addAttribute("Usuario" , Usuarioautenticado);
 	            if ("admin".equalsIgnoreCase(usuario) && "admin".equals(contrasena)) {
 	                return "redirect:/inicio-admin";
-	            } else {
+	            } else if (id_Persona <= 0 && !"admin".equalsIgnoreCase(usuario) && !"admin".equals(contrasena)) {
 	                return "redirect:/inicio-cliente";
+	            }else {
+	            	return "redirect:/inicio-personal";
 	            }
 	        } else {
 	            model.addAttribute("error", "Usuario o contraseña incorrectos.");

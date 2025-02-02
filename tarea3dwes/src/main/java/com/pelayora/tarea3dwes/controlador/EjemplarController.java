@@ -61,6 +61,36 @@ public class EjemplarController {
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "ejemplares-admin";
     }
+    
+    @GetMapping("/ejemplares-personal")
+    public String EjemplaresPersonal(
+            @RequestParam(value = "nombreComun", required = false) String nombreComun,
+            @RequestParam(value = "nombre", required = false) String nombre,
+            @ModelAttribute("nombreUsuario") String nombreUsuario,
+            Model model) {
+
+        model.addAttribute("mensaje", "Gestión de ejemplares (Usuario administrador)");
+        model.addAttribute("UsuarioActual", nombreUsuario);
+
+        if (nombreComun != null && !nombreComun.isEmpty()) {
+            List<Ejemplar> ejemplaresFiltrados = S_ejemplar.obtenerEjemplarPorNombrePlanta(nombreComun);
+            model.addAttribute("ejemplares", ejemplaresFiltrados);
+            model.addAttribute("mensaje", "Filtrado por planta: " + nombreComun);
+        } else {
+            model.addAttribute("ejemplares", S_ejemplar.obtenerTodosLosEjemplares());
+        }
+
+        if (nombre != null && !nombre.isEmpty()) {
+            List<Mensaje> mensajesFiltrados = S_mensaje.obtenerMensajePorNombreEjemplar(nombre);
+            model.addAttribute("mensajes", mensajesFiltrados);
+            model.addAttribute("mensaje", "Filtrado por ejemplar: " + nombre);
+        } else {
+            model.addAttribute("mensajes", S_mensaje.listarMensajes());
+        }
+
+        model.addAttribute("plantas", S_planta.listarPlantas());
+        return "ejemplares-personal";
+    }
 
 
     @PostMapping("/ejemplares-admin")
@@ -98,6 +128,43 @@ public class EjemplarController {
 
         return "redirect:/ejemplares-admin";
     }
+    
+    @PostMapping("/ejemplares-personal")
+    public String añadirEjemplarPersonal(@RequestParam("planta") String codigoPlanta,
+            @ModelAttribute("nombreUsuario") String nombreUsuario,
+            @ModelAttribute("id_Persona") long id_persona,
+            Model model) {
+
+        Optional<Planta> plantaOpt = S_planta.buscarPlantaPorId(codigoPlanta);
+        if (!plantaOpt.isPresent()) {
+            model.addAttribute("error", "Planta no encontrada");
+            return "redirect:/ejemplares-admin";
+        }
+
+        Planta planta = plantaOpt.get();
+        Ejemplar nuevoEjemplar = new Ejemplar();
+        nuevoEjemplar.setPlanta(planta);
+        nuevoEjemplar = S_ejemplar.guardarEjemplar(nuevoEjemplar);
+
+        String nombreEjemplar = planta.getCodigo() + "_" + nuevoEjemplar.getId();
+        nuevoEjemplar.setNombre(nombreEjemplar);
+        S_ejemplar.modificarEjemplar(nuevoEjemplar);
+        
+        Mensaje mensajeInicial = new Mensaje();
+        mensajeInicial.setFechahora(new Date());
+        mensajeInicial.setMensaje("Registro realizado por " + nombreUsuario + " el " + new Date());
+
+        mensajeInicial.setEjemplar(nuevoEjemplar);
+        Persona personaActual = new Persona();
+        personaActual.setId(id_persona);
+        mensajeInicial.setPersona(personaActual);
+
+        // Guardo el mensaje
+        S_mensaje.guardarMensaje(mensajeInicial);
+
+        return "redirect:/ejemplares-personal";
+    }
+    
     
     @PostMapping("/ejemplares-admin/modificar")
     public String modificarEjemplar(@RequestParam("planta") String codigoPlanta,
@@ -142,6 +209,51 @@ public class EjemplarController {
         S_mensaje.guardarMensaje(mensajeInicial);
 
         return "redirect:/ejemplares-admin";
+    }
+    
+    @PostMapping("/ejemplares-personal/modificar")
+    public String modificarEjemplarPersonal(@RequestParam("planta") String codigoPlanta,
+            @RequestParam("id_ejemplar") Long id_ejemplar,
+            @ModelAttribute("nombreUsuario") String nombreUsuario,
+            @ModelAttribute("id_Persona") long id_persona,
+            Model model) {
+
+        Optional<Ejemplar> ejemplarOpt = S_ejemplar.obtenerEjemplarPorId(id_ejemplar);
+        Optional<Planta> plantaOpt = S_planta.buscarPlantaPorId(codigoPlanta);
+
+        if (!ejemplarOpt.isPresent()) {
+            model.addAttribute("error", "Ejemplar no encontrado");
+            return "redirect:/ejemplares-personal";
+        }
+        
+        if (!plantaOpt.isPresent()) {
+            model.addAttribute("error", "Planta no encontrada");
+            return "redirect:/ejemplares-personal";
+        }
+
+        Ejemplar ejemplar = ejemplarOpt.get();
+        Planta planta = plantaOpt.get();
+        
+        ejemplar.setPlanta(planta);
+
+        String nombreEjemplar = planta.getCodigo() + "_" + id_ejemplar;
+        ejemplar.setNombre(nombreEjemplar);
+
+        S_ejemplar.modificarEjemplar(ejemplar);
+
+        // Creo un mensaje de registro
+        Mensaje mensajeInicial = new Mensaje();
+        mensajeInicial.setFechahora(new Date());
+        mensajeInicial.setMensaje("Ejemplar actualizado por " + nombreUsuario + " el " + new Date());
+        mensajeInicial.setEjemplar(ejemplar);
+
+        Persona personaActual = new Persona();
+        personaActual.setId(id_persona);
+        mensajeInicial.setPersona(personaActual);
+
+        S_mensaje.guardarMensaje(mensajeInicial);
+
+        return "redirect:/ejemplares-personal";
     }
 
 
@@ -193,5 +305,26 @@ public class EjemplarController {
         model.addAttribute("plantas", S_planta.listarPlantas());
 
         return "ejemplares-admin";
+    }
+    
+    @PostMapping("/ejemplares-personal/filtrarportipoplanta")
+    public String filtrarEjemplarPorTipoDePlantaPersonal(
+            @RequestParam("tipoPlanta") String tipoPlanta,
+            @ModelAttribute("nombreUsuario") String nombreUsuario,
+            Model model) {
+
+        List<Ejemplar> ejemplaresTipoPlanta = S_ejemplar.obtenerEjemplarPorPlanta(tipoPlanta);
+
+        if (ejemplaresTipoPlanta.isEmpty()) {
+            model.addAttribute("error", "No hay ejemplares para el tipo de planta seleccionado.");
+        } else {
+            model.addAttribute("ejemplares", ejemplaresTipoPlanta);
+        }
+
+        model.addAttribute("mensaje", "Filtrado por tipo de planta: " + tipoPlanta);
+        model.addAttribute("UsuarioActual", nombreUsuario);
+        model.addAttribute("plantas", S_planta.listarPlantas());
+
+        return "ejemplares-personal";
     }
 }

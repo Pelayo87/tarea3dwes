@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Vivero CIFP La Laboral</title>
+    <link rel="stylesheet" href="css/vivero.css">
+    <link rel="stylesheet" href="css/vivero-admin.css">
+    <link rel="stylesheet" href="css/fitosanitarios-admin.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
+        <nav>
+            <a href="/inicio-personal" th:text="#{nav.inicio}">INICIO</a>
+            <a href="/ejemplares-personal" th:text="#{nav.ejemplares}">EJEMPLARES</a>
+            <a href="/mensajes-personal" th:text="#{nav.mensajes}">MENSAJES</a>
+        </nav>
+        <nav>
+			<a href="?lang=es">Español</a>
+			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
+		</nav>
+        <div class="admin-desplegable">
+            <div class="circulo-perfil">
+                <img src="img/fotoperfil-personal.png" alt="Foto de perfil del personal">
+            </div>
+            <div class="admin-desplegable-informacion">
+				<strong th:text="'Personal : ' + ${UsuarioActual}"></strong>
+				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+			</div>
+        </div>
+    </header>
+
+	<form th:action="@{/fitosanitarios-personal}" method="post">
+        <img src="img/aplicarfitosanitario.png" alt="Aplicar Fitosanitario">
+		<h2 class="titulos" th:text="#{fitosanitario.aplicar}">APLICAR FITOSANITARIO</h2>
+		<div class="ejemplar-fitosanitario">
+			<select id="selectAplicarEjemplar" name="ejemplar" class="select" required>
+				<option value="" th:text="#{fitosanitarioAplicar.seleccionar.ejemplar}">Selecciona el ejemplar</option>
+				<option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
+			</select>
+
+			<select id="selectAplicarFitosanitario" name="fitosanitario" class="select" required>
+				<option value="" th:text="#{fitosanitarioAplicar.seleccionar.fitosanitario}">Selecciona el fitosanitario</option>
+				<option th:each="fitosanitario : ${fitosanitarios}" th:value="${fitosanitario.id_fitosanitario}" th:text="${fitosanitario.nombre}"></option>
+			</select>
+
+			<button type="submit" class="boton" th:text="#{fitosanitario.aplicar}">Aplicar Fitosanitario</button>
+		</div>
+	</form>
+
+
+	<div class="contenedor-listadofitosanitarios">
+	<h2 class="titulos" th:text="#{fitosanitario.listado.titulo}">LISTADO DE FITOSANITARIOS</h2>
+	<p th:text="#{fitosanitario.listado.descripcion}">Gestiona y visualiza todos los fitosanitarios disponibles en nuestro vivero. Cada fitosanitario está diseñado para tratar las
+	   necesidades específicas de nuestras plantas, asegurando su salud y protección contra plagas y enfermedades. Cada uno tiene
+	   características particulares en cuanto a su composición, uso y aplicación.
+	</p>
+
+		<table class="tabla-fitosanitarios">
+        <thead>
+            <tr>
+                <th th:text="#{fitosanitario.nombre}">Nombre</th>
+                <th th:text="#{fitosanitario.marca}">Marca</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="fitosanitario : ${fitosanitarios}">
+                <td th:text="${fitosanitario.nombre}"></td>
+                <td th:text="${fitosanitario.marca}"></td>
+            </tr>
+        </tbody>
+     </table>
+    </div>
+
+
+	<footer>
+        <div class="footer">
+          <div class="footer-info">
+              <p class="direccion" th:text="#{footer.direccion}">
+                C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias
+              </p>
+              <p class="telefono" th:text="#{footer.telefono}">+34 634 23 36 87</p>
+              <p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
+          </div>
+          <div class="horario">
+              <h4 th:text="#{footer.horario.titulo}">Horario</h4>
+              <p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes: 9:00 - 20:00</p>
+              <p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
+          </div>
+          <div class="redes-sociales">
+            <a href="#"><img src="img/facebook.png" th:alt="#{social.facebook}" alt="Facebook" /></a>
+            <a href="#"><img src="img/x.png" th:alt="#{social.x}" alt="X" /></a>
+            <a href="#"><img src="img/instagram.png" th:alt="#{social.instagram}" alt="Instagram" /></a>
+          </div>
+        </div>
+    </footer>
+
+</body>
+</html>

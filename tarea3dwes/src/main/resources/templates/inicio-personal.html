@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Vivero CIFP La Laboral</title>
+<link rel="stylesheet" href="css/vivero.css">
+<link rel="stylesheet" href="css/vivero-admin.css">
+<link rel="stylesheet" href="css/inicio-admin.css">
+<link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+	<header>
+		<div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
+		<nav>
+			<a href="/inicio-personal" th:text="#{nav.inicio}">INICIO</a> 
+			<a href="/ejemplares-personal" th:text="#{nav.ejemplares}">EJEMPLARES</a>
+			<a href="/fitosanitarios-personal" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
+			<a href="/mensajes-personal" th:text="#{nav.mensajes}">MENSAJES</a>
+		</nav>
+		<nav>
+			<a href="?lang=es">Español</a> 
+			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
+		</nav>
+		<div class="admin-desplegable">
+			<div class="circulo-perfil">
+				<img src="img/fotoperfil-personal.png" alt="Foto de perfil del personal">
+			</div>
+			<div class="admin-desplegable-informacion">
+				<strong th:text="'Personal : ' + ${UsuarioActual}"></strong> 
+				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+			</div>
+		</div>
+	</header>
+
+	<main class="contenido-principal">
+		<section class="bienvenida">
+			<h1 th:text="#{admin.panel.title}">Panel de Administracion</h1>
+			<p th:text="#{admin.panel.welcome}">Bienvenido al sistema de gestion del Vivero CIFP La Laboral</p>
+		</section>
+
+		<section class="estadisticas">
+			<h2 th:text="#{admin.stats.title}">Resumen General</h2>
+			<div class="tarjetas-estadisticas">
+				<div class="tarjeta">
+					<h3 th:text="#{admin.stats.totalPlants}">Total Plantas</h3>
+					<p class="numero" th:text="${totalPlantas}"></p>
+				</div>
+				<div class="tarjeta">
+					<h3 th:text="#{admin.stats.specimens}">Ejemplares</h3>
+					<p class="numero" th:text="${totalEjemplares}"></p>
+				</div>
+				<div class="tarjeta">
+					<h3 th:text="#{admin.stats.phytosanitaries}">Fitosanitarios</h3>
+					<p class="numero" th:text="${totalFitosanitarios}"></p>
+				</div>
+				<div class="tarjeta">
+					<h3 th:text="#{admin.stats.messages}">Mensajes</h3>
+					<p class="numero" th:text="${totalMensajes}"></p>
+				</div>
+			</div>
+		</section>
+
+		<div class="contenedor-principal">
+			<section class="informacion-adicional">
+				<h2 th:text="#{admin.info.title}">Informacion Importante</h2>
+				<div class="lista-info">
+					<div class="info-item">
+						<h3 th:text="#{admin.info.managementTitle}">Gestion del Vivero</h3>
+						<p th:text="#{admin.info.managementDescription}">Desde este panel podras gestionar los ejemplares, 
+						fitosanitarios y mensajes del vivero.</p>
+					</div>
+					<div class="info-item">
+						<h3 th:text="#{admin.info.maintenanceTitle}">Mantenimiento</h3>
+						<p th:text="#{admin.info.maintenanceDescription}">Es importante mantener actualizado el inventario y la informacion
+						sobre las plantas para un correcto funcionamiento.</p>
+					</div>
+				</div>
+			</section>
+
+			<div class="contenedor-listadoplantas">
+				<h2 th:text="#{plantas.titulo}">Plantas</h2>
+				<p th:text="#{plantas.descripcion}">En nuestro vivero encontraras una amplia variedad de plantas, desde especies exoticas
+				hasta las mas nativas. Ideales para transformar tu hogar o jardin en un espacio lleno de vida y color.</p>
+				<table class="tabla-plantas">
+					<thead>
+						<tr>
+							<th th:text="#{plantas.nombreComun}">Nombre Comun</th>
+							<th th:text="#{plantas.nombreCientifico}">Nombre Cientifico</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="planta : ${plantas}">
+							<td th:text="${planta.nombreComun}"></td>
+							<td th:text="${planta.nombreCientifico}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<div class="footer">
+			<div class="footer-info">
+				<p class="direccion" th:text="#{footer.direccion}">C. Luis Moya
+					Blanco, Periurbano - Rural, 33203 Gijon, Asturias</p>
+				<p class="telefono" th:text="#{footer.telefono}">+34 634 23 36
+					87</p>
+				<p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
+			</div>
+			<div class="horario">
+				<h4 th:text="#{footer.horario.titulo}">Horario</h4>
+				<p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes:
+					9:00 - 20:00</p>
+				<p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
+			</div>
+			<div class="redes-sociales">
+				<a href="#"><img src="img/facebook.png"
+					th:alt="#{social.facebook}" alt="Facebook" /></a> <a href="#"><img
+					src="img/x.png" th:alt="#{social.x}" alt="X" /></a> <a href="#"><img
+					src="img/instagram.png" th:alt="#{social.instagram}"
+					alt="Instagram" /></a>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>
