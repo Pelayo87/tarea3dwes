@@ -18,6 +18,7 @@ import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
+
 @Controller
 @SessionAttributes("nombreUsuario")
 public class PlantaController {
@@ -27,6 +28,8 @@ public class PlantaController {
     
     @Autowired
     private ServicioEjemplar S_ejemplar;
+    
+   
 
     @GetMapping("/plantas-admin")
     public String PlantasAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
