@@ -32,14 +32,6 @@ public class Planta {
 
 	@Column(name = "nombrecientifico", length = 50)
 	private String nombreCientifico;
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(
-	    name = "plantas_enfermedades",
-	    joinColumns = @JoinColumn(name = "codigo"),
-	    inverseJoinColumns = @JoinColumn(name = "id_enfermedad")
-	)
-	private List<Enfermedad> enfermedades = new LinkedList<Enfermedad>();
 	
 	@ManyToMany(mappedBy = "plantas", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Cliente> clientes = new ArrayList<>();
