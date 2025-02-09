@@ -10,24 +10,40 @@ Apache (servidor local con XAMPP)
 📂 Estructura del proyecto
 tarea3dwes/
 ├── src/main/java/
-│   ├── com.pelayora.tarea3dwes.configuracion/   # Clases de configuración del proyecto.
-│   │   └── I18nConfiguration.java               # Configuración para internacionalización (i18n).  
-│   ├── com.pelayora.tarea3dwes.controlador/     # Controladores que gestionan las peticiones.
-│   ├── com.pelayora.tarea3dwes.modelo/          # Clases del modelo que representan la lógica de negocio.
-│   ├── com.pelayora.tarea3dwes.principal/       # Clase principal que inicia la aplicación.
-│   ├── com.pelayora.tarea3dwes.repositorios/    # Repositorios para la gestión de datos.
-│   ├── com.pelayora.tarea3dwes.servicios/       # Interfaces de los servicios de negocio.
-│   ├── com.pelayora.tarea3dwes.serviciosImpl/   # Implementaciones de los servicios de negocio.
-│   ├── com.pelayora.tarea3dwes.util/            # Utilidades y funciones de apoyo.
+│   ├── com.pelayora.tarea3dwes.configuracion/
+│   │   └── I18nConfiguration.java          # Configuración para internacionalización (i18n).
+│   ├── com.pelayora.tarea3dwes.controlador/
+│   │   ├── EjemplarController.java         # Controlador para gestionar ejemplares.
+│   │   ├── PlantaController.java           # Controlador para gestionar plantas.
+│   │   ├── SesionController.java           # Controlador para la gestión de sesiones.
+│   │   └── ...                             # Otros controladores.
+│   ├── com.pelayora.tarea3dwes.modelo/
+│   │   ├── Cliente.java                    # Entidad Cliente.
+│   │   ├── Planta.java                     # Entidad Planta.
+│   │   └── ...                             # Otras entidades del modelo.
+│   ├── com.pelayora.tarea3dwes.principal/
+│   │   └── Tarea3dwesApplication.java      # Clase principal para iniciar la aplicación.
+│   ├── com.pelayora.tarea3dwes.repositorios/
+│   │   ├── ClienteRepository.java          # Repositorio para la entidad Cliente.
+│   │   └── ...                             # Otros repositorios.
+│   ├── com.pelayora.tarea3dwes.servicios/
+│   │   ├── ServicioPlanta.java             # Interfaz del servicio para plantas.
+│   │   └── ...                             # Otros servicios.
+│   ├── com.pelayora.tarea3dwes.serviciosImpl/
+│   │   ├── ServicioPlantaImpl.java         # Implementación del servicio de plantas.
+│   │   └── ...                             # Otras implementaciones.
+│   └── com.pelayora.tarea3dwes.util/
+│       └── Utilidades.java                 # Métodos utilitarios para el proyecto.
 ├── src/main/resources/
-│   ├── static/                                  # Recursos estáticos (CSS, JS, imágenes, etc.).
-│   ├── templates/                               # Plantillas HTML para vistas.
-│   ├── application.properties                   # Configuración principal del proyecto.
-│   ├── datos.sql                                # Script SQL para la base de datos.
-│   ├── messages.properties                      # Mensajes de idioma predeterminado.
-│   ├── messages_ast.properties                  # Mensajes en asturiano.
-│   ├── messages_en.properties                   # Mensajes en inglés.
-│   ├── messages_zh.properties                   # Mensajes en chino.
+│   ├── static/                             # Archivos estáticos (CSS, JS, imágenes, etc.).
+│   ├── templates/                          # Plantillas HTML para vistas.
+│   ├── application.properties              # Configuración de la aplicación.
+│   ├── datos.sql                           # Script SQL de inicialización de la base de datos.
+│   ├── messages.properties                 # Mensajes en idioma predeterminado.
+│   ├── messages_ast.properties             # Traducciones en asturiano.
+│   ├── messages_en.properties              # Traducciones en inglés.
+│   └── messages_zh.properties              # Traducciones en chino.
+
        
 
 ✍️ Autor
