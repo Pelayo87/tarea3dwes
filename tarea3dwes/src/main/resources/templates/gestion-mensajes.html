@@ -13,30 +13,48 @@
 
 <body>
    <header>
-        <div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
-        <nav>
-            <a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a>
-            <a href="/plantas-admin" th:text="#{nav.plantas}">Plantas</a>
-            <a href="/ejemplares-admin" th:text="#{nav.ejemplares}">EJEMPLARES</a>
-            <a href="/fitosanitarios-admin" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
-        </nav>
-        <nav>
-			<a href="?lang=es">Español</a>
-			<a href="?lang=en">English</a>
-			<a href="?lang=ast">Asturianu</a>
+		<div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
+		<nav>
+			<a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a> 
+			<a th:if="${nombreUsuario == 'admin'}" href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a> 
+			<a href="/gestion-ejemplares" th:text="#{nav.ejemplares}">EJEMPLARES</a>
+			<a href="/gestion-fitosanitarios" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
+		</nav>
+		<nav>
+			<a href="?lang=es">Español</a> 
+			<a href="?lang=en">English</a> 
+			<a href="?lang=ast">Asturianu</a> 
 			<a href="?lang=zh">Chino</a>
 		</nav>
-        <div class="admin-desplegable">
-            <div class="circulo-perfil">
-                <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
-            </div>
-            <div class="admin-desplegable-informacion">
-				<strong th:text="#{admin.dropdown.admin}">ADMIN</strong> <a
-					href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
-				<a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+		<div class="admin-desplegable">
+			<div class="circulo-perfil">
+				<img th:src="${nombreUsuario == 'admin' ? 'img/fotoperfil-admin.png' : 'img/fotoperfil-personal.png'}" alt="Foto de perfil">
 			</div>
-        </div>
-    </header>
+			<div class="admin-desplegable-informacion">
+				<strong th:text="${nombreUsuario == 'admin' ? 'ADMIN' : 'PERSONAL'}"></strong>
+				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a> 
+				<a th:if="${nombreUsuario == 'admin'}" href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+			</div>
+		</div>
+	</header>
+	
+	<h2 class="titulos" th:text="#{anotacion.realizar}">REALIZAR ANOTACION</h2>
+    
+        <form th:action="@{/gestion-mensajes}" method="post">
+            <img src="img/realizar-anotacion.png" alt="Realizar anotación">
+            <label for="selectRealizarAnotacion" th:text="#{mensajesRealizar.seleccionar.ejemplar}">Selecciona el ejemplar</label>
+            <select id="selectRealizarAnotacion" name="ejemplar" class="select" required>
+                <option value="" th:text="#{mensajesRealizar.seleccionar.ejemplar}">Selecciona el ejemplar</option>
+                <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
+            </select>
+            <span th:if="${ejemplarError}" th:text="${ejemplarError}" style="color: red;"></span>
+    
+            <label for="mensaje" th:text="#{mensaje.anotacion}">Anotación/Mensaje:</label>
+            <input type="text" id="mensaje" name="mensaje" placeholder="Escribe la anotación" required autocomplete="off">
+            <span th:if="${mensajeError}" th:text="${mensajeError}" style="color: red;"></span>
+    
+            <button type="submit" class="boton" th:text="#{anotacion.realizar}">Realizar Anotación</button>
+        </form>
 
     <div class="contenedor-listado">
         <h2 class="titulos" th:text="#{mensajes.listado.titulo}">LISTADO DE MENSAJES/ANOTACIONES</h2>
@@ -44,7 +62,7 @@
             Los usuarios pueden consultar sobre ejemplares en especifico.
         </p>
 
-        <form method="GET" action="/mensajes-admin" class="filtro-formulario">
+        <form method="GET" action="/gestion-mensajes" class="filtro-formulario">
             <div class="filtro-grupo">
                 <label for="nombre" class="filtro-label" th:text="#{filtrar.persona}">Filtrar por persona (nombre):</label>
                 <select name="nombre" id="nombre" class="filtro-select">

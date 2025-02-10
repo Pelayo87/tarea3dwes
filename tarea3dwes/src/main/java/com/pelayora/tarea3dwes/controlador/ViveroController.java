@@ -68,14 +68,18 @@ public class ViveroController {
      * @param model Modelo de Spring para pasar atributos a la vista.
      * @return La vista "inicio-admin".
      */
-    @GetMapping("/inicio-admin")
+	@GetMapping("/inicio-admin")
     public String inicioViveroAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         model.addAttribute("mensaje", "Página inicial del vivero(Usuario administrador)");
         model.addAttribute("UsuarioActual", nombreUsuario);
-        model.addAttribute("totalPlantas", S_planta.contadorPlantas());
-        model.addAttribute("totalEjemplares", S_ejemplar.contadorEjemplares());
-        model.addAttribute("totalFitosanitarios", S_fitosanitario.contadorFitosanitarios());
-        model.addAttribute("totalMensajes", S_mensaje.contadorMensajes());
+        long totalPlantas = S_planta.contadorPlantas();
+        model.addAttribute("totalPlantas", totalPlantas);
+        long totalEjemplares = S_ejemplar.contadorEjemplares();
+        model.addAttribute("totalEjemplares", totalEjemplares);
+        long totalFitosanitarios = S_fitosanitario.contadorFitosanitarios();
+        model.addAttribute("totalFitosanitarios", totalFitosanitarios);
+        long totalMensajes = S_mensaje.contadorMensajes();
+        model.addAttribute("totalMensajes", totalMensajes);
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "inicio-admin";
     }
@@ -87,14 +91,18 @@ public class ViveroController {
      * @param model Modelo de Spring para pasar atributos a la vista.
      * @return La vista "inicio-personal".
      */
-    @GetMapping("/inicio-personal")
+	@GetMapping("/inicio-personal")
     public String inicioViveroPersonal(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         model.addAttribute("mensaje", "Página inicial del vivero(Usuario personal)");
         model.addAttribute("UsuarioActual", nombreUsuario);
-        model.addAttribute("totalPlantas", S_planta.contadorPlantas());
-        model.addAttribute("totalEjemplares", S_ejemplar.contadorEjemplares());
-        model.addAttribute("totalFitosanitarios", S_fitosanitario.contadorFitosanitarios());
-        model.addAttribute("totalMensajes", S_mensaje.contadorMensajes());
+        long totalPlantas = S_planta.contadorPlantas();
+        model.addAttribute("totalPlantas", totalPlantas);
+        long totalEjemplares = S_ejemplar.contadorEjemplares();
+        model.addAttribute("totalEjemplares", totalEjemplares);
+        long totalFitosanitarios = S_fitosanitario.contadorFitosanitarios();
+        model.addAttribute("totalFitosanitarios", totalFitosanitarios);
+        long totalMensajes = S_mensaje.contadorMensajes();
+        model.addAttribute("totalMensajes", totalMensajes);
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "inicio-personal";
     }
@@ -106,15 +114,8 @@ public class ViveroController {
      * @param model Modelo de Spring para pasar atributos a la vista.
      * @return La vista "inicio-cliente".
      */
-    @GetMapping("/inicio-cliente")
-    public String inicioViveroCliente(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
-        model.addAttribute("mensaje", "Página inicial del vivero(Usuario cliente)");
-        model.addAttribute("UsuarioActual", nombreUsuario);
-        model.addAttribute("plantas", S_planta.listarPlantas());
-        return "inicio-cliente";
-    }
 	
-    @GetMapping("/inicio-cliente")
+	@GetMapping("/inicio-cliente")
     public String inicioViveroCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
                                       @ModelAttribute("id_Cliente") Long id_Cliente,
                                       Model model) {
@@ -140,8 +141,6 @@ public class ViveroController {
         return "inicio-cliente";
     }
 
-
-	
 	@PostMapping("/plantas-favoritas")
     public String anadirPlantaFavorita(@RequestParam("CodigoPlanta") String CodigoPlanta,
     		                           @ModelAttribute("id_Cliente") long id_Cliente,

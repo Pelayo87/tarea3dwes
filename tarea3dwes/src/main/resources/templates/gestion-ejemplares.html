@@ -12,35 +12,35 @@
 </head>
 
 <body>
-    <header>
-        <div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
-        <nav>
-            <a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a>
-            <a href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a>
-            <a href="/fitosanitarios-admin" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
-            <a href="/mensajes-admin" th:text="#{nav.mensajes}">MENSAJES</a>
-        </nav>
-        <nav>
-			<a href="?lang=es">Español</a>
-			<a href="?lang=en">English</a>
-			<a href="?lang=ast">Asturianu</a>
+	<header>
+		<div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
+		<nav>
+			<a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a> 
+			<a th:if="${nombreUsuario == 'admin'}" href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a> 
+			<a href="/gestion-fitosanitarios" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
+			<a href="/gestion-mensajes" th:text="#{nav.mensajes}">MENSAJES</a>
+		</nav>
+		<nav>
+			<a href="?lang=es">Español</a> 
+			<a href="?lang=en">English</a> 
+			<a href="?lang=ast">Asturianu</a> 
 			<a href="?lang=zh">Chino</a>
 		</nav>
-        <div class="admin-desplegable">
-            <div class="circulo-perfil">
-                <img src="img/fotoperfil-admin.png" alt="Foto de perfil del admin">
-            </div>
-            <div class="admin-desplegable-informacion">
-				<strong th:text="#{admin.dropdown.admin}">ADMIN</strong> <a
-					href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
-				<a href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+		<div class="admin-desplegable">
+			<div class="circulo-perfil">
+				<img th:src="${nombreUsuario == 'admin' ? 'img/fotoperfil-admin.png' : 'img/fotoperfil-personal.png'}" alt="Foto de perfil">
 			</div>
-        </div>
-    </header>
+			<div class="admin-desplegable-informacion">
+				<strong th:text="${nombreUsuario == 'admin' ? 'ADMIN' : 'PERSONAL'}"></strong>
+				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a> 
+				<a th:if="${nombreUsuario == 'admin'}" href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
+			</div>
+		</div>
+	</header>
 
-    <div class="formularios-ejemplares">
+	<div class="formularios-ejemplares">
         <div class="card">
-            <form th:action="@{/ejemplares-admin}" method="post">
+            <form th:action="@{/gestion-ejemplares}" method="post">
                 <img src="img/anadir-ejemplar.png" alt="Añadir ejemplar">
                 <h2 class="titulos" th:text="#{admin.anadirEjemplar}">AÑADIR EJEMPLAR</h2>
                 <div class="ejemplar">
@@ -54,7 +54,7 @@
         </div>
     
         <div class="card">
-            <form th:action="@{/ejemplares-admin/modificar}" method="post">
+            <form th:action="@{/gestion-ejemplares/modificar}" method="post">
                 <img src="img/modificar-ejemplar.png" alt="Modificar ejemplar">
                 <h2 class="titulos" th:text="#{admin.modificarEjemplar}">MODIFICAR EJEMPLAR</h2>
                 <div class="ejemplar">
@@ -72,7 +72,7 @@
         </div>
     
         <div class="card">
-            <form th:action="@{/ejemplares-admin/eliminar}" method="post">
+            <form th:action="@{/gestion-ejemplares/eliminar}" method="post">
                 <img src="img/eliminar-ejemplar.png" alt="Eliminar ejemplar">
                 <h2 class="titulos" th:text="#{admin.eliminarEjemplar}">ELIMINAR EJEMPLAR</h2>
                 <div class="ejemplar">
@@ -94,7 +94,7 @@
         de crecimiento particular.
     </p>
 
-		<form method="GET" action="/ejemplares-admin" class="filtro-formulario">
+		<form method="GET" action="/gestion-ejemplares" class="filtro-formulario">
 			<label for="nombreComun" class="filtro-label" th:text="#{filtrar.planta}">Filtrar por planta (nombre común):</label> 
 				<select name="nombreComun" id="nombreComun" class="filtro-select">
 				<option value="" th:text="#{seleccionar.planta}">-- Seleccionar planta --</option>
@@ -125,7 +125,7 @@
             Los usuarios pueden consultar sobre ejemplares en específico.
         </p>
 
-            <form method="GET" action="/ejemplares-admin" class="filtro-formulario">
+            <form method="GET" action="/gestion-ejemplares" class="filtro-formulario">
                 <label for="nombre" class="filtro-label" th:text="#{filtrar.ejemplar}">Filtrar por ejemplar (nombre):</label> 
                     <select name="nombre" id="nombre" class="filtro-select">
                     <option value="" th:text="#{seleccionar.ejemplar}">-- Seleccionar ejemplar --</option>

@@ -170,6 +170,8 @@ public class SesionController {
 	        nuevoCliente.setFechaRegistro(LocalDate.now());
 
 	        Cliente clienteGuardado = S_cliente.guardarCliente(nuevoCliente);
+	        /*id_Cliente = clienteGuardado.getId_cliente();
+	        System.out.println("Id Cliente: " + id_Cliente);*/
 	        if (clienteGuardado == null || clienteGuardado.getId_cliente() <= 0) {
 	            model.addAttribute("error", "Error al guardar el cliente. Inténtalo de nuevo.");
 	            model.addAttribute("mostrarRegistro", true);
@@ -182,6 +184,7 @@ public class SesionController {
 	        credenciales.setCliente(clienteGuardado);
 
 	        Credenciales credencialesGuardadas = S_credenciales.guardarCredenciales(credenciales);
+	        
 	        if (credencialesGuardadas == null || credencialesGuardadas.getId() <= 0) {
 	            model.addAttribute("error", "Error al guardar las credenciales. Inténtalo de nuevo.");
 	            model.addAttribute("mostrarRegistro", true);
@@ -191,6 +194,6 @@ public class SesionController {
 	        model.addAttribute("nombreUsuario", usuario);
 	        model.addAttribute("UsuarioCliente", credencialesGuardadas);
 	        model.addAttribute("mensaje", "Registro completado con éxito.");
-	        return "redirect:/inicio-cliente";
+	        return "redirect:/iniciosesion-registrarse";
 	    }
 	}

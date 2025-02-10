@@ -15,7 +15,7 @@
         <h2 th:text="#{login}">Iniciar Sesion</h2>
         <form th:action="@{/login}" method="post">
             <label for="usuario" th:text="#{personal.usuario}">Nombre de usuario</label>
-            <input type="text" id="usuario" name="usuario" th:placeholder="#{placeholder.personal.usuario}" required>
+            <input type="text" id="usuario" name="usuario" th:placeholder="#{placeholder.personal.nombreCompleto}" required>
 
             <label for="contrasena" th:text="#{personal.contrasena}">Contrasena</label>
             <input type="password" id="contrasena" name="contrasena" th:placeholder="#{placeholder.personal.contrasena}" required>
@@ -37,7 +37,7 @@
 
 		<form th:action="@{/registro}" method="post">
 			<label for="nombre" th:text="#{personal.nombreCompleto}">Nombre Completo</label> <input type="text" id="nombre" name="nombre" 
-			th:placeholder="#{placeholder.personal.nombreComun}" required> 
+			th:placeholder="#{placeholder.personal.nombreCompleto}" required> 
 			<span th:if="${nombreError}" th:text="${nombreError}" style="color: red;"></span>
 
 			<label for="nif_nie" th:placeholder="#{personal.nifnie}">NIF/NIE</label> <input type="text" id="nif_nie" name="nif_nie" 

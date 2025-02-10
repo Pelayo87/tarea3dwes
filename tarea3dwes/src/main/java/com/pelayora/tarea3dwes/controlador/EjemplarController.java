@@ -43,14 +43,14 @@ public class EjemplarController {
      * @param model Modelo para la vista.
      * @return Página de ejemplares.
      */
-    @GetMapping("/ejemplares-admin")
+    @GetMapping("/gestion-ejemplares")
     public String EjemplaresAdmin(
             @RequestParam(value = "nombreComun", required = false) String nombreComun,
             @RequestParam(value = "nombre", required = false) String nombre,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
             Model model) {
 
-        model.addAttribute("mensaje", "Gestión de ejemplares (Usuario administrador)");
+        model.addAttribute("mensaje", "Gestión de ejemplares");
         model.addAttribute("UsuarioActual", nombreUsuario);
 
         if (nombreComun != null && !nombreComun.isEmpty()) {
@@ -70,37 +70,7 @@ public class EjemplarController {
         }
 
         model.addAttribute("plantas", S_planta.listarPlantas());
-        return "ejemplares-admin";
-    }
-    
-    @GetMapping("/ejemplares-personal")
-    public String EjemplaresPersonal(
-            @RequestParam(value = "nombreComun", required = false) String nombreComun,
-            @RequestParam(value = "nombre", required = false) String nombre,
-            @ModelAttribute("nombreUsuario") String nombreUsuario,
-            Model model) {
-
-        model.addAttribute("mensaje", "Gestión de ejemplares (Usuario administrador)");
-        model.addAttribute("UsuarioActual", nombreUsuario);
-
-        if (nombreComun != null && !nombreComun.isEmpty()) {
-            List<Ejemplar> ejemplaresFiltrados = S_ejemplar.obtenerEjemplarPorNombrePlanta(nombreComun);
-            model.addAttribute("ejemplares", ejemplaresFiltrados);
-            model.addAttribute("mensaje", "Filtrado por planta: " + nombreComun);
-        } else {
-            model.addAttribute("ejemplares", S_ejemplar.obtenerTodosLosEjemplares());
-        }
-
-        if (nombre != null && !nombre.isEmpty()) {
-            List<Mensaje> mensajesFiltrados = S_mensaje.obtenerMensajePorNombreEjemplar(nombre);
-            model.addAttribute("mensajes", mensajesFiltrados);
-            model.addAttribute("mensaje", "Filtrado por ejemplar: " + nombre);
-        } else {
-            model.addAttribute("mensajes", S_mensaje.listarMensajes());
-        }
-
-        model.addAttribute("plantas", S_planta.listarPlantas());
-        return "ejemplares-personal";
+        return "gestion-ejemplares";
     }
 
     /**
@@ -111,7 +81,7 @@ public class EjemplarController {
      * @param model Modelo para la vista.
      * @return Redirección a la página de ejemplares.
      */
-    @PostMapping("/ejemplares-admin")
+    @PostMapping("/gestion-ejemplares")
     public String añadirEjemplar(@RequestParam("planta") String codigoPlanta,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
             @ModelAttribute("id_Persona") long id_persona,
@@ -120,7 +90,7 @@ public class EjemplarController {
         Optional<Planta> plantaOpt = S_planta.buscarPlantaPorId(codigoPlanta);
         if (!plantaOpt.isPresent()) {
             model.addAttribute("error", "Planta no encontrada");
-            return "redirect:/ejemplares-admin";
+            return "redirect:/gestion-ejemplares";
         }
 
         Planta planta = plantaOpt.get();
@@ -144,47 +114,20 @@ public class EjemplarController {
         // Guardo el mensaje
         S_mensaje.guardarMensaje(mensajeInicial);
 
-        return "redirect:/ejemplares-admin";
+        return "redirect:/gestion-ejemplares";
     }
-    
-    @PostMapping("/ejemplares-personal")
-    public String añadirEjemplarPersonal(@RequestParam("planta") String codigoPlanta,
-            @ModelAttribute("nombreUsuario") String nombreUsuario,
-            @ModelAttribute("id_Persona") long id_persona,
-            Model model) {
-
-        Optional<Planta> plantaOpt = S_planta.buscarPlantaPorId(codigoPlanta);
-        if (!plantaOpt.isPresent()) {
-            model.addAttribute("error", "Planta no encontrada");
-            return "redirect:/ejemplares-admin";
-        }
-
-        Planta planta = plantaOpt.get();
-        Ejemplar nuevoEjemplar = new Ejemplar();
-        nuevoEjemplar.setPlanta(planta);
-        nuevoEjemplar = S_ejemplar.guardarEjemplar(nuevoEjemplar);
-
-        String nombreEjemplar = planta.getCodigo() + "_" + nuevoEjemplar.getId();
-        nuevoEjemplar.setNombre(nombreEjemplar);
-        S_ejemplar.modificarEjemplar(nuevoEjemplar);
-        
-        Mensaje mensajeInicial = new Mensaje();
-        mensajeInicial.setFechahora(new Date());
-        mensajeInicial.setMensaje("Registro realizado por " + nombreUsuario + " el " + new Date());
-
-        mensajeInicial.setEjemplar(nuevoEjemplar);
-        Persona personaActual = new Persona();
-        personaActual.setId(id_persona);
-        mensajeInicial.setPersona(personaActual);
-
-        // Guardo el mensaje
-        S_mensaje.guardarMensaje(mensajeInicial);
-
-        return "redirect:/ejemplares-personal";
-    }
-    
-    
-    @PostMapping("/ejemplares-admin/modificar")
+     
+    /**
+     * Modifica un ejemplar existente asignándole una nueva planta.
+     *
+     * @param codigoPlanta Código de la planta a asignar.
+     * @param id_ejemplar ID del ejemplar a modificar.
+     * @param nombreUsuario Nombre del usuario que realiza la modificación.
+     * @param id_persona ID de la persona que realiza la modificación.
+     * @param model Modelo para agregar atributos de error si es necesario.
+     * @return Redirecciona a la vista de ejemplares.
+     */
+    @PostMapping("/gestion-ejemplares/modificar")
     public String modificarEjemplar(@RequestParam("planta") String codigoPlanta,
             @RequestParam("id_ejemplar") Long id_ejemplar,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
@@ -196,12 +139,12 @@ public class EjemplarController {
 
         if (!ejemplarOpt.isPresent()) {
             model.addAttribute("error", "Ejemplar no encontrado");
-            return "redirect:/ejemplares-admin";
+            return "redirect:/gestion-ejemplares";
         }
         
         if (!plantaOpt.isPresent()) {
             model.addAttribute("error", "Planta no encontrada");
-            return "redirect:/ejemplares-admin";
+            return "redirect:/gestion-ejemplares";
         }
 
         Ejemplar ejemplar = ejemplarOpt.get();
@@ -226,62 +169,7 @@ public class EjemplarController {
 
         S_mensaje.guardarMensaje(mensajeInicial);
 
-        return "redirect:/ejemplares-admin";
-    }
-
-    /**
-     * Modifica un ejemplar existente asignándole una nueva planta.
-     *
-     * @param codigoPlanta Código de la planta a asignar.
-     * @param id_ejemplar ID del ejemplar a modificar.
-     * @param nombreUsuario Nombre del usuario que realiza la modificación.
-     * @param id_persona ID de la persona que realiza la modificación.
-     * @param model Modelo para agregar atributos de error si es necesario.
-     * @return Redirecciona a la vista de ejemplares.
-     */
-    @PostMapping("/ejemplares-personal/modificar")
-    public String modificarEjemplarPersonal(@RequestParam("planta") String codigoPlanta,
-            @RequestParam("id_ejemplar") Long id_ejemplar,
-            @ModelAttribute("nombreUsuario") String nombreUsuario,
-            @ModelAttribute("id_Persona") long id_persona,
-            Model model) {
-
-        Optional<Ejemplar> ejemplarOpt = S_ejemplar.obtenerEjemplarPorId(id_ejemplar);
-        Optional<Planta> plantaOpt = S_planta.buscarPlantaPorId(codigoPlanta);
-
-        if (!ejemplarOpt.isPresent()) {
-            model.addAttribute("error", "Ejemplar no encontrado");
-            return "redirect:/ejemplares-personal";
-        }
-        
-        if (!plantaOpt.isPresent()) {
-            model.addAttribute("error", "Planta no encontrada");
-            return "redirect:/ejemplares-personal";
-        }
-
-        Ejemplar ejemplar = ejemplarOpt.get();
-        Planta planta = plantaOpt.get();
-        
-        ejemplar.setPlanta(planta);
-
-        String nombreEjemplar = planta.getCodigo() + "_" + id_ejemplar;
-        ejemplar.setNombre(nombreEjemplar);
-
-        S_ejemplar.modificarEjemplar(ejemplar);
-
-        // Creo un mensaje de registro
-        Mensaje mensajeInicial = new Mensaje();
-        mensajeInicial.setFechahora(new Date());
-        mensajeInicial.setMensaje("Ejemplar actualizado por " + nombreUsuario + " el " + new Date());
-        mensajeInicial.setEjemplar(ejemplar);
-
-        Persona personaActual = new Persona();
-        personaActual.setId(id_persona);
-        mensajeInicial.setPersona(personaActual);
-
-        S_mensaje.guardarMensaje(mensajeInicial);
-
-        return "redirect:/ejemplares-personal";
+        return "redirect:/gestion-ejemplares";
     }
 
     /**
@@ -293,7 +181,7 @@ public class EjemplarController {
      * @param model Modelo para agregar mensajes de error si ocurre un problema.
      * @return Redirecciona a la vista de administración de ejemplares.
      */
-    @PostMapping("/ejemplares-admin/eliminar")
+    @PostMapping("/gestion-ejemplares/eliminar")
     public String eliminarEjemplar(@RequestParam("id_ejemplar") Long id_ejemplar, 
                                 @ModelAttribute("nombreUsuario") String nombreUsuario,
                                 @ModelAttribute("id_Persona") long id_persona,
@@ -302,7 +190,7 @@ public class EjemplarController {
     	Optional<Ejemplar> ejemplar = S_ejemplar.obtenerEjemplarPorId(id_ejemplar);
         if (!ejemplar.isPresent()) {
             model.addAttribute("error", "Ejemplar no encontrado");
-            return "redirect:/ejemplares-admin";
+            return "redirect:/gestion-ejemplares";
         }
 
         S_ejemplar.eliminarEjemplar(id_ejemplar);
@@ -316,10 +204,10 @@ public class EjemplarController {
         
         }catch(Exception e) {
         	model.addAttribute("error", "Error al borrar el ejemplar");
-        	return "redirect:/ejemplares-admin";
+        	return "redirect:/gestion-ejemplares";
         }
 
-        return "redirect:/ejemplares-admin";
+        return "redirect:/gestion-ejemplares";
     }
 
     /**
@@ -330,7 +218,7 @@ public class EjemplarController {
      * @param model Modelo para agregar atributos a la vista.
      * @return Retorna la vista con los ejemplares filtrados.
      */
-    @PostMapping("/ejemplares-admin/filtrarportipoplanta")
+    @PostMapping("/gestion-ejemplares/filtrarportipoplanta")
     public String filtrarEjemplarPorTipoDePlanta(
             @RequestParam("tipoPlanta") String tipoPlanta,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
@@ -348,27 +236,6 @@ public class EjemplarController {
         model.addAttribute("UsuarioActual", nombreUsuario);
         model.addAttribute("plantas", S_planta.listarPlantas());
 
-        return "ejemplares-admin";
-    }
-    
-    @PostMapping("/ejemplares-personal/filtrarportipoplanta")
-    public String filtrarEjemplarPorTipoDePlantaPersonal(
-            @RequestParam("tipoPlanta") String tipoPlanta,
-            @ModelAttribute("nombreUsuario") String nombreUsuario,
-            Model model) {
-
-        List<Ejemplar> ejemplaresTipoPlanta = S_ejemplar.obtenerEjemplarPorPlanta(tipoPlanta);
-
-        if (ejemplaresTipoPlanta.isEmpty()) {
-            model.addAttribute("error", "No hay ejemplares para el tipo de planta seleccionado.");
-        } else {
-            model.addAttribute("ejemplares", ejemplaresTipoPlanta);
-        }
-
-        model.addAttribute("mensaje", "Filtrado por tipo de planta: " + tipoPlanta);
-        model.addAttribute("UsuarioActual", nombreUsuario);
-        model.addAttribute("plantas", S_planta.listarPlantas());
-
-        return "ejemplares-personal";
+        return "gestion-ejemplares";
     }
 }
