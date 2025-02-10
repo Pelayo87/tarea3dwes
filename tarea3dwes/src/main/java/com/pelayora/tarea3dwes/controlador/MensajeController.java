@@ -24,6 +24,9 @@ import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
+/**
+ * Controlador para gestionar los mensajes y anotaciones en el sistema.
+ */
 @Controller
 @SessionAttributes({"nombreUsuario", "id_Persona"})
 public class MensajeController {
@@ -40,6 +43,17 @@ public class MensajeController {
     @Autowired
     private ServicioPersona S_persona;
 
+    /**
+     * Muestra la vista de administración de mensajes con filtros opcionales.
+     * 
+     * @param nombre Nombre de la persona asociada al mensaje.
+     * @param fechaInicio Fecha de inicio del filtro.
+     * @param fechaFin Fecha de fin del filtro.
+     * @param planta Tipo de planta asociada.
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param model Modelo de datos para la vista.
+     * @return Nombre de la vista "mensajes-admin".
+     */
     @GetMapping("/mensajes-admin")
     public String MensajesAdmin(
             @RequestParam(value = "nombre", required = false) String nombre,
@@ -87,6 +101,7 @@ public class MensajeController {
         model.addAttribute("mensajes", mensajesFiltrados);
         return "mensajes-admin";
     }
+
     
     @GetMapping("/mensajes-personal")
     public String MensajesPersonal(
@@ -139,6 +154,16 @@ public class MensajeController {
         return "mensajes-personal";
     }
 
+    /**
+     * Registra una anotación en un ejemplar.
+     * 
+     * @param ejemplarId ID del ejemplar asociado a la anotación.
+     * @param mensajeTexto Contenido del mensaje.
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param id_Persona ID de la persona asociada.
+     * @param model Modelo de datos para la vista.
+     * @return Redirección a la vista "mensajes-personal".
+     */
     @PostMapping("/mensajes-personal")
     public String realizarAnotacion(@RequestParam("ejemplar") Long ejemplarId,
                                     @RequestParam("mensaje") String mensajeTexto,

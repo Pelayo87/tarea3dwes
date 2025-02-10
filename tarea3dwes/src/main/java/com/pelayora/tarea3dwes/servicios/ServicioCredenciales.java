@@ -7,7 +7,7 @@ import com.pelayora.tarea3dwes.modelo.Credenciales;
 
 //--------------------------------------------------------
 //Autor: Pelayo Rodríguez Álvarez
-//Fecha: 2024-12-11
+//Fecha: 2025-02-13
 //Descripción: Interfaz de servicio para gestionar las operaciones
 //relacionadas con las credenciales de usuario. Proporciono métodos 
 //para listar, buscar, guardar, eliminar y autenticar credenciales.

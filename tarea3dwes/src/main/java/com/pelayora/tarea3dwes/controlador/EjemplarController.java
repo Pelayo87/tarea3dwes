@@ -19,6 +19,9 @@ import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
+/**
+ * Controlador para la gestión de ejemplares.
+ */
 @Controller
 @SessionAttributes({"nombreUsuario", "id_Persona"})
 public class EjemplarController {
@@ -32,6 +35,14 @@ public class EjemplarController {
     @Autowired
     private ServicioMensaje S_mensaje;
 
+    /**
+     * Muestra la vista de gestión de ejemplares.
+     * @param nombreComun Nombre común de la planta para filtrar.
+     * @param nombre Nombre del ejemplar para filtrar.
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param model Modelo para la vista.
+     * @return Página de ejemplares.
+     */
     @GetMapping("/ejemplares-admin")
     public String EjemplaresAdmin(
             @RequestParam(value = "nombreComun", required = false) String nombreComun,
@@ -92,7 +103,14 @@ public class EjemplarController {
         return "ejemplares-personal";
     }
 
-
+    /**
+     * Agrega un nuevo ejemplar al sistema.
+     * @param codigoPlanta Código de la planta asociada.
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param id_persona ID de la persona en sesión.
+     * @param model Modelo para la vista.
+     * @return Redirección a la página de ejemplares.
+     */
     @PostMapping("/ejemplares-admin")
     public String añadirEjemplar(@RequestParam("planta") String codigoPlanta,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
@@ -210,7 +228,17 @@ public class EjemplarController {
 
         return "redirect:/ejemplares-admin";
     }
-    
+
+    /**
+     * Modifica un ejemplar existente asignándole una nueva planta.
+     *
+     * @param codigoPlanta Código de la planta a asignar.
+     * @param id_ejemplar ID del ejemplar a modificar.
+     * @param nombreUsuario Nombre del usuario que realiza la modificación.
+     * @param id_persona ID de la persona que realiza la modificación.
+     * @param model Modelo para agregar atributos de error si es necesario.
+     * @return Redirecciona a la vista de ejemplares.
+     */
     @PostMapping("/ejemplares-personal/modificar")
     public String modificarEjemplarPersonal(@RequestParam("planta") String codigoPlanta,
             @RequestParam("id_ejemplar") Long id_ejemplar,
@@ -256,7 +284,15 @@ public class EjemplarController {
         return "redirect:/ejemplares-personal";
     }
 
-
+    /**
+     * Elimina un ejemplar por su ID.
+     *
+     * @param id_ejemplar ID del ejemplar a eliminar.
+     * @param nombreUsuario Nombre del usuario que realiza la eliminación.
+     * @param id_persona ID de la persona que realiza la eliminación.
+     * @param model Modelo para agregar mensajes de error si ocurre un problema.
+     * @return Redirecciona a la vista de administración de ejemplares.
+     */
     @PostMapping("/ejemplares-admin/eliminar")
     public String eliminarEjemplar(@RequestParam("id_ejemplar") Long id_ejemplar, 
                                 @ModelAttribute("nombreUsuario") String nombreUsuario,
@@ -285,7 +321,15 @@ public class EjemplarController {
 
         return "redirect:/ejemplares-admin";
     }
-    
+
+    /**
+     * Filtra los ejemplares por tipo de planta.
+     *
+     * @param tipoPlanta Tipo de planta por el cual se filtrarán los ejemplares.
+     * @param nombreUsuario Nombre del usuario que realiza la acción.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Retorna la vista con los ejemplares filtrados.
+     */
     @PostMapping("/ejemplares-admin/filtrarportipoplanta")
     public String filtrarEjemplarPorTipoDePlanta(
             @RequestParam("tipoPlanta") String tipoPlanta,

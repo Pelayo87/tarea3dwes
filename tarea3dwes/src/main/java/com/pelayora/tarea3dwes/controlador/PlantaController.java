@@ -18,6 +18,11 @@ import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
 
+
+/**
+ * Controlador para la gestión de plantas en el vivero.
+ * Proporciona funcionalidades para agregar, modificar y eliminar plantas.
+ */
 @Controller
 @SessionAttributes("nombreUsuario")
 public class PlantaController {
@@ -28,6 +33,12 @@ public class PlantaController {
     @Autowired
     private ServicioEjemplar S_ejemplar;
 
+    /**
+     * Muestra la página de administración de plantas.
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param model Modelo de la vista.
+     * @return Vista de administración de plantas.
+     */
     @GetMapping("/plantas-admin")
     public String PlantasAdmin(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         model.addAttribute("mensaje", "Gestión de plantas (Usuario administrador)");
@@ -35,6 +46,12 @@ public class PlantaController {
         return "plantas-admin";
     }
 
+    /**
+     * Muestra el formulario para añadir una nueva planta.
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param model Modelo de la vista.
+     * @return Vista para añadir plantas.
+     */
     @GetMapping("/plantas-adminAnadir")
     public String PlantasAdminAnadir(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         model.addAttribute("mensaje", "Añadir planta (Usuario administrador)");
@@ -43,6 +60,13 @@ public class PlantaController {
         return "plantas-adminAñadir";
     }
 
+    /**
+     * Guarda una nueva planta en la base de datos.
+     * @param planta Planta a guardar.
+     * @param resultado Resultado de validación.
+     * @param redirectAttributes Atributos para redireccionar mensajes.
+     * @return Redirección a la vista de administración de plantas.
+     */
     @PostMapping("/plantas-adminAnadir")
     public String guardarPlanta(@ModelAttribute Planta planta, BindingResult resultado, RedirectAttributes redirectAttributes) {
         String codigo = planta.getCodigo();
@@ -98,6 +122,12 @@ public class PlantaController {
         return "plantas-adminModificar";
     }
 
+    /**
+     * Modifica los datos de una planta de la base de datos.
+     * @param codigo Código de la planta a modificar.
+     * @param model Modelo de la vista.
+     * @return Redirección a la vista de administración de plantas.
+     */
     @PostMapping("/plantas-adminModificar")
     public String modificarPlanta(@RequestParam("codigo") String codigo,
             @ModelAttribute Planta planta, Model model) {
@@ -146,6 +176,12 @@ public class PlantaController {
         return "plantas-adminEliminar";
     }
 
+    /**
+     * Elimina una planta de la base de datos.
+     * @param codigo Código de la planta a eliminar.
+     * @param model Modelo de la vista.
+     * @return Redirección a la vista de administración de plantas.
+     */
     @PostMapping("/plantas-adminEliminar")
     public String eliminarPlanta(@RequestParam("codigo") String codigo, Model model) {
         try {

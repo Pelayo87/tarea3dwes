@@ -9,13 +9,9 @@ import com.pelayora.tarea3dwes.modelo.Seccion;
 public interface ServicioSeccion {
 	
 	Seccion guardarSeccion(Seccion seccion);
-
 	Optional<Seccion> obtenerSeccionPorId(Long id);
-
 	List<Seccion> obtenerSeccionPorNombre(String nombre);
-
 	List<Seccion> obtenerTodasLasSecciones();
-
 	void eliminarSeccion(Long id);
 
 }

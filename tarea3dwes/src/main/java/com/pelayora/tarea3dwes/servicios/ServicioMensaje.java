@@ -7,7 +7,7 @@ import com.pelayora.tarea3dwes.modelo.Mensaje;
 
 //--------------------------------------------------------
 //Autor: Pelayo Rodríguez Álvarez
-//Fecha: 2024-12-11
+//Fecha: 2025-02-13
 //Descripción: Interfaz de servicio para gestionar las operaciones
 //relacionadas con los mensajes. Proporciona métodos para listar, 
 //buscar por ID, filtrar por persona o ejemplar, guardar nuevos 

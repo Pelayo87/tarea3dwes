@@ -5,6 +5,15 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Fitosanitario;
 
+//--------------------------------------------------------
+//Autor: Pelayo Rodríguez Álvarez
+//Fecha: 2025-02-13
+//Descripción: Interfaz de servicio para gestionar las operaciones
+//relacionadas con los fitosanitarios de los ejemplares. Proporciona métodos 
+//para guardar, buscar por ID o nombre, listar todos los fitosanitarios 
+//y eliminar fitosanitarios del sistema.
+//--------------------------------------------------------
+
 @Service
 public interface ServicioFitosanitario {
 

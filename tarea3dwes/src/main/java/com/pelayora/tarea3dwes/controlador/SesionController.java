@@ -3,7 +3,6 @@ package com.pelayora.tarea3dwes.controlador;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +15,11 @@ import com.pelayora.tarea3dwes.modelo.Credenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 
+
+/**
+ * Controlador encargado de gestionar la sesión de los usuarios.
+ * Permite iniciar sesión, registrarse y gestionar credenciales de usuario.
+ */
 @Controller
 @SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente"})
 public class SesionController {
@@ -31,12 +35,28 @@ public class SesionController {
 	    protected long id_Cliente;
 	    protected long id_Persona;
 	    
+	    
+	    /**
+	     * Muestra el formulario de inicio de sesión y registro.
+	     * 
+	     * @param action Acción opcional para mostrar el formulario de registro.
+	     * @param model Modelo para la vista.
+	     * @return Vista "iniciosesion-registrarse".
+	     */
 	    @GetMapping("/iniciosesion-registrarse")
 	    public String mostrarFormulario(@RequestParam(value = "action", required = false) String action, Model model) {
 	        model.addAttribute("mostrarRegistro", "registro".equals(action));
 	        return "iniciosesion-registrarse";
 	    }
 
+	    /**
+	     * Maneja el inicio de sesión de los usuarios.
+	     * 
+	     * @param usuario Nombre de usuario.
+	     * @param contrasena Contraseña del usuario.
+	     * @param model Modelo para la vista.
+	     * @return Redirección a la página correspondiente según el tipo de usuario.
+	     */
 	    @PostMapping("/login")
 	    public String login(
 	        @RequestParam("usuario") String usuario,
@@ -79,6 +99,16 @@ public class SesionController {
 	        }
 	    }
 	    
+	    /**
+	     * Maneja el registro de nuevos usuarios.
+	     * 
+	     * @param nombre Nombre del usuario.
+	     * @param nif_nie Documento identificativo.
+	     * @param usuario Nombre de usuario.
+	     * @param contrasena Contraseña del usuario.
+	     * @param model Modelo para la vista.
+	     * @return Redirección a la página de inicio del cliente o vista de registro en caso de error.
+	     */
 	    @PostMapping("/registro")
 	    public String registro(@RequestParam("nombre") String nombre,
 	                           @RequestParam("nif_nie") String nif_nie,

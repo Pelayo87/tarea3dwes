@@ -21,6 +21,9 @@ import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 import com.pelayora.tarea3dwes.servicios.ServicioHistorial;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 
+/**
+ * Controlador para la gestión de fitosanitarios en la aplicación.
+ */
 @Controller
 @SessionAttributes({"nombreUsuario", "id_Persona"})
 public class FitosanitariosController {
@@ -38,6 +41,13 @@ public class FitosanitariosController {
     private ServicioMensaje S_mensaje;
 	
 
+	/**
+     * Muestra la vista de gestión de fitosanitarios.
+     * @param nombreComun Nombre común del fitosanitario (opcional).
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param model Modelo para la vista.
+     * @return Vista "fitosanitarios-admin".
+     */
 	@GetMapping("/fitosanitarios-admin")
 	public String FitosanitariosAdmin(@RequestParam(value = "nombreComun", required = false) String nombreComun,
 			@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
@@ -49,7 +59,14 @@ public class FitosanitariosController {
 
 		return "fitosanitarios-admin";
 	}
-	
+
+	/**
+     * Muestra la vista de gestión de fitosanitarios.
+     * @param nombreComun Nombre común del fitosanitario (opcional).
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param model Modelo para la vista.
+     * @return Vista "fitosanitarios-personal".
+     */
 	@GetMapping("/fitosanitarios-personal")
 	public String FitosanitariosPersonal(@RequestParam(value = "nombreComun", required = false) String nombreComun,
 			@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
@@ -61,7 +78,16 @@ public class FitosanitariosController {
 
 		return "fitosanitarios-personal";
 	}
-	
+
+	/**
+     * Aplica un fitosanitario a un ejemplar y guarda el historial correspondiente.
+     * @param idEjemplar ID del ejemplar.
+     * @param idFitosanitario ID del fitosanitario.
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param id_persona ID de la persona que realiza la acción.
+     * @param model Modelo para la vista.
+     * @return Redirección a "fitosanitarios-admin".
+     */
 	@PostMapping("/fitosanitarios-admin")
 	public String aplicarFitosanitario(@RequestParam("ejemplar") long idEjemplar,
 	        @RequestParam("fitosanitario") long idFitosanitario,
@@ -117,7 +143,16 @@ public class FitosanitariosController {
 
 	    return "redirect:/fitosanitarios-admin";
 	}
-	
+
+	 /**
+     * Aplica un fitosanitario a un ejemplar y guarda el historial correspondiente.
+     * @param idEjemplar ID del ejemplar.
+     * @param idFitosanitario ID del fitosanitario.
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param id_persona ID de la persona que realiza la acción.
+     * @param model Modelo para la vista.
+     * @return Redirección a "fitosanitarios-personal".
+     */
 	@PostMapping("/fitosanitarios-personal")
 	public String aplicarFitosanitarioPersonal(@RequestParam("ejemplar") long idEjemplar,
 	        @RequestParam("fitosanitario") long idFitosanitario,

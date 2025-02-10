@@ -7,7 +7,7 @@ import com.pelayora.tarea3dwes.modelo.Planta;
 
 //--------------------------------------------------------
 //Autor: Pelayo Rodríguez Álvarez
-//Fecha: 2024-12-11
+//Fecha: 2025-02-13
 //Descripción: Interfaz de servicio para gestionar las operaciones
 //relacionadas con las plantas. Proporciona métodos para guardar, 
 //modificar, buscar por código, listar todas las plantas y eliminar 

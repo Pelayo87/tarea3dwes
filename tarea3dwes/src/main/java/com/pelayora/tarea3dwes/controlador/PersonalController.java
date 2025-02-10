@@ -25,7 +25,14 @@ public class PersonalController {
     private ServicioCredenciales S_credenciales;
 	
 	private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@[\\w-]+\\.[a-zA-Z]{2,4}$");
-	
+
+	/**
+     * Muestra el formulario para añadir personal.
+     * 
+     * @param nombreUsuario Nombre del usuario en sesión.
+     * @param model Modelo de datos para la vista.
+     * @return Nombre de la vista "añadirpersonal".
+     */
 	@GetMapping("/anadirpersonal")
     public String anadirPersonal(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         model.addAttribute("mensaje", "Añadir personal al vivero");
@@ -34,7 +41,16 @@ public class PersonalController {
         model.addAttribute("credenciales", new Credenciales());
         return "añadirpersonal";
     }
-	
+
+	 /**
+     * Procesa el registro de un nuevo miembro del personal.
+     * 
+     * @param persona Objeto Persona con los datos ingresados.
+     * @param usuario Nombre de usuario proporcionado.
+     * @param password Contraseña proporcionada.
+     * @param model Modelo de datos para la vista.
+     * @return Nombre de la vista a mostrar.
+     */
 	@PostMapping("/anadirpersonal")
     public String registrarPersonal(@ModelAttribute("persona") Persona persona,
                                     @RequestParam("username") String usuario,
@@ -43,6 +59,7 @@ public class PersonalController {
 
         boolean hayErrores = false;
 
+        // Validación del nombre
         if (persona.getNombre() == null || persona.getNombre().trim().isEmpty()) {
             model.addAttribute("nombreError", "El nombre no puede estar vacío.");
             hayErrores = true;
@@ -50,7 +67,8 @@ public class PersonalController {
             model.addAttribute("nombreError", "El nombre solo debe contener letras.");
             hayErrores = true;
         }
-        
+
+        // Validación del correo electrónico
         if (persona.getEmail() == null || persona.getEmail().trim().isEmpty()) {
             model.addAttribute("emailError", "El correo electrónico no puede estar vacío.");
             hayErrores = true;
@@ -62,6 +80,7 @@ public class PersonalController {
             hayErrores = true;
         }
 
+        // Validación del nombre de usuario
         if (usuario == null || usuario.trim().isEmpty()) {
             model.addAttribute("usuarioError", "El nombre de usuario no puede estar vacío.");
             hayErrores = true;
@@ -76,6 +95,7 @@ public class PersonalController {
             hayErrores = true;
         }
 
+        // Validación de la contraseña
         if (password == null || password.trim().isEmpty()) {
             model.addAttribute("passwordError", "La contraseña no puede estar vacía.");
             hayErrores = true;
