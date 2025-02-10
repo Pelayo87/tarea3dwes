@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Cliente;
+import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.repositorios.ClienteRepository;
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 
@@ -40,6 +41,11 @@ public class ServicioClienteImpl implements ServicioCliente{
 	@Transactional
 	public Cliente guardarPlantasFavoritasCliente(Cliente cliente) {
 		return cliente_R.save(cliente);
+	}
+
+	@Override
+	public List<Planta> findPlantasByClienteId(Long id_Cliente) {
+		return cliente_R.findPlantasByClienteId(id_Cliente);
 	}
 
 }

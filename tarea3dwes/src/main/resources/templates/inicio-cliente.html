@@ -11,11 +11,10 @@
 </head>
 <body>
 	<header>
-		<div class="logo">VIVERO CIFP LA LABORAL</div>
+		<div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
 		<nav>
-			<a href="/inicio-cliente">INICIO</a> 
-			<a href="#">VER PLANTAS FAVORITAS</a> 
-			<a href="#">CONTACTO</a>
+			<a href="/inicio-cliente" th:text="#{nav.inicio}">INICIO</a> 
+			<a href="#" th:text="#{nav.contacto}">CONTACTO</a>
 		</nav>
 		<nav>
 			<a href="?lang=es">Español</a>
@@ -25,12 +24,11 @@
 		</nav>
 		<div class="cliente-desplegable">
 			<div class="circulo-perfil">
-				<img src="img/fotoperfil-invitado.png"
-					alt="Foto de perfil del admin">
+				<img src="img/fotoperfil-invitado.png" alt="Foto de perfil del cliente">
 			</div>
 			<div class="cliente-desplegable-informacion">
-				<strong th:text="'Usuario(cliente) : ' + ${UsuarioActual}"></strong> 
-				<a href="/inicio">Cerrar sesión</a>
+				<strong th:text="'Cliente : ' + ${UsuarioActual}"></strong> 
+				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
 			</div>
 		</div>
 	</header>
@@ -39,70 +37,95 @@
 		<h1 th:text="'BIENVENIDO: ' + ${UsuarioActual} + ' al Vivero CIFP'"></h1>
 
 		<section class="destacados">
-			<h2>Catálogo de Plantas</h2>
+			<h2 th:text="#{catalogo.plantas}">Catálogo de Plantas</h2>
 			<div class="grid-plantas">
 				<div class="planta-card" th:each="planta : ${plantas}">
 					<h3 th:text="${planta.nombreComun}">Nombre Común</h3>
 					<p th:text="${planta.nombreCientifico}">Nombre Científico</p>
-					<button type="submit">Añadir a favoritos</button>
+					<form th:action="@{/plantas-favoritas}" method="post">
+						<input type="hidden" name="CodigoPlanta"
+							th:value="${planta.codigo}" />
+						<button type="submit" th:text="#{plantas.anadirFavoritos}">Añadir
+							a favoritos</button>
+					</form>
+				</div>
+			</div>
+		</section>
+
+		<section class="servicios">
+			<h2 th:text="#{servicios.titulo}">Nuestros Servicios</h2>
+			<div class="servicios-grid">
+				<div class="servicio">
+					<img src="img/asesoramiento.png" alt="Asesoramiento">
+					<h3 th:text="#{servicios.asesoramiento}">Asesoramiento
+						Personalizado</h3>
+				</div>
+				<div class="servicio">
+					<img src="img/entrega.png" alt="Entrega">
+					<h3 th:text="#{servicios.entrega}">Entrega a Domicilio</h3>
+				</div>
+				<div class="servicio">
+					<img src="img/mantenimiento.png" alt="Mantenimiento">
+					<h3 th:text="#{servicios.mantenimiento}">Mantenimiento de
+						Jardines</h3>
 				</div>
 			</div>
 		</section>
 	</div>
 
-	   <section class="novedades">
-            <h2>Últimas Novedades</h2>
-            <div class="noticias">
-                <article>
-                    <h3>Nuevo Invernadero</h3>
-                    <p>Hemos inaugurado un nuevo espacio para plantas tropicales.</p>
-                </article>
-                <article>
-                    <h3>Nuevos Ejemplares</h3>
-                    <p>Ampliamos nuestra colección con ejemplares de plantas exóticas de Asia.</p>
-                </article>
-            </div>
-        </section>
-        
-		<section class="servicios">
-			<h2>Nuestros Servicios</h2>
-			<div class="servicios-grid">
-				<div class="servicio">
-					<img src="img/asesoramiento.png" alt="Asesoramiento">
-					<h3>Asesoramiento Personalizado</h3>
+
+		<div class="contenedor-listadoplantas">
+			<h2 th:text="#{plantasfavoritas.titulo}">Plantas Favoritas</h2>
+
+			<p th:text="#{plantas.descripcion}">En nuestro vivero encontrarás
+				una amplia variedad de plantas, desde especies exóticas hasta las
+				más nativas. Ideales para transformar tu hogar o jardín en un
+				espacio lleno de vida y color.</p>
+
+			<h3 th:if="${#lists.isEmpty(plantasFavoritas)}"
+				th:text="#{plantasfavoritas.sin}">No tienes plantas favoritas
+				añadidas.</h3>
+			<table class="tabla-plantas"
+				th:if="${!#lists.isEmpty(plantasFavoritas)}">
+				<thead>
+					<tr>
+						<th th:text="#{plantas.nombreComun}">Nombre Común</th>
+						<th th:text="#{plantas.nombreCientifico}">Nombre Científico</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="planta : ${plantasFavoritas}">
+						<td th:text="${planta.nombreComun}"></td>
+						<td th:text="${planta.nombreCientifico}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+		<footer>
+			<div class="footer">
+				<div class="footer-info">
+					<p class="direccion" th:text="#{footer.direccion}">C. Luis Moya
+						Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
+					<p class="telefono" th:text="#{footer.telefono}">+34 634 23 36
+						87</p>
+					<p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
 				</div>
-				<div class="servicio">
-					<img src="img/entrega.png" alt="Entrega">
-					<h3>Entrega a Domicilio</h3>
+				<div class="horario">
+					<h4 th:text="#{footer.horario.titulo}">Horario</h4>
+					<p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes:
+						9:00 - 20:00</p>
+					<p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
 				</div>
-				<div class="servicio">
-					<img src="img/mantenimiento.png" alt="Mantenimiento">
-					<h3>Mantenimiento de Jardines</h3>
+				<div class="redes-sociales">
+					<a href="#"><img src="img/facebook.png"
+						th:alt="#{social.facebook}" alt="Facebook" /></a> <a href="#"><img
+						src="img/x.png" th:alt="#{social.x}" alt="X" /></a> <a href="#"><img
+						src="img/instagram.png" th:alt="#{social.instagram}"
+						alt="Instagram" /></a>
 				</div>
 			</div>
-		</section>
-
-	<footer>
-        <div class="footer">
-          <div class="footer-info">
-              <p class="direccion" th:text="#{footer.direccion}">
-                C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias
-              </p>
-              <p class="telefono" th:text="#{footer.telefono}">+34 634 23 36 87</p>
-              <p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
-          </div>
-          <div class="horario">
-              <h4 th:text="#{footer.horario.titulo}">Horario</h4>
-              <p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes: 9:00 - 20:00</p>
-              <p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
-          </div>
-          <div class="redes-sociales">
-            <a href="#"><img src="img/facebook.png" th:alt="#{social.facebook}" alt="Facebook" /></a>
-            <a href="#"><img src="img/x.png" th:alt="#{social.x}" alt="X" /></a>
-            <a href="#"><img src="img/instagram.png" th:alt="#{social.instagram}" alt="Instagram" /></a>
-          </div>
-        </div>
-    </footer>
-	
+		</footer>
 </body>
 </html>
