@@ -1,16 +1,16 @@
---PLANTAS
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('1', 'ROSA', 'Rosa chinensis');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('2', 'MARGARITA', 'Bellis perennis');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('3', 'TULIPAN', 'Tulipa gesneriana');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('4', 'ORQUIDEA', 'Phalaenopsis amabilis');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('5', 'LILAS', 'Syringa vulgaris');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('6', 'JAZMIN', 'Jasminum sambac');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('7', 'GERANIO', 'Pelargonium peltatum');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('8', 'ALMENDRO', 'Prunus dulcis');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('9', 'MIMOSA', 'Acacia dealbata');
-INSERT INTO `plantas`(`codigo`, `nombrecientifico`, `nombrecomun`) VALUES ('10', 'MAGNOLIA', 'Magnolia grandiflora');
+/*PLANTAS*/
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`) VALUES ('1', 'ROSA', 'Rosa chinensis');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('2', 'MARGARITA', 'Bellis perennis');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('3', 'TULIPAN', 'Tulipa gesneriana');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('4', 'ORQUIDEA', 'Phalaenopsis amabilis');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('5', 'LILAS', 'Syringa vulgaris');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('6', 'JAZMIN', 'Jasminum sambac');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('7', 'GERANIO', 'Pelargonium peltatum');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('8', 'ALMENDRO', 'Prunus dulcis');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('9', 'MIMOSA', 'Acacia dealbata');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('10', 'MAGNOLIA', 'Magnolia grandiflora');
 
---EJEMPLARES
+/*EJEMPLARES*/
 INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('1','ROSA_1','1');
 INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('2','MARGARITA_2','2');
 INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('3','TULIPAN_3','3');
@@ -22,7 +22,7 @@ INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('8',
 INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('9','MIMOSA_9','9');
 INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('10','MAGNOLIA_10','10');
 
---FITOSANITARIOS
+/*FITOSANITARIOS*/
 INSERT INTO `fitosanitario`(`id_fitosanitario`, `eco`, `marca`, `nombre`) VALUES ('1','Eco-friendly','Bayer','Fitosanitario Alpha');
 INSERT INTO `fitosanitario`(`id_fitosanitario`, `eco`, `marca`, `nombre`) VALUES ('2','Eco-safe','Syngenta','Fitosanitario Beta');
 INSERT INTO `fitosanitario`(`id_fitosanitario`, `eco`, `marca`, `nombre`) VALUES ('3','Eco-plus','BASF','Fitosanitario Gamma');
@@ -34,7 +34,7 @@ INSERT INTO `fitosanitario`(`id_fitosanitario`, `eco`, `marca`, `nombre`) VALUES
 INSERT INTO `fitosanitario`(`id_fitosanitario`, `eco`, `marca`, `nombre`) VALUES ('9','Eco-smart','Nufarm','Fitosanitario Iota');
 INSERT INTO `fitosanitario`(`id_fitosanitario`, `eco`, `marca`, `nombre`) VALUES ('10','Eco-dynamic','FMC','Fitosanitario Kappa');
 
---MENSAJES
+/*MENSAJES*/
 INSERT INTO `mensajes`(`id`, `fechahora`, `mensaje`, `id_ejemplar`, `id_persona`) VALUES ('1','2025-02-03 08:50:30.000000','Registro realizado por admin el Mon Feb 03 08:50:30.000000','1','1');
 INSERT INTO `mensajes`(`id`, `fechahora`, `mensaje`, `id_ejemplar`, `id_persona`) VALUES ('2','2025-02-03 08:51:30.000000','Registro realizado por admin el Mon Feb 03 08:51:30.000000','2','1');
 INSERT INTO `mensajes`(`id`, `fechahora`, `mensaje`, `id_ejemplar`, `id_persona`) VALUES ('3','2025-02-03 08:52:30.000000','Registro realizado por admin el Mon Feb 03 08:52:30.000000','3','1');

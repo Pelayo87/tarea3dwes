@@ -15,7 +15,8 @@
    <header>
 		<div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
 		<nav>
-			<a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a> 
+			<a th:if="${nombreUsuario == 'admin'}" href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a> 
+			<a th:if="${nombreUsuario != 'admin'}" href="/inicio-personal" th:text="#{nav.inicio}">INICIO</a>
 			<a th:if="${nombreUsuario == 'admin'}" href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a> 
 			<a href="/gestion-ejemplares" th:text="#{nav.ejemplares}">EJEMPLARES</a>
 			<a href="/gestion-fitosanitarios" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
