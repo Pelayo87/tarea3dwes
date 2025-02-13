@@ -1,26 +1,26 @@
 /*PLANTAS*/
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`) VALUES ('1', 'ROSA', 'Rosa chinensis');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('2', 'MARGARITA', 'Bellis perennis');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('3', 'TULIPAN', 'Tulipa gesneriana');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('4', 'ORQUIDEA', 'Phalaenopsis amabilis');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('5', 'LILAS', 'Syringa vulgaris');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('6', 'JAZMIN', 'Jasminum sambac');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('7', 'GERANIO', 'Pelargonium peltatum');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('8', 'ALMENDRO', 'Prunus dulcis');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('9', 'MIMOSA', 'Acacia dealbata');
-INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('10', 'MAGNOLIA', 'Magnolia grandiflora');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`) VALUES ('ROSA', 'ROSA', 'Rosa chinensis');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('MARGARITA', 'MARGARITA', 'Bellis perennis');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('TULIPAN', 'TULIPAN', 'Tulipa gesneriana');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('ORQUIDEA', 'ORQUIDEA', 'Phalaenopsis amabilis');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('LILAS', 'LILAS', 'Syringa vulgaris');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('JAZMIN', 'JAZMIN', 'Jasminum sambac');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('GERANIO', 'GERANIO', 'Pelargonium peltatum');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('ALMENDRO', 'ALMENDRO', 'Prunus dulcis');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('MIMOSA', 'MIMOSA', 'Acacia dealbata');
+INSERT INTO `plantas`(`codigo`, `nombrecomun`, `nombrecientifico`)  VALUES ('MAGNOLIA', 'MAGNOLIA', 'Magnolia grandiflora');
 
 /*EJEMPLARES*/
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('1','ROSA_1','1');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('2','MARGARITA_2','2');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('3','TULIPAN_3','3');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('4','ORQUIDEA_4','4');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('5','LILAS_5','5');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('6','JAZMIN_6','6');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('7','GERANIO_7','7');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('8','ALMENDRO_8','8');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('9','MIMOSA_9','9');
-INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('10','MAGNOLIA_10','10');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('1','ROSA_1','ROSA');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('2','MARGARITA_2','MARGARITA');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('3','TULIPAN_3','TULIPAN');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('4','ORQUIDEA_4','ORQUIDEA');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('5','LILAS_5','LILAS');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('6','JAZMIN_6','JAZMIN');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('7','GERANIO_7','GERANIO');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('8','ALMENDRO_8','ALMENDRO');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('9','MIMOSA_9','MIMOSA');
+INSERT INTO `ejemplares`(`id_ejemplar`, `nombrecomun`, `id_planta`) VALUES ('10','MAGNOLIA_10','MAGNOLIA');
 
 /*FITOSANITARIOS*/
 INSERT INTO `fitosanitario`(`id_fitosanitario`, `eco`, `marca`, `nombre`) VALUES ('1','Eco-friendly','Bayer','Fitosanitario Alpha');
