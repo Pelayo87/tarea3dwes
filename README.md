@@ -1,13 +1,18 @@
-🌱 Tarea 3 DWES - Vivero
-Proyecto para la Tarea 3 de Desarrollo Web en Entorno Servidor (DWES). En esta práctica, se implementa un sistema de gestión para un vivero, aplicando arquitectura en capas y buenas prácticas de desarrollo en Spring Web.
+# 🌱 Tarea 3 DWES - Vivero
 
-📌 Tecnologías utilizadas
-Lenguaje: Java
-Base de datos: MySQL
-HTML y CSS para la parte visual
-Apache (servidor local con XAMPP)
+Proyecto para la Tarea 3 de Desarrollo Web en Entorno Servidor (DWES).  
+En esta práctica, se implementa un sistema de gestión para un vivero, aplicando arquitectura en capas y buenas prácticas de desarrollo en Spring Web.
 
-📂 Estructura del proyecto
+## 📌 Tecnologías utilizadas
+
+- **Lenguaje:** Java  
+- **Base de datos:** MySQL  
+- **HTML y CSS** para la parte visual  
+- **Apache** (servidor local con XAMPP)  
+
+## 📂 Estructura del proyecto
+
+```plaintext
 tarea3dwes/
 ├── src/main/java/
 │   ├── com.pelayora.tarea3dwes.configuracion/
@@ -42,9 +47,7 @@ tarea3dwes/
 │   ├── messages.properties                 # Mensajes en idioma predeterminado.
 │   ├── messages_ast.properties             # Traducciones en asturiano.
 │   ├── messages_en.properties              # Traducciones en inglés.
-│   └── messages_zh.properties              # Traducciones en chino.
-
-       
-
+│   ├── messages_zh.properties              # Traducciones en chino.
+     
 ✍️ Autor
 Pelayo Rodríguez Álvarez - 2º DAW - DWES
