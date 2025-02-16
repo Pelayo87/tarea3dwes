@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Redressed&family=Ubuntu:wght@400;700&display=swap");
+
+:root {
+  --fondo-principal: #4a8c3c;
+  --blanco: #fff;
+  --fondo-factura: #e7e7ff;
+  --color-primario: #2f2929;
+  --color-secundario: #7ac16a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Ubuntu", sans-serif;
+}
+
+body {
+  background: var(--fondo-principal);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--color-primario);
+  padding: 0 20px;
+}
+
+.titulo_principal {
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--color-secundario);
+  margin-bottom: 10px;
+}
+
+.titulo_persona {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.titulo_persona > span {
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.texto_derecha {
+  text-align: right;
+}
+
+.texto_centro {
+  text-align: center;
+}
+
+.fila_factura {
+  display: flex;
+}
+
+.factura {
+  width: 800px;
+  max-width: 100%;
+  height: auto;
+  background: var(--blanco);
+  margin: 20px auto;
+}
+
+.factura > div {
+  width: 100%;
+  padding: 40px;
+}
+
+.factura .factura_info .fila_factura {
+  justify-content: space-between;
+}
+
+.factura .factura_info,
+.factura .factura_terminos {
+  background: var(--fondo-factura);
+}
+
+.factura .factura_info > div:not(:last-child) {
+  margin-bottom: 40px;
+} 
+
+.factura .factura_info h1 {
+  font-size: 38px;
+  line-height: 44px;
+  color: var(--color-secundario);
+}
+
+.factura .ancho_15 {
+  width: 15%;
+}
+
+.factura .ancho_50 {
+  width: 50%;
+}
+
+.factura .ancho_55 {
+  width: 55%;
+}
+
+.factura .tabla .fila_factura {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--fondo-factura);
+}
+
+.factura .tabla .fila_factura p {
+  margin: 0;
+  font-weight: 700;
+}
+
+.factura .tabla .tabla_encabezado .fila_factura,
+.factura .tabla .tabla_pie .total_final_wrap {
+  background: var(--fondo-factura);
+  border: 0;
+}
+
+.factura .factura_derecha .terminos {
+  margin: 0;
+}

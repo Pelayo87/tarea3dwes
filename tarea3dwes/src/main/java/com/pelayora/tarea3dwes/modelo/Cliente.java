@@ -41,6 +41,15 @@ public class Cliente {
 	@Column(name = "fechaRegistro")
 	private LocalDate fechaRegistro;
 	
+	@Column(name = "direccionEnvio", length = 255, nullable = false)
+    private String direccionEnvio;
+    
+    @Column(name = "telefono", length = 15, nullable = false)
+    private String telefono;
+
+    @Column(name = "email", length = 100, unique = true, nullable = false)
+    private String email;
+	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(
 	    name = "plantas_clientes",
@@ -55,13 +64,16 @@ public class Cliente {
 	}
 
 	public Cliente(Long id_cliente, String nombre, String nif_nie, LocalDate fechaNacimiento, LocalDate fechaRegistro,
-			List<Planta> plantas) {
+			String direccionEnvio, String telefono, String email, List<Planta> plantas) {
 		super();
 		this.id_cliente = id_cliente;
 		this.nombre = nombre;
 		this.nif_nie = nif_nie;
 		this.fechaNacimiento = fechaNacimiento;
 		this.fechaRegistro = fechaRegistro;
+		this.direccionEnvio = direccionEnvio;
+		this.telefono = telefono;
+		this.email = email;
 		this.plantas = plantas;
 	}
 
@@ -103,6 +115,30 @@ public class Cliente {
 
 	public void setFechaRegistro(LocalDate fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
+	}
+
+	public String getDireccionEnvio() {
+		return direccionEnvio;
+	}
+
+	public void setDireccionEnvio(String direccionEnvio) {
+		this.direccionEnvio = direccionEnvio;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public List<Planta> getPlantas() {

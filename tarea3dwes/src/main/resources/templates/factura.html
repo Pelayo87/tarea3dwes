@@ -1,0 +1,174 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>Factura Vivero CIFP La Laboral</title>
+	<link rel="stylesheet" type="text/css" href="css/factura.css">
+</head>
+<body>
+
+<section>
+  <div class="factura">
+    <div class="factura_info">
+      <div class="fila_factura">
+        <div class="logo_factura">
+          <h1>VIVERO CIFP LA LABORAL</h1>
+        </div>
+        <div class="titulo_factura">
+          <h1>FACTURA</h1>
+        </div>
+      </div>
+      <div class="fila_factura">
+
+        <div class="factura_para">
+          <div class="titulo_principal">
+            <p>Factura Para</p>
+          </div>
+          <div class="titulo_persona">
+            <p th:text="'Cliente : ' + ${UsuarioActual}"></p> 
+          </div>
+          <div class="titulo_persona">
+            <p>C. Luis Moya Blanco, 33203</p>
+            <p>Asturias, España</p>
+          </div>
+        </div>
+        <div class="factura_detalles texto_derecha">
+          <div class="titulo_principal">
+            <p>Detalles de Factura</p>
+          </div>
+          <div class="titulo_persona">
+            <p>No. de Factura:</p>
+            <span>3452356</span>
+          </div>
+          <div class="titulo_persona">
+            <p>Fecha de Factura:</p>
+            <span>16 de marzo de 2025</span>
+          </div>
+        </div>
+      </div>
+      <div class="fila_factura">
+        <div class="factura_pago">
+          <div class="titulo_principal">
+            <p>Métodos de Pago</p>
+          </div>
+          <div class="titulo_persona">
+            <p>Paypal:</p>
+            <span>paypal@tuempresa.com</span>
+          </div>
+          <div class="titulo_persona">
+            <p>Pago con Tarjeta:</p>
+            <span>Visa, MasterCard, Paypal</span>
+          </div>
+        </div>
+        <div class="factura_total texto_derecha">
+          <div class="titulo_principal">
+            <p>Total a Pagar</p>
+          </div>
+          <div class="titulo_persona">
+            <p>Coste en Euros:</p>
+            <span>150.00€</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tabla_factura">
+      <div class="tabla">
+        <div class="tabla_encabezado">
+          <div class="fila_factura">
+            <div class="columna ancho_55">
+              <p class="titulo_persona">DESCRIPCIÓN</p>
+            </div>
+            <div class="columna ancho_15 texto_centro">
+              <p class="titulo_persona">CANTIDAD</p>
+            </div>
+            <div class="columna ancho_15 texto_centro">
+              <p class="titulo_persona">PRECIO</p>
+            </div>
+            <div class="columna ancho_15 texto_derecha">
+              <p class="titulo_persona">TOTAL</p>
+            </div>
+          </div>
+        </div>
+        <div class="tabla_cuerpo">
+          <div class="fila_factura">
+            <div class="columna ancho_55">
+              <p>Ejemplar A</p>
+              <span>Nombre Ejemplar</span>
+            </div>
+            <div class="columna ancho_15 texto_centro">
+              <p>3</p>
+            </div>
+            <div class="columna ancho_15 texto_centro">
+              <p>10.00€</p>
+            </div>
+            <div class="columna ancho_15 texto_derecha">
+              <p>30.00€</p>
+            </div>
+          </div>
+          <div class="fila_factura">
+            <div class="columna ancho_55">
+              <p>Ejemplar B</p>
+              <span>Descripción del producto.</span>
+            </div>
+            <div class="columna ancho_15 texto_centro">
+              <p>5</p>
+            </div>
+            <div class="columna ancho_15 texto_centro">
+              <p>10.00€</p>
+            </div>
+            <div class="columna ancho_15 texto_derecha">
+              <p>50.00€</p>
+            </div>
+          </div>
+          <div class="fila_factura">
+            <div class="columna ancho_55">
+              <p>Ejemplar C</p>
+              <span>Descripción del producto.</span>
+            </div>
+            <div class="columna ancho_15 texto_centro">
+              <p>7</p>
+            </div>
+            <div class="columna ancho_15 texto_centro">
+              <p>10.00€</p>
+            </div>
+            <div class="columna ancho_15 texto_derecha">
+              <p>70.00€</p>
+            </div>
+          </div>
+        </div>
+        <div class="tabla_pie">
+          <div class="fila_factura">
+            <div class="columna ancho_50">
+              <p>Subtotal</p>
+              <p>Total a Pagar</p>
+            </div>
+            <div class="columna ancho_50 texto_derecha">
+              <p>580.00€</p>
+              <p>150.00€</p>
+            </div>
+          </div>
+          <div class="fila_factura total_final_wrap">
+            <div class="columna ancho_50">
+              <p>TOTAL FINAL:</p>
+            </div>
+            <div class="columna ancho_50 texto_derecha">
+              <p>745.00€</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+			<div class="factura_terminos">
+				<div class="titulo_principal">
+					<p>Términos y Condiciones</p>
+				</div>
+				<p>Esta factura es un documento oficial emitido por nuestra empresa y debe ser abonada en un plazo máximo de 30 días a partir
+					de la fecha de emisión. En caso de retraso en el pago, se podrá aplicar un recargo del 5% mensual sobre el importe total.</p>
+				<p>Los productos y servicios facturados están sujetos a la disponibilidad y a las condiciones previamente acordadas con el
+					cliente. No se aceptarán devoluciones ni reembolsos salvo en los casos especificados en nuestra política de garantía.</p>
+				<p>Para cualquier consulta o reclamación, por favor, póngase en contacto con nuestro equipo de atención al cliente a través del
+					correo electrónico contacto@viverolaboral.com o llamando al +34 634 23 36 87</p>
+			</div>
+	</div>
+  </section>
+</body>
+</html>

@@ -112,6 +112,10 @@ public class SesionController {
 	    @PostMapping("/registro")
 	    public String registro(@RequestParam("nombre") String nombre,
 	                           @RequestParam("nif_nie") String nif_nie,
+	                           @RequestParam("fechaNacimiento") String fechaNacimiento,
+	                           @RequestParam("direccionEnvio") String direccionEnvio,
+	                           @RequestParam("telefono") String telefono,
+	                           @RequestParam("email") String email,
 	                           @RequestParam("usuario") String usuario,
 	                           @RequestParam("contrasena") String contrasena,
 	                           Model model) {
@@ -129,33 +133,25 @@ public class SesionController {
 	        if (nif_nie == null || nif_nie.trim().isEmpty()) {
 	            model.addAttribute("nifNieError", "El NIF/NIE no puede estar vacío.");
 	            hayErrores = true;
-	        } else if (!validacionFormatoNifNie.matcher(nif_nie).matches()) {
-	            model.addAttribute("nifNieError", "El NIF/NIE no tiene un formato válido (Ej: 12345678A o X1234567T).");
+	        }
+
+	        if (!telefono.matches("^[0-9]{9,15}$")) {
+	            model.addAttribute("telefonoError", "El teléfono debe tener entre 9 y 15 dígitos numéricos.");
 	            hayErrores = true;
 	        }
 
-	        if (usuario == null || usuario.trim().isEmpty()) {
-	            model.addAttribute("usuarioError", "El nombre de usuario no puede estar vacío.");
-	            hayErrores = true;
-	        } else if (usuario.length() < 4) {
-	            model.addAttribute("usuarioError", "El usuario debe tener al menos 4 caracteres.");
-	            hayErrores = true;
-	        } else if (!usuario.matches("^[a-zA-Z0-9]+$")) {
-	            model.addAttribute("usuarioError", "El usuario solo debe contener letras y números.");
-	            hayErrores = true;
-	        } else if (!usuario.matches(".*[a-zA-Z].*") || !usuario.matches(".*[0-9].*")) {
-	            model.addAttribute("usuarioError", "El usuario debe contener al menos una letra y un número.");
+	        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+	            model.addAttribute("emailError", "El email no tiene un formato válido.");
 	            hayErrores = true;
 	        }
 
-	        if (contrasena == null || contrasena.trim().isEmpty()) {
-	            model.addAttribute("passwordError", "La contraseña no puede estar vacía.");
+	        if (usuario.length() < 4 || !usuario.matches("^[a-zA-Z0-9]+$")) {
+	            model.addAttribute("usuarioError", "El usuario debe tener al menos 4 caracteres, letras y números.");
 	            hayErrores = true;
-	        } else if (contrasena.length() < 8) {
-	            model.addAttribute("passwordError", "La contraseña debe tener al menos 8 caracteres.");
-	            hayErrores = true;
-	        } else if (!contrasena.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-	            model.addAttribute("passwordError", "La contraseña debe contener al menos un carácter especial.");
+	        }
+
+	        if (contrasena.length() < 8 || !contrasena.matches(".*[!@#$%^&*()].*")) {
+	            model.addAttribute("passwordError", "La contraseña debe tener al menos 8 caracteres y un símbolo.");
 	            hayErrores = true;
 	        }
 
@@ -167,12 +163,14 @@ public class SesionController {
 	        Cliente nuevoCliente = new Cliente();
 	        nuevoCliente.setNombre(nombre);
 	        nuevoCliente.setNif_nie(nif_nie);
+	        nuevoCliente.setFechaNacimiento(LocalDate.parse(fechaNacimiento));
 	        nuevoCliente.setFechaRegistro(LocalDate.now());
+	        nuevoCliente.setDireccionEnvio(direccionEnvio);
+	        nuevoCliente.setTelefono(telefono);
+	        nuevoCliente.setEmail(email);
 
 	        Cliente clienteGuardado = S_cliente.guardarCliente(nuevoCliente);
-	        /*id_Cliente = clienteGuardado.getId_cliente();
-	        System.out.println("Id Cliente: " + id_Cliente);*/
-	        if (clienteGuardado == null || clienteGuardado.getId_cliente() <= 0) {
+	        if (clienteGuardado == null) {
 	            model.addAttribute("error", "Error al guardar el cliente. Inténtalo de nuevo.");
 	            model.addAttribute("mostrarRegistro", true);
 	            return "iniciosesion-registrarse";
@@ -184,8 +182,7 @@ public class SesionController {
 	        credenciales.setCliente(clienteGuardado);
 
 	        Credenciales credencialesGuardadas = S_credenciales.guardarCredenciales(credenciales);
-	        
-	        if (credencialesGuardadas == null || credencialesGuardadas.getId() <= 0) {
+	        if (credencialesGuardadas == null) {
 	            model.addAttribute("error", "Error al guardar las credenciales. Inténtalo de nuevo.");
 	            model.addAttribute("mostrarRegistro", true);
 	            return "iniciosesion-registrarse";
@@ -194,6 +191,7 @@ public class SesionController {
 	        model.addAttribute("nombreUsuario", usuario);
 	        model.addAttribute("UsuarioCliente", credencialesGuardadas);
 	        model.addAttribute("mensaje", "Registro completado con éxito.");
-	        return "redirect:/iniciosesion-registrarse";
+	        return "redirect:/inicio-cliente";
 	    }
+
 	}
