@@ -15,7 +15,8 @@
     <header>
 		<div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
 		<nav>
-			<a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a> 
+			<a th:if="${nombreUsuario == 'admin'}" href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a>
+			<a th:if="${nombreUsuario != 'admin'}" href="/inicio-personal" th:text="#{nav.inicio}">INICIO</a> 
 			<a th:if="${nombreUsuario == 'admin'}" href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a> 
 			<a href="/gestion-ejemplares" th:text="#{nav.ejemplares}">EJEMPLARES</a>
 			<a href="/gestion-mensajes" th:text="#{nav.mensajes}">MENSAJES</a>
@@ -59,7 +60,7 @@
 
 	<div class="contenedor-listadofitosanitarios">
 	<h2 class="titulos" th:text="#{fitosanitario.listado.titulo}">LISTADO DE FITOSANITARIOS</h2>
-	<p th:text="#{fitosanitario.listado.descripcion}">Gestiona y visualiza todos los fitosanitarios disponibles en nuestro vivero. Cada fitosanitario está diseñado para tratar las
+	<p th:text="#{fitosanitario.listado.descripcion}">Gestiona y visualiza todos los fitosanitarios disponibles en nuestro vivero. Cada fitosanitario esta diseñado para tratar las
 	   necesidades específicas de nuestras plantas, asegurando su salud y protección contra plagas y enfermedades. Cada uno tiene
 	   características particulares en cuanto a su composición, uso y aplicación.
 	</p>

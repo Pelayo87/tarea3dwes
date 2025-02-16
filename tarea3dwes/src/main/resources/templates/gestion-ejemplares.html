@@ -15,7 +15,8 @@
 	<header>
 		<div class="logo" th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
 		<nav>
-			<a href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a> 
+			<a th:if="${nombreUsuario == 'admin'}" href="/inicio-admin" th:text="#{nav.inicio}">INICIO</a>
+			<a th:if="${nombreUsuario != 'admin'}" href="/inicio-personal" th:text="#{nav.inicio}">INICIO</a> 
 			<a th:if="${nombreUsuario == 'admin'}" href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a> 
 			<a href="/gestion-fitosanitarios" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
 			<a href="/gestion-mensajes" th:text="#{nav.mensajes}">MENSAJES</a>
@@ -90,7 +91,7 @@
     <h2 class="titulos" th:text="#{listado.ejemplares.titulo}">LISTADO DE EJEMPLARES</h2>
     <p th:text="#{listado.ejemplares.descripcion}">
         Gestiona y visualiza todos los ejemplares disponibles en nuestro vivero. Cada ejemplar es único y
-        representa una instancia específica de nuestras plantas, con sus propias características y estado
+        representa una instancia especifica de nuestras plantas, con sus propias caracteristicas y estado
         de crecimiento particular.
     </p>
 
@@ -122,7 +123,7 @@
     <div class="contenedor-listado">
         <h2 class="titulos" th:text="#{listado.mensajesejemplares.titulo}">LISTADO DE MENSAJES DE EJEMPLARES</h2>
         <p th:text="#{listado.mensajesejemplares.descripcion}">Aquí puedes ver y gestionar todos los mensajes relacionados con los ejemplares del vivero. 
-            Los usuarios pueden consultar sobre ejemplares en específico.
+            Los usuarios pueden consultar sobre ejemplares en especifico.
         </p>
 
             <form method="GET" action="/gestion-ejemplares" class="filtro-formulario">

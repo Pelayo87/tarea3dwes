@@ -67,6 +67,7 @@ public class MensajeController {
         model.addAttribute("UsuarioActual", nombreUsuario);
         model.addAttribute("plantas", S_planta.listarPlantas());
         model.addAttribute("personas", S_persona.listarPersonas());
+        model.addAttribute("ejemplares", S_ejemplar.obtenerTodosLosEjemplares());
 
         List<Mensaje> mensajesFiltrados = S_mensaje.listarMensajes();
 
