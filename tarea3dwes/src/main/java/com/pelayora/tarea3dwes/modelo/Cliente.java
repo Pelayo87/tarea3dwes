@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 //--------------------------------------------------------
@@ -57,6 +58,9 @@ public class Cliente {
 	    inverseJoinColumns = @JoinColumn(name = "codigo")
 	)
 	private List<Planta> plantas = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Pedido> pedidos;
 
 
 	public Cliente() {
@@ -75,6 +79,21 @@ public class Cliente {
 		this.telefono = telefono;
 		this.email = email;
 		this.plantas = plantas;
+	}
+
+	public Cliente(Long id_cliente, String nombre, String nif_nie, LocalDate fechaNacimiento, LocalDate fechaRegistro,
+			String direccionEnvio, String telefono, String email, List<Planta> plantas, List<Pedido> pedidos) {
+		super();
+		this.id_cliente = id_cliente;
+		this.nombre = nombre;
+		this.nif_nie = nif_nie;
+		this.fechaNacimiento = fechaNacimiento;
+		this.fechaRegistro = fechaRegistro;
+		this.direccionEnvio = direccionEnvio;
+		this.telefono = telefono;
+		this.email = email;
+		this.plantas = plantas;
+		this.pedidos = pedidos;
 	}
 
 	public Long getId_cliente() {
@@ -147,6 +166,14 @@ public class Cliente {
 
 	public void setPlantas(List<Planta> plantas) {
 		this.plantas = plantas;
+	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override

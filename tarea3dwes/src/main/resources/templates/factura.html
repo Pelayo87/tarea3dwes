@@ -27,21 +27,26 @@
             <p th:text="'Cliente : ' + ${UsuarioActual}"></p> 
           </div>
           <div class="titulo_persona">
-            <p>C. Luis Moya Blanco, 33203</p>
-            <p>Asturias, España</p>
+            <p th:text="${direccionCliente}"></p>
+          </div>
+          <div class="titulo_persona">
+            <p th:text="${nifnieCliente}"></p>
+          </div>
+          <div class="titulo_persona">
+            <p th:text="${emailCliente}"></p>
           </div>
         </div>
         <div class="factura_detalles texto_derecha">
           <div class="titulo_principal">
-            <p>Detalles de Factura</p>
+            <p>Detalles del Pedido</p>
           </div>
           <div class="titulo_persona">
-            <p>No. de Factura:</p>
+            <p>No. de Pedido:</p>
             <span>3452356</span>
           </div>
           <div class="titulo_persona">
-            <p>Fecha de Factura:</p>
-            <span>16 de marzo de 2025</span>
+            <p>Fecha de Pedido:</p>
+            <span th:text="${fechaHoy}"></span>
           </div>
         </div>
       </div>
@@ -52,7 +57,7 @@
           </div>
           <div class="titulo_persona">
             <p>Paypal:</p>
-            <span>paypal@tuempresa.com</span>
+            <span>paypal@viverocifp.com</span>
           </div>
           <div class="titulo_persona">
             <p>Pago con Tarjeta:</p>
@@ -139,11 +144,13 @@
           <div class="fila_factura">
             <div class="columna ancho_50">
               <p>Subtotal</p>
+              <p>Impuestos Transladados  IVA 16,00%</p>
               <p>Total a Pagar</p>
             </div>
             <div class="columna ancho_50 texto_derecha">
-              <p>580.00€</p>
               <p>150.00€</p>
+              <p>24.00€</p>
+              <p>174.00€</p>
             </div>
           </div>
           <div class="fila_factura total_final_wrap">
@@ -151,7 +158,7 @@
               <p>TOTAL FINAL:</p>
             </div>
             <div class="columna ancho_50 texto_derecha">
-              <p>745.00€</p>
+              <p>174.00€</p>
             </div>
           </div>
         </div>

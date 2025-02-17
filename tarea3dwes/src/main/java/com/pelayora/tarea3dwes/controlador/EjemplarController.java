@@ -96,6 +96,7 @@ public class EjemplarController {
         Planta planta = plantaOpt.get();
         Ejemplar nuevoEjemplar = new Ejemplar();
         nuevoEjemplar.setPlanta(planta);
+        nuevoEjemplar.setDisponible(true);
         nuevoEjemplar = S_ejemplar.guardarEjemplar(nuevoEjemplar);
 
         String nombreEjemplar = planta.getCodigo() + "_" + nuevoEjemplar.getId();

@@ -21,7 +21,7 @@ import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
  * Permite iniciar sesión, registrarse y gestionar credenciales de usuario.
  */
 @Controller
-@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente"})
+@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente", "Usuario"})
 public class SesionController {
 
 	    @Autowired
@@ -68,6 +68,7 @@ public class SesionController {
 	        	Optional<Credenciales> credencialesAutenticadas = S_credenciales.buscarPorUsuario(usuario);
 	        	
 	        	Credenciales credenciales = credencialesAutenticadas.get();
+	        	Cliente Usuario= new Cliente();
 
 				if (credenciales.getPersona() != null) {
 					id_Persona = credenciales.getPersona().getId();
@@ -77,6 +78,7 @@ public class SesionController {
 
 				if (credenciales.getCliente() != null) {
 					id_Cliente = credenciales.getCliente().getId_cliente();
+					Usuario= credenciales.getCliente();
 				} else {
 					id_Cliente = -1;
 				}
@@ -84,7 +86,7 @@ public class SesionController {
 	            model.addAttribute("nombreUsuario", usuario);
 	            model.addAttribute("id_Persona", id_Persona);
 	            model.addAttribute("id_Cliente", id_Cliente);
-	            model.addAttribute("Usuario" , Usuarioautenticado);
+	            model.addAttribute("Usuario" , Usuario);
 	            if ("admin".equalsIgnoreCase(usuario) && "admin".equals(contrasena)) {
 	                return "redirect:/inicio-admin";
 	            } else if (id_Persona <= 0 && !"admin".equalsIgnoreCase(usuario) && !"admin".equals(contrasena)) {
@@ -189,7 +191,8 @@ public class SesionController {
 	        }
 
 	        model.addAttribute("nombreUsuario", usuario);
-	        model.addAttribute("UsuarioCliente", credencialesGuardadas);
+	        model.addAttribute("Usuario", credencialesGuardadas);
+	        model.addAttribute("id_Cliente", clienteGuardado.getId_cliente());
 	        model.addAttribute("mensaje", "Registro completado con éxito.");
 	        return "redirect:/inicio-cliente";
 	    }
