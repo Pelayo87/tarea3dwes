@@ -33,12 +33,22 @@ public class ClienteController {
 	private ServicioCliente S_cliente;
 	
 	@GetMapping("/factura")
-    public String inicioViveroCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
+    public String facturaCompraCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
                                       @ModelAttribute("id_Cliente") Long id_Cliente,
                                       Model model) {
 		model.addAttribute("mensaje", "Factura del cliente");
 		model.addAttribute("UsuarioActual", nombreUsuario);
 		model.addAttribute("id_Cliente", id_Cliente);
 		return "factura";
+	}
+	
+	@GetMapping("/carrito-compra")
+    public String carritoCompraCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
+                                      @ModelAttribute("id_Cliente") Long id_Cliente,
+                                      Model model) {
+		model.addAttribute("mensaje", "Factura del cliente");
+		model.addAttribute("UsuarioActual", nombreUsuario);
+		model.addAttribute("id_Cliente", id_Cliente);
+		return "carrito-compra";
 	}
 }
