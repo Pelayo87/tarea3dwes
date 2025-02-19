@@ -43,10 +43,15 @@ public class SesionController {
 	     * @param model Modelo para la vista.
 	     * @return Vista "iniciosesion-registrarse".
 	     */
-	    @GetMapping("/iniciosesion-registrarse")
+	    /*@GetMapping("/iniciosesion-registrarse")
 	    public String mostrarFormulario(@RequestParam(value = "action", required = false) String action, Model model) {
 	        model.addAttribute("mostrarRegistro", "registro".equals(action));
 	        return "iniciosesion-registrarse";
+	    }*/
+	    
+	    @GetMapping("/login")
+	    public String mostrarLogin() {
+	        return "iniciosesion-registrarse"; 
 	    }
 
 	    /**
@@ -57,7 +62,7 @@ public class SesionController {
 	     * @param model Modelo para la vista.
 	     * @return Redirección a la página correspondiente según el tipo de usuario.
 	     */
-	    @PostMapping("/login")
+	    /*@PostMapping("/login")
 	    public String login(
 	        @RequestParam("usuario") String usuario,
 	        @RequestParam("contrasena") String contrasena, Model model) {
@@ -99,7 +104,7 @@ public class SesionController {
 				System.err.println("Usuario o contraseña incorrectos.");
 	            return "iniciosesion-registrarse";
 	        }
-	    }
+	    }*/
 	    
 	    /**
 	     * Maneja el registro de nuevos usuarios.

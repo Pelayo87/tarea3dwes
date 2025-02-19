@@ -11,26 +11,27 @@
 
 <body>
 
-    <div class="container" id="login" th:unless="${mostrarRegistro}">
-        <h2 th:text="#{login}">Iniciar Sesion</h2>
-        <form th:action="@{/login}" method="post">
-            <label for="usuario" th:text="#{personal.usuario}">Nombre de usuario</label>
-            <input type="text" id="usuario" name="usuario" th:placeholder="#{placeholder.personal.nombreCompleto}" required>
+	<div class="container" id="login" th:unless="${mostrarRegistro}">
+		<h2 th:text="#{login}">Iniciar Sesión</h2>
+		<form th:action="@{/login}" method="post">
+			<label for="usuario" th:text="#{personal.usuario}">Nombre de usuario</label> 
+			<input type="text" id="usuario" name="usuario" th:placeholder="#{placeholder.personal.nombreCompleto}" required>
 
-            <label for="contrasena" th:text="#{personal.contrasena}">Contrasena</label>
-            <input type="password" id="contrasena" name="contrasena" th:placeholder="#{placeholder.personal.contrasena}" required>
+			<label for="contrasena" th:text="#{personal.contrasena}">Contraseña</label>
+			<input type="password" id="contrasena" name="contrasena" th:placeholder="#{placeholder.personal.contrasena}" required>
 
-            <button type="submit" th:text="#{login}">Iniciar Sesion</button>
-        </form>
-        <div class="link">
-            <p>¿No tienes una cuenta? 
-            <a th:href="@{/iniciosesion-registrarse(action='registro')}" th:text="#{register}">Registrate</a>
-            </p>
-        </div>
-    </div>
+			<button type="submit" th:text="#{login}">Iniciar Sesión</button>
+		</form>
+		<div class="link">
+			<p>¿No tienes una cuenta? 
+			<a th:href="@{/iniciosesion-registrarse(action='registro')}" th:text="#{register}">Regístrate</a>
+			</p>
+		</div>
+	</div>
 
-    <div id="error" th:text="${error}" style="display: none;"></div>
-    <div id="mensaje" th:text="${success}" style="display: none;"></div>
+	<div id="error" th:text="${error}" style="display: none;"></div>
+	<div id="mensaje" th:text="${success}" style="display: none;"></div>
+
 
 	<div class="container" id="registro" th:if="${mostrarRegistro}">
     <h2 th:text="#{register}">Registrarse (Nuevo Cliente)</h2>
