@@ -27,7 +27,7 @@ import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
  */
 
 @Controller
-@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente"})
+@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente", "UsuarioCliente", "UsuarioPersona"})
 public class ViveroController {
     
     @Autowired
@@ -165,13 +165,5 @@ public class ViveroController {
 
         return "redirect:/inicio-cliente";
     }
-	
-	/*// Método para obtener la primera letra
-    private String obtenerPrimeraLetra(String nombre) {
-        if (nombre != null && !nombre.isEmpty()) {
-            return String.valueOf(nombre.charAt(0)).toUpperCase();
-        }
-        return "";
-    }	*/
 }
 

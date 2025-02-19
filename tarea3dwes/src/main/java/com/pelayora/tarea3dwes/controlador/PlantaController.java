@@ -26,7 +26,7 @@ import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
  * Proporciona funcionalidades para agregar, modificar y eliminar plantas.
  */
 @Controller
-@SessionAttributes("nombreUsuario")
+@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente", "UsuarioCliente", "UsuarioPersona"})
 public class PlantaController {
 
     @Autowired

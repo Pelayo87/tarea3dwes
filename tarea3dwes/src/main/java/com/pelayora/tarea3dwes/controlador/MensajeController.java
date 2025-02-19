@@ -28,7 +28,7 @@ import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
  * Controlador para gestionar los mensajes y anotaciones en el sistema.
  */
 @Controller
-@SessionAttributes({"nombreUsuario", "id_Persona"})
+@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente", "UsuarioCliente", "UsuarioPersona"})
 public class MensajeController {
 
     @Autowired

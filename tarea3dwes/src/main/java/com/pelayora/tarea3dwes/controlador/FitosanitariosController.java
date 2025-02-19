@@ -25,7 +25,7 @@ import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
  * Controlador para la gestión de fitosanitarios en la aplicación.
  */
 @Controller
-@SessionAttributes({"nombreUsuario", "id_Persona"})
+@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente", "UsuarioCliente", "UsuarioPersona"})
 public class FitosanitariosController {
 	
 	@Autowired

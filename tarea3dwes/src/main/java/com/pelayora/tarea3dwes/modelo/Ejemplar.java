@@ -32,9 +32,6 @@ public class Ejemplar {
 	@Column(name = "nombrecomun", length = 50)
 	private String nombre;
 	
-	@Column(name = "disponible")
-	private boolean disponible;
-	
 	@ManyToOne(cascade= CascadeType.REMOVE)
 	@JoinColumn(name="id_planta")
 	private Planta planta;
@@ -68,12 +65,11 @@ public class Ejemplar {
 		this.mensajes = mensajes;
 	}
 
-	public Ejemplar(Long id_ejemplar, String nombre, boolean disponible, Planta planta, List<Mensaje> mensajes,
+	public Ejemplar(Long id_ejemplar, String nombre, Planta planta, List<Mensaje> mensajes,
 			List<Fitosanitario> fitosanitarios, Historial historial, Localizacion localizacion) {
 		super();
 		this.id_ejemplar = id_ejemplar;
 		this.nombre = nombre;
-		this.disponible = disponible;
 		this.planta = planta;
 		this.mensajes = mensajes;
 		this.fitosanitarios = fitosanitarios;
@@ -81,12 +77,11 @@ public class Ejemplar {
 		this.localizacion = localizacion;
 	}
 
-	public Ejemplar(Long id_ejemplar, String nombre, boolean disponible, Planta planta, List<Mensaje> mensajes,
+	public Ejemplar(Long id_ejemplar, String nombre, Planta planta, List<Mensaje> mensajes,
 			List<Fitosanitario> fitosanitarios, Historial historial, Localizacion localizacion, List<Pedido> pedidos) {
 		super();
 		this.id_ejemplar = id_ejemplar;
 		this.nombre = nombre;
-		this.disponible = disponible;
 		this.planta = planta;
 		this.mensajes = mensajes;
 		this.fitosanitarios = fitosanitarios;
@@ -109,14 +104,6 @@ public class Ejemplar {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public boolean isDisponible() {
-		return disponible;
-	}
-
-	public void setDisponible(boolean disponible) {
-		this.disponible = disponible;
 	}
 
 	public Planta getPlanta() {

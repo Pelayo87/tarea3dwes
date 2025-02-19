@@ -38,7 +38,7 @@ public class ConfiguracionSecurity {
             .csrf(csrf -> csrf.disable())
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/login", "/iniciosesion-registrarse", "/registro").permitAll()
+                .requestMatchers("/", "/inicio", "/login", "/iniciosesion-registrarse", "/registro", "/css/**", "/js/**", "/img/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -58,4 +58,3 @@ public class ConfiguracionSecurity {
         return http.build();
     }
 }
-

@@ -3,6 +3,7 @@ package com.pelayora.tarea3dwes.serviciosImpl;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Credenciales;
 import com.pelayora.tarea3dwes.modelo.Persona;
@@ -20,6 +21,9 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
 
     @Autowired
     private PersonaRepository personaRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<Credenciales> listarCredenciales() {
@@ -49,7 +53,7 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
 
             Credenciales credencialesAdmin = new Credenciales();
             credencialesAdmin.setUsuario("admin");
-            credencialesAdmin.setPassword("admin");
+            credencialesAdmin.setPassword(passwordEncoder.encode("admin"));
             credencialesAdmin.setPersona(personaAdmin);
 
             credenciales_R.save(credencialesAdmin);
@@ -61,6 +65,11 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
 
     @Override
     public Credenciales guardarCredenciales(Credenciales credenciales) {
+       if (credenciales.getPassword() == null || credenciales.getPassword().isEmpty()) {
+    	        System.err.println("La contraseña no puede ser nula o vacía");
+    	}
+
+    	credenciales.setPassword(passwordEncoder.encode(credenciales.getPassword()));
         return credenciales_R.save(credenciales);
     }
 

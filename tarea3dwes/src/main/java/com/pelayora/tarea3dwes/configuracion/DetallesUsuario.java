@@ -26,6 +26,14 @@ public class DetallesUsuario implements UserDetails {
         return (c != null) ? c.getId_cliente() : -1L;
     }
     
+    public Cliente getCliente() {
+        return credenciales.getCliente();
+    }
+    
+    public Persona getPersona() {
+        return credenciales.getPersona();
+    }
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();

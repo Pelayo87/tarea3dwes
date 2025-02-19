@@ -27,7 +27,7 @@ public class Credenciales {
 	@Column(name = "usuario", length = 50)
 	private String usuario;
 	
-	@Column(name = "password", length = 50)
+	@Column(name = "password", length = 100)
 	private String password;
 	
 	@OneToOne

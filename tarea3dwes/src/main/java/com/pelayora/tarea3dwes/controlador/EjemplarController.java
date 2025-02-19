@@ -23,7 +23,7 @@ import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
  * Controlador para la gestión de ejemplares.
  */
 @Controller
-@SessionAttributes({"nombreUsuario", "id_Persona"})
+@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente", "UsuarioCliente", "UsuarioPersona"})
 public class EjemplarController {
 
     @Autowired
@@ -96,7 +96,7 @@ public class EjemplarController {
         Planta planta = plantaOpt.get();
         Ejemplar nuevoEjemplar = new Ejemplar();
         nuevoEjemplar.setPlanta(planta);
-        nuevoEjemplar.setDisponible(true);
+        //nuevoEjemplar.setDisponible(true);
         nuevoEjemplar = S_ejemplar.guardarEjemplar(nuevoEjemplar);
 
         String nombreEjemplar = planta.getCodigo() + "_" + nuevoEjemplar.getId();

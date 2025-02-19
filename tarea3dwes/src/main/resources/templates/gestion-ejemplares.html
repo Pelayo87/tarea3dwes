@@ -32,7 +32,8 @@
 				<img th:src="${nombreUsuario == 'admin' ? 'img/fotoperfil-admin.png' : 'img/fotoperfil-personal.png'}" alt="Foto de perfil">
 			</div>
 			<div class="admin-desplegable-informacion">
-				<strong th:text="${nombreUsuario == 'admin' ? 'ADMIN' : 'PERSONAL'}"></strong>
+			    <strong th:if="${nombreUsuario == 'admin'}">ADMIN</strong>
+				<strong th:if="${nombreUsuario != 'admin'}" th:text="'Cliente : ' + ${UsuarioActual}"></strong>
 				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a> 
 				<a th:if="${nombreUsuario == 'admin'}" href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
 			</div>

@@ -15,7 +15,7 @@ import com.pelayora.tarea3dwes.servicios.ServicioCredenciales;
 import com.pelayora.tarea3dwes.servicios.ServicioPersona;
 
 @Controller
-@SessionAttributes({"nombreUsuario", "id_Persona"})
+@SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente", "UsuarioCliente", "UsuarioPersona"})
 public class PersonalController {
 	
 	@Autowired
