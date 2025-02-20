@@ -4,6 +4,11 @@ body {
     color: #333;
 }
 
+.logo{
+	width:100px;
+	height:100px;
+}
+
 header {
     display: flex;
     justify-content: space-between;
