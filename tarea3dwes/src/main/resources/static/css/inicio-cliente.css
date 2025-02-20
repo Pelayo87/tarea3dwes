@@ -78,6 +78,59 @@ h1 {
     background: #45a049;
 }
 
+.quantity-selector {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.quantity-selector button.minus-btn,
+.quantity-selector button.plus-btn {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    margin: 0 5px;
+    transition: background 0.3s ease;
+}
+
+.quantity-selector button.minus-btn:hover,
+.quantity-selector button.plus-btn:hover {
+    background-color: #d32f2f;
+}
+
+.quantity-selector .quantity-input {
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    padding: 3px;
+}
+
+.add-cart-btn {
+    display: block;
+    margin: 10px auto 0 auto;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.add-cart-btn:hover {
+    background-color: #d32f2f;
+}
+
+
 .servicios {
     margin: 40px 0;
 }
