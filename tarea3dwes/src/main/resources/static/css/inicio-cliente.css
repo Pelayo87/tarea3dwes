@@ -18,8 +18,8 @@ h1 {
 }
 
 #carrito-compra{
-	width: 40px;
-    height: 40px;
+	width: 60px;
+    height: 60px;
 }
 
 .destacados {
@@ -86,7 +86,7 @@ h1 {
 
 .quantity-selector button.minus-btn,
 .quantity-selector button.plus-btn {
-    background-color: #f44336;
+    background-color: #4CAF50;
     color: #fff;
     border: none;
     width: 30px;
@@ -100,7 +100,7 @@ h1 {
 
 .quantity-selector button.minus-btn:hover,
 .quantity-selector button.plus-btn:hover {
-    background-color: #d32f2f;
+    background-color: #45a049;
 }
 
 .quantity-selector .quantity-input {
@@ -116,7 +116,7 @@ h1 {
 .add-cart-btn {
     display: block;
     margin: 10px auto 0 auto;
-    background-color: #f44336;
+    background-color: #4CAF50;
     color: #fff;
     border: none;
     padding: 12px 20px;
@@ -127,7 +127,7 @@ h1 {
 }
 
 .add-cart-btn:hover {
-    background-color: #d32f2f;
+    background-color: #45a049;
 }
 
 

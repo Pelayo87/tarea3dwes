@@ -35,7 +35,7 @@
 			<div class="admin-desplegable-informacion">
 			    <strong th:if="${nombreUsuario == 'admin'}">ADMIN</strong>
 				<strong th:if="${nombreUsuario != 'admin'}" th:text="'Cliente : ' + ${UsuarioActual}"></strong>
-				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesión</a> 
+				<a href="/logout" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
 				<a th:if="${nombreUsuario == 'admin'}" href="/anadirpersonal" th:text="#{admin.dropdown.addStaff}">Anadir personal</a>
 			</div>
 		</div>

@@ -30,7 +30,7 @@
 			</div>
 			<div class="cliente-desplegable-informacion">
 				<strong th:text="'Cliente : ' + ${UsuarioActual}"></strong> 
-				<a href="/inicio" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+				<a href="/logout" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
 			</div>
 		</div>
 	</header>
@@ -47,7 +47,7 @@
 
 					<p>Disponibles: <span th:text="${disponibles[planta.codigo]}">0</span></p>
 
-					<form th:action="@{/carrito}" method="post">
+					<form th:action="@{/carrito-compra}" method="post">
 						<input type="hidden" name="CodigoPlanta" th:value="${planta.codigo}" />
 						<div class="quantity-selector">
 							<button type="button" class="minus-btn">-</button>
@@ -57,6 +57,10 @@
 							<button type="button" class="plus-btn">+</button>
 						</div>
 						<button type="submit" class="add-cart-btn">AÑADIR AL CARRITO</button>
+					</form>
+					<form th:action="@{/plantas-favoritas}" method="post">
+						<input type="hidden" name="CodigoPlanta" th:value="${planta.codigo}" />
+						<button type="submit" th:text="#{plantas.anadirFavoritos}">Añadir a favoritos</button>
 					</form>
 				</div>
 			</div>

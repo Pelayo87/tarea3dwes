@@ -52,7 +52,7 @@ public class ConfiguracionSecurity {
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
+                .logoutSuccessUrl("/inicio?logout=true")
             );
         
         return http.build();
