@@ -46,5 +46,14 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
     
     @Query("SELECT COUNT(e) FROM Ejemplar e WHERE e.planta.codigo = :codigoPlanta AND e.disponible = true")
     int contarEjemplaresDisponibles(@Param("codigoPlanta") String codigoPlanta);
-
+    
+	@Query(value = "SELECT e.* " 
+	        + "FROM ejemplares e " 
+		    + "JOIN plantas p ON e.codigo = p.codigo "
+		    + "WHERE p.codigo = :codigoPlanta " 
+		    + "  AND e.disponible = true " 
+		    + "ORDER BY e.id_ejemplar ASC "
+		    + "LIMIT :cantidad", nativeQuery = true)
+	List<Ejemplar> obtenerPrimerosEjemplaresDisponibles(@Param("codigoPlanta") String codigoPlanta,
+			                                            @Param("cantidad") int cantidad);
 }

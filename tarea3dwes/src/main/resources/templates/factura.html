@@ -42,7 +42,7 @@
           </div>
           <div class="titulo_persona">
             <p>No. de Pedido:</p>
-            <span>3452356</span>
+            <span th:text="${idPedido}"></span>
           </div>
           <div class="titulo_persona">
             <p>Fecha de Pedido:</p>
@@ -94,53 +94,24 @@
           </div>
         </div>
         <div class="tabla_cuerpo">
-          <div class="fila_factura">
-            <div class="columna ancho_55">
-              <p>Ejemplar A</p>
-              <span>Nombre Ejemplar</span>
-            </div>
-            <div class="columna ancho_15 texto_centro">
-              <p>3</p>
-            </div>
-            <div class="columna ancho_15 texto_centro">
-              <p>10.00€</p>
-            </div>
-            <div class="columna ancho_15 texto_derecha">
-              <p>30.00€</p>
-            </div>
-          </div>
-          <div class="fila_factura">
-            <div class="columna ancho_55">
-              <p>Ejemplar B</p>
-              <span>Descripción del producto.</span>
-            </div>
-            <div class="columna ancho_15 texto_centro">
-              <p>5</p>
-            </div>
-            <div class="columna ancho_15 texto_centro">
-              <p>10.00€</p>
-            </div>
-            <div class="columna ancho_15 texto_derecha">
-              <p>50.00€</p>
-            </div>
-          </div>
-          <div class="fila_factura">
-            <div class="columna ancho_55">
-              <p>Ejemplar C</p>
-              <span>Descripción del producto.</span>
-            </div>
-            <div class="columna ancho_15 texto_centro">
-              <p>7</p>
-            </div>
-            <div class="columna ancho_15 texto_centro">
-              <p>10.00€</p>
-            </div>
-            <div class="columna ancho_15 texto_derecha">
-              <p>70.00€</p>
-            </div>
-          </div>
-        </div>
-        <div class="tabla_pie">
+			<div th:each="info : ${plantasConCantidad}">
+				<div class="fila_factura">
+					<div class="columna ancho_55">
+						<p th:text="${info.key.nombreComun}"></p>
+						<span th:text="${info.key.nombreCientifico}">Nombre Científico</span>
+					</div>
+					<div class="columna ancho_15 texto_centro">
+						<p th:text="${info.value}">Cantidad Ejemplares</p>
+					</div>
+					<div class="columna ancho_15 texto_centro">
+						<p>10.00€</p>
+					</div>
+					<div class="columna ancho_15 texto_derecha">
+						<p>30.00€</p>
+					</div>
+				</div>
+			</div>
+	<div class="tabla_pie">
           <div class="fila_factura">
             <div class="columna ancho_50">
               <p>Subtotal</p>

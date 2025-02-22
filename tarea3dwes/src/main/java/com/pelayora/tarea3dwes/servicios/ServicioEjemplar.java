@@ -30,5 +30,6 @@ public interface ServicioEjemplar {
     long contadorEjemplares();
     List<Ejemplar> obtenerEjemplarPorNombrePlanta(String nombreComun);
     int contarEjemplaresDisponibles(String codigoPlanta);
+    List<Ejemplar> obtenerPrimerosEjemplaresDisponibles(String codigoPlanta, int cantidad);
     
 }

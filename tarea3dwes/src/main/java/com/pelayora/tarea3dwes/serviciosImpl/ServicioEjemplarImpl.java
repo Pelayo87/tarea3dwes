@@ -79,5 +79,7 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
         return ejemplar_R.contarEjemplaresDisponibles(codigoPlanta);
     }
     
-
+    public List<Ejemplar> obtenerPrimerosEjemplaresDisponibles(String codigoPlanta, int cantidad) {
+        return ejemplar_R.obtenerPrimerosEjemplaresDisponibles(codigoPlanta, cantidad);
+    } 
 }

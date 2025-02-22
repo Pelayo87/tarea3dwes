@@ -1,13 +1,16 @@
 package com.pelayora.tarea3dwes.controlador;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,13 +20,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.pelayora.tarea3dwes.modelo.Cliente;
+import com.pelayora.tarea3dwes.modelo.Ejemplar;
+import com.pelayora.tarea3dwes.modelo.Pedido;
 import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
+import com.pelayora.tarea3dwes.servicios.ServicioPedido;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @SessionAttributes({"nombreUsuario", "id_Persona", "id_Cliente", "UsuarioCliente", "UsuarioPersona"})
@@ -37,6 +47,9 @@ public class ClienteController {
 	    	
      @Autowired
      private ServicioCliente S_cliente;
+     
+     @Autowired
+     private ServicioPedido S_pedido;
 	
 	LocalDate Fechahoy = LocalDate.now();
 	String fechahoyFormateada = Fechahoy.getDayOfMonth() + " de " +
@@ -112,46 +125,117 @@ public class ClienteController {
     }
 	
 	@GetMapping("/factura")
-    public String facturaCompraCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
-                                      @ModelAttribute("id_Cliente") Long id_Cliente,
-                                      @ModelAttribute("UsuarioCliente") Cliente Usuario,
-                                      Model model) {
-		model.addAttribute("mensaje", "Factura del cliente");
-		model.addAttribute("UsuarioActual", nombreUsuario);
-		model.addAttribute("id_Cliente", id_Cliente);
-		model.addAttribute("UsuarioCliente", Usuario);
-		model.addAttribute("fechaHoy", fechahoyFormateada);
-		String direccionCliente= Usuario.getDireccionEnvio();
-		String nifnieCliente=Usuario.getNif_nie();
-		String emailCliente=Usuario.getEmail();
-		model.addAttribute("direccionCliente", direccionCliente);
-		model.addAttribute("nifnieCliente", nifnieCliente);
-		model.addAttribute("emailCliente", emailCliente);
-		return "factura";
+	public String facturaCompraCliente(@RequestParam("idPedido") Long idPedido,
+	                                   @ModelAttribute("nombreUsuario") String nombreUsuario,
+	                                   @ModelAttribute("id_Cliente") Long id_Cliente,
+	                                   @ModelAttribute("UsuarioCliente") Cliente Usuario,
+	                                   Model model) {
+
+	    Optional<Pedido> pedido = S_pedido.buscarPedidoPorId(idPedido);
+	    if (!pedido.isPresent()) {
+	        model.addAttribute("error", "Pedido no encontrado.");
+	        return "redirect:/inicio-cliente";
+	    }
+
+	    List<Ejemplar> ejemplares = pedido.get().getEjemplares();
+
+	    Map<Planta, Long> plantasConCantidad = ejemplares.stream()
+	            .collect(Collectors.groupingBy(Ejemplar::getPlanta, Collectors.counting()));
+
+	    model.addAttribute("mensaje", "Factura del cliente");
+	    model.addAttribute("UsuarioActual", nombreUsuario);
+	    model.addAttribute("id_Cliente", id_Cliente);
+	    model.addAttribute("UsuarioCliente", Usuario);
+	    model.addAttribute("fechaHoy", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+	    model.addAttribute("direccionCliente", Usuario.getDireccionEnvio());
+	    model.addAttribute("nifnieCliente", Usuario.getNif_nie());
+	    model.addAttribute("emailCliente", Usuario.getEmail());
+	    model.addAttribute("idPedido", idPedido);
+	    model.addAttribute("plantasConCantidad", plantasConCantidad);
+
+	    return "factura";
 	}
 	
 	@GetMapping("/carrito-compra")
-    public String carritoCompraCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
-                                      @ModelAttribute("id_Cliente") Long id_Cliente,
-                                      Model model) {
-		model.addAttribute("mensaje", "Factura del cliente");
-		model.addAttribute("UsuarioActual", nombreUsuario);
-		model.addAttribute("id_Cliente", id_Cliente);
-		return "carrito-compra";
+	public String carritoCompraCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
+	                                   @ModelAttribute("id_Cliente") Long id_Cliente,
+	                                   HttpSession session,
+	                                   Model model) {
+	    model.addAttribute("mensaje", "Factura del cliente");
+	    model.addAttribute("UsuarioActual", nombreUsuario);
+	    model.addAttribute("id_Cliente", id_Cliente);
+	    
+	    Pedido carrito = (Pedido) session.getAttribute("carrito");
+	    model.addAttribute("carrito", carrito);
+	    
+	    return "carrito-compra";
 	}
+
 	
 	@PostMapping("/carrito-compra")
-	public String addToCart(@RequestParam("CodigoPlanta") String codigoPlanta,
-	                        @RequestParam("cantidad") int cantidad,
-	                        Model model) {
+	public String anadirAlCarrito(@RequestParam("CodigoPlanta") String codigoPlanta,
+	                              @RequestParam("cantidad") int cantidad,
+	                              HttpSession session,
+	                              Model model) {
+		
 	    int disponibles = S_ejemplar.contarEjemplaresDisponibles(codigoPlanta);
-
 	    if (cantidad > disponibles) {
 	        model.addAttribute("error", "No hay suficientes ejemplares disponibles para esa planta.");
 	        return "redirect:/inicio-cliente";
 	    }
+	    
+	    List<Ejemplar> ejemplaresSeleccionados = S_ejemplar.obtenerPrimerosEjemplaresDisponibles(codigoPlanta, cantidad);
+	    
+	    Pedido carrito = (Pedido) session.getAttribute("carrito");
+	    if (carrito == null) {
+	        carrito = new Pedido();
+	        carrito.setFechaPedido(LocalDate.now());
+	        carrito.setEjemplares(new ArrayList<>());
+	        session.setAttribute("carrito", carrito);
+	    }
 
+	    carrito.getEjemplares().addAll(ejemplaresSeleccionados);
+	    
+	    session.setAttribute("carrito", carrito);
+	    
 	    return "redirect:/carrito-compra";
+	}
+	
+	@PostMapping("/confirmar-pedido")
+	public String confirmarPedido(HttpSession session, 
+	                              @ModelAttribute("id_Cliente") Long id_Cliente,
+	                              RedirectAttributes redirectAttributes) {
+	    Pedido carrito = (Pedido) session.getAttribute("carrito");
+
+	    if (carrito == null || carrito.getEjemplares().isEmpty()) {
+	        redirectAttributes.addFlashAttribute("error", "El carrito está vacío.");
+	        return "redirect:/carrito-compra";
+	    }
+
+	    Optional<Cliente> cliente = S_cliente.buscarPorId(id_Cliente);
+	    if (!cliente.isPresent()) { 
+	        redirectAttributes.addFlashAttribute("error", "Cliente no encontrado.");
+	        return "redirect:/carrito-compra";
+	    }
+
+	    Cliente clienteActual = cliente.get(); 
+	    carrito.setCliente(clienteActual); 
+	    carrito.setFechaPedido(LocalDate.now());
+
+	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
+	        ejemplar.setDisponible(false);
+	        S_ejemplar.modificarEjemplar(ejemplar);
+	    }
+
+	    S_pedido.guardarPedido(carrito);
+	    Long idPedido = carrito.getId();
+
+	    redirectAttributes.addAttribute("idPedido", idPedido);
+
+	    session.removeAttribute("carrito");
+
+	    redirectAttributes.addFlashAttribute("success", "Pedido realizado con éxito.");
+	    return "redirect:/factura";
 	}
 
 }

@@ -35,8 +35,8 @@ public class Ejemplar {
 	@Column(name = "disponible")
 	private boolean disponible=true;
 	
-	@ManyToOne(cascade= CascadeType.REMOVE)
-	@JoinColumn(name="id_planta")
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "codigo")
 	private Planta planta;
 	
 	@OneToMany(cascade=CascadeType.ALL)

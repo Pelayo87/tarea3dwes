@@ -45,7 +45,7 @@
 					<h3 th:text="${planta.nombreComun}">Nombre Común</h3>
 					<p th:text="${planta.nombreCientifico}">Nombre Científico</p>
 
-					<p>Disponibles: <span th:text="${disponibles[planta.codigo]}">0</span></p>
+					<p>Disponibles: <span th:text="${disponibles[planta.codigo]}"></span></p>
 
 					<form th:action="@{/carrito-compra}" method="post">
 						<input type="hidden" name="CodigoPlanta" th:value="${planta.codigo}" />

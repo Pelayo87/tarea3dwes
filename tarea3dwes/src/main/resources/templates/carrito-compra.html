@@ -37,16 +37,34 @@
     <div class="container">
         <div class="cart">
             <h2>Mi cesta</h2>
-            <div class="empty-cart">
+            <div class="empty-cart" th:if="${carrito == null or #lists.isEmpty(carrito.ejemplares)}">
                 <img src="img/carrito.png" alt="Carrito vacío">
                 <p>Tu cesta de la compra está vacía</p>
-                <span>Continúa comprando y encuentra tus productos favoritos.</span>
+                <span>Continúa comprando y encuentra tus plantas favoritas.</span>
                 <a href="/inicio-cliente"><button class="btn">Volver</button></a>
             </div>
-            
-            <div class="delivery-info">
+
+			<div th:if="${carrito != null and !#lists.isEmpty(carrito.ejemplares)}" class="carrito-container">
+				<h2 class="carrito-title">Ejemplares en tu carrito</h2>
+				<table class="carrito-table">
+					<thead>
+						<tr>
+							<th>Código de Planta</th>
+							<th>Nombre Ejemplar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="ejemplar : ${carrito.ejemplares}">
+							<td th:text="${ejemplar.planta.codigo}">Código Planta</td>
+							<td th:text="${ejemplar.nombre}">Nombre Ejemplar</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="delivery-info">
                 <h3>Costes y fecha de entrega</h3>
-                <p>En el siguiente paso, después de iniciar sesión o registrarte, elige un método de entrega para conocer el coste y la fecha de entrega.</p>
+                <p>En el siguiente paso, elige un método de entrega para conocer el coste y la fecha de entrega.</p>
             </div>
         </div>
 
@@ -57,8 +75,10 @@
                 <p>Envío <span>Se calculará en el siguiente paso</span></p>
                 <hr>
                 <p class="total">Total IVA incl. <span>0,00€</span></p>
-                <a href="/factura"><button class="btn">Realizar pedido</button></a>
-            </div>
+				<form th:action="@{/confirmar-pedido}" method="post">
+					<button class="btn" type="submit">Realizar pedido</button>
+				</form>
+			</div>
 
             <div class="promo-code">
                 <button class="accordion">Introducir un código promocional</button>
