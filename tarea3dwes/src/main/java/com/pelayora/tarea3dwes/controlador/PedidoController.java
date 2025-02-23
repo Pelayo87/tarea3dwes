@@ -23,7 +23,7 @@ public class PedidoController {
         } else {
             model.addAttribute("pedidos", S_pedido.findByEstado(EstadoPedido.valueOf(estado)));
         }
-
+        model.addAttribute("UsuarioActual", nombreUsuario);
         model.addAttribute("estados", EstadoPedido.values());
         model.addAttribute("estadoSeleccionado", estado);
         return "gestion-pedidos";

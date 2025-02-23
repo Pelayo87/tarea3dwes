@@ -33,6 +33,9 @@ public class Planta {
 	@Column(name = "nombrecientifico", length = 50)
 	private String nombreCientifico;
 	
+	@Column(name = "precio")
+	private double precio;
+	
 	@ManyToMany(mappedBy = "plantas", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Cliente> clientes = new ArrayList<>();
 
@@ -46,6 +49,15 @@ public class Planta {
 		this.codigo = codigo;
 		this.nombreComun = nombreComun;
 		this.nombreCientifico = nombreCientifico;
+	}
+
+	public Planta(String codigo, String nombreComun, String nombreCientifico, double precio, List<Cliente> clientes) {
+		super();
+		this.codigo = codigo;
+		this.nombreComun = nombreComun;
+		this.nombreCientifico = nombreCientifico;
+		this.precio = precio;
+		this.clientes = clientes;
 	}
 
 	public String getCodigo() {
@@ -72,7 +84,15 @@ public class Planta {
         this.nombreComun = nombreComun;
     }
 
-    public List<Cliente> getClientes() {
+    public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	public List<Cliente> getClientes() {
 		return clientes;
 	}
 

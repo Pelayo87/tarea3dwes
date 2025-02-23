@@ -103,6 +103,7 @@ public class PlantaController {
         }
 
         try {
+        	planta.setPrecio(10);
             S_planta.guardarPlanta(planta);
             redirectAttributes.addFlashAttribute("mensaje", "Planta añadida con éxito.");
         } catch (Exception e) {

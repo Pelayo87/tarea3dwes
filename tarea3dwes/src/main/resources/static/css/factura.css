@@ -1,26 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Redressed&family=Ubuntu:wght@400;700&display=swap");
-
 :root {
   --fondo-principal: #4a8c3c;
   --blanco: #fff;
   --fondo-factura: #e7e7ff;
   --color-primario: #2f2929;
   --color-secundario: #7ac16a;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Ubuntu", sans-serif;
-}
-
-body {
-  background: var(--fondo-principal);
-  font-size: 12px;
-  line-height: 20px;
-  color: var(--color-primario);
-  padding: 0 20px;
 }
 
 .titulo_principal {

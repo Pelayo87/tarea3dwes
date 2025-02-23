@@ -242,7 +242,7 @@ public class ClienteController {
 	
 	@GetMapping("/mispedidos")
     public String pedidosCliente(@RequestParam(value = "estado", required = false, defaultValue = "todos") String estado,
-                                 @ModelAttribute("nombreUsuario") String nombreUsuario,
+    		                     @ModelAttribute("nombreUsuario") String nombreUsuario,
                                  @ModelAttribute("UsuarioCliente") Cliente cliente,
                                  Model model) {
         if ("todos".equalsIgnoreCase(estado)) {
@@ -251,6 +251,7 @@ public class ClienteController {
             model.addAttribute("pedidos", S_pedido.findByEstado(EstadoPedido.valueOf(estado)));
         }
 
+        model.addAttribute("UsuarioActual", nombreUsuario);
         model.addAttribute("estados", EstadoPedido.values());
         model.addAttribute("estadoSeleccionado", estado);
         return "mispedidos";
