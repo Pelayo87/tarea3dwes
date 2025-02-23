@@ -21,6 +21,7 @@
 			<a th:if="${nombreUsuario == 'admin'}" href="/plantas-admin" th:text="#{nav.plantas}">PLANTAS</a> 
 			<a href="/gestion-ejemplares" th:text="#{nav.ejemplares}">EJEMPLARES</a>
 			<a href="/gestion-fitosanitarios" th:text="#{nav.fitosanitarios}">FITOSANITARIOS</a>
+			<a th:if="${nombreUsuario != 'admin'}" href="/gestion-pedidos" th:text="#{nav.pedidos}">PEDIDOS</a>
 		</nav>
 		<nav>
 			<a href="?lang=es">Español</a> 

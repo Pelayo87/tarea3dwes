@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pelayora.tarea3dwes.modelo.Cliente;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
+import com.pelayora.tarea3dwes.modelo.EstadoPedido;
 import com.pelayora.tarea3dwes.modelo.Pedido;
 import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
@@ -220,6 +221,7 @@ public class ClienteController {
 
 	    Cliente clienteActual = cliente.get(); 
 	    carrito.setCliente(clienteActual); 
+	    carrito.setEstado(EstadoPedido.REALIZADO);
 	    carrito.setFechaPedido(LocalDate.now());
 
 	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
@@ -237,5 +239,38 @@ public class ClienteController {
 	    redirectAttributes.addFlashAttribute("success", "Pedido realizado con éxito.");
 	    return "redirect:/factura";
 	}
+	
+	@GetMapping("/mispedidos")
+    public String pedidosCliente(@RequestParam(value = "estado", required = false, defaultValue = "todos") String estado,
+                                 @ModelAttribute("nombreUsuario") String nombreUsuario,
+                                 @ModelAttribute("UsuarioCliente") Cliente cliente,
+                                 Model model) {
+        if ("todos".equalsIgnoreCase(estado)) {
+        	model.addAttribute("pedidos", S_pedido.findByCliente(cliente));
+        } else { 
+            model.addAttribute("pedidos", S_pedido.findByEstado(EstadoPedido.valueOf(estado)));
+        }
+
+        model.addAttribute("estados", EstadoPedido.values());
+        model.addAttribute("estadoSeleccionado", estado);
+        return "mispedidos";
+    }
+
+	@PostMapping("/cancelar-pedido")
+	public String cancelarPedido(@RequestParam("pedidoId") Long pedidoId, Model model) {
+		Optional<Pedido> pedido = S_pedido.buscarPedidoPorId(pedidoId);
+		Pedido pedidoCliente = pedido.get();
+
+		if (!pedidoCliente.getEstado().equals(EstadoPedido.ENTREGADO)
+			&& !pedidoCliente.getEstado().equals(EstadoPedido.COMPLETADO)) {
+
+			pedidoCliente.setEstado(EstadoPedido.CANCELADO);
+
+			S_pedido.guardarPedido(pedidoCliente);
+		}
+
+		return "redirect:/mispedidos";
+	}
+
 
 }

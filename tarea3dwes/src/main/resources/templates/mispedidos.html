@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos - Vivero CIFP La Laboral</title>
+    <link rel="stylesheet" href="css/vivero.css">
+    <link rel="stylesheet" href="css/vivero-cliente.css">
+    <link rel="stylesheet" href="css/gestion-pedidos.css">
+    <link rel="stylesheet" href="css/footer.css"> 
+</head>
+<body>
+
+    <header>
+		<img class="logo" src="img/logo-vivero.png" alt="Logo vivero">
+		<div th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
+		<nav>
+			<a href="/inicio-cliente" th:text="#{nav.inicio}">INICIO</a> 
+			<a href="/mispedidos" th:text="#{nav.mispedidos}">MIS PEDIDOS</a>
+		</nav>
+		<nav>
+			<a href="?lang=es">Español</a>
+			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
+		</nav>
+		<a href="/carrito-compra"><img id="carrito-compra" src="img/carrito-compra.png" alt="Foto de carrito de la compra"></a>
+		<div class="cliente-desplegable">
+			<div class="circulo-perfil">
+				<img src="img/fotoperfil-invitado.png" alt="Foto de perfil del cliente">
+			</div>
+			<div class="cliente-desplegable-informacion">
+				<strong th:text="'Cliente : ' + ${UsuarioActual}"></strong> 
+				<a href="/logout" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+			</div>
+		</div>
+	</header>
+
+	<main>
+		<div class="container">
+			<h1>Mis pedidos</h1>
+
+			<div class="pedido-filters">
+				<form th:action="@{/mispedidos}" method="get" class="filter-form">
+					<select name="estado" class="filter-select">
+						<option value="todos" th:selected="${estadoSeleccionado} == 'todos'">Todos los Pedidos</option>
+						<option th:each="estado : ${estados}" th:value="${estado}" th:text="${estado}"
+							    th:selected="${estado} == ${estadoSeleccionado}">
+						</option>
+					</select>
+					<button type="submit" class="btn-filtrar">
+					<img id="filtrar-estado" src="img/filtrar-estadoPedido.png" alt="Filtrar pedido">
+					</button>
+				</form>
+			</div>
+
+			<table class="pedido-table">
+				<thead>
+					<tr>
+						<th>Fecha</th>
+						<th>Estado</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pedido : ${pedidos}">
+						<td th:text="${pedido.fechaPedido}"></td>
+						<td th:text="${pedido.estado}"></td>
+						<td>
+							<form th:action="@{/cancelar-pedido}" method="post">
+								<input type="hidden" name="pedidoId" th:value="${pedido.id}" />
+								<button type="submit" 
+								        class="btn-cancelar" 
+								        th:disabled="${pedido.estado == 'ENTREGADO' or pedido.estado == 'COMPLETADO'}">
+									    Cancelar
+								</button>
+							</form>
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
+
+
+	<footer>
+        <div class="footer">
+          <div class="footer-info">
+              <p class="direccion" th:text="#{footer.direccion}">
+                C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias
+              </p>
+              <p class="telefono" th:text="#{footer.telefono}">+34 634 23 36 87</p>
+              <p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
+          </div>
+          <div class="horario">
+              <h4 th:text="#{footer.horario.titulo}">Horario</h4>
+              <p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes: 9:00 - 20:00</p>
+              <p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
+          </div>
+          <div class="redes-sociales">
+            <a href="#"><img src="img/facebook.png" th:alt="#{social.facebook}" alt="Facebook" /></a>
+            <a href="#"><img src="img/x.png" th:alt="#{social.x}" alt="X" /></a>
+            <a href="#"><img src="img/instagram.png" th:alt="#{social.instagram}" alt="Instagram" /></a>
+          </div>
+        </div>
+    </footer>
+
+</body>
+</html>

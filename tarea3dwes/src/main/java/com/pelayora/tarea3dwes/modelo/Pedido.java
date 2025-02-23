@@ -29,8 +29,11 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	 @Column(name = "fecha_pedido", nullable = false)
-	    private LocalDate fechaPedido;
+    @Column(name = "fecha_pedido", nullable = false)
+	private LocalDate fechaPedido;
+    
+    @Column(name="estado")
+    private EstadoPedido estado;
 
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false)
@@ -52,6 +55,15 @@ public class Pedido {
 		this.ejemplares = ejemplares;
 	}
 
+	public Pedido(long id, LocalDate fechaPedido, EstadoPedido estado, Cliente cliente, List<Ejemplar> ejemplares) {
+		super();
+		this.id = id;
+		this.fechaPedido = fechaPedido;
+		this.estado = estado;
+		this.cliente = cliente;
+		this.ejemplares = ejemplares;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -66,6 +78,14 @@ public class Pedido {
 
 	public void setFechaPedido(LocalDate fechaPedido) {
 		this.fechaPedido = fechaPedido;
+	}
+
+	public EstadoPedido getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoPedido estado) {
+		this.estado = estado;
 	}
 
 	public Cliente getCliente() {
@@ -83,7 +103,11 @@ public class Pedido {
 	public void setEjemplares(List<Ejemplar> ejemplares) {
 		this.ejemplares = ejemplares;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Pedido [id=" + id + ", fechaPedido=" + fechaPedido + ", estado=" + estado + ", cliente=" + cliente
+				+ ", ejemplares=" + ejemplares + "]";
+	}
 	
 }

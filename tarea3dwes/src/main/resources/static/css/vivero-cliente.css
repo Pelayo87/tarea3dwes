@@ -1,3 +1,8 @@
+#carrito-compra{
+	width: 60px;
+    height: 60px;
+}
+
 .cliente-desplegable {
     position: relative;
     display: inline-block;
@@ -72,3 +77,4 @@
     opacity: 1;
     transform: translateY(0);
 }
+

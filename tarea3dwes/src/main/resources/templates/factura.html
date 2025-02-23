@@ -2,9 +2,35 @@
 <html>
 <head>
 	<title>Factura Vivero CIFP La Laboral</title>
-	<link rel="stylesheet" type="text/css" href="css/factura.css">
+	<link rel="stylesheet" href="css/vivero.css">
+    <link rel="stylesheet" href="css/vivero-cliente.css">
+    <link rel="stylesheet" type="text/css" href="css/factura.css">
+    <link rel="stylesheet" href="css/footer.css">	
 </head>
 <body>
+ <header>
+		<img class="logo" src="img/logo-vivero.png" alt="Logo vivero">
+		<div th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
+		<nav>
+			<a href="/inicio-cliente" th:text="#{nav.inicio}">INICIO</a> 
+			<a href="#" th:text="#{nav.contacto}">CONTACTO</a>
+		</nav>
+		<nav>
+			<a href="?lang=es">Español</a>
+			<a href="?lang=en">English</a>
+			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=zh">Chino</a>
+		</nav>
+		<div class="cliente-desplegable">
+			<div class="circulo-perfil">
+				<img src="img/fotoperfil-invitado.png" alt="Foto de perfil del cliente">
+			</div>
+			<div class="cliente-desplegable-informacion">
+				<strong th:text="'Cliente : ' + ${UsuarioActual}"></strong> 
+				<a href="/logout" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+			</div>
+		</div>
+	</header>
 
 <section>
   <div class="factura">
@@ -135,6 +161,7 @@
         </div>
       </div>
     </div>
+    </div>
 			<div class="factura_terminos">
 				<div class="titulo_principal">
 					<p>Términos y Condiciones</p>
@@ -148,5 +175,28 @@
 			</div>
 	</div>
   </section>
+  
+  <footer>
+        <div class="footer">
+          <div class="footer-info">
+              <p class="direccion" th:text="#{footer.direccion}">
+                C. Luis Moya Blanco, Periurbano - Rural, 33203 Gijón, Asturias
+              </p>
+              <p class="telefono" th:text="#{footer.telefono}">+34 634 23 36 87</p>
+              <p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
+          </div>
+          <div class="horario">
+              <h4 th:text="#{footer.horario.titulo}">Horario</h4>
+              <p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes: 9:00 - 20:00</p>
+              <p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
+          </div>
+          <div class="redes-sociales">
+            <a href="#"><img src="img/facebook.png" th:alt="#{social.facebook}" alt="Facebook" /></a>
+            <a href="#"><img src="img/x.png" th:alt="#{social.x}" alt="X" /></a>
+            <a href="#"><img src="img/instagram.png" th:alt="#{social.instagram}" alt="Instagram" /></a>
+          </div>
+        </div>
+    </footer>
+    
 </body>
 </html>

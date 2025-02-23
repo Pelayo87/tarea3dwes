@@ -184,9 +184,9 @@ public class EjemplarController {
      */
     @PostMapping("/gestion-ejemplares/eliminar")
     public String eliminarEjemplar(@RequestParam("id_ejemplar") Long id_ejemplar, 
-                                @ModelAttribute("nombreUsuario") String nombreUsuario,
-                                @ModelAttribute("id_Persona") long id_persona,
-                                Model model) {
+                                   @ModelAttribute("nombreUsuario") String nombreUsuario,
+                                   @ModelAttribute("id_Persona") long id_persona,
+                                   Model model) {
         try {
     	Optional<Ejemplar> ejemplar = S_ejemplar.obtenerEjemplarPorId(id_ejemplar);
         if (!ejemplar.isPresent()) {
