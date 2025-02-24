@@ -6,6 +6,11 @@
   --color-secundario: #7ac16a;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #4a8c3c;
+}
+
 .titulo_principal {
   font-weight: 700;
   font-size: 16px;
@@ -87,7 +92,7 @@
 
 .factura .tabla .fila_factura p {
   margin: 0;
-  font-weight: 700;
+  font-weight: 1300;
 }
 
 .factura .tabla .tabla_encabezado .fila_factura,

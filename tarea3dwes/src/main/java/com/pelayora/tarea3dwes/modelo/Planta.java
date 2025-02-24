@@ -1,5 +1,6 @@
 package com.pelayora.tarea3dwes.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "plantas")
-public class Planta {
+public class Planta implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "codigo", unique = true)

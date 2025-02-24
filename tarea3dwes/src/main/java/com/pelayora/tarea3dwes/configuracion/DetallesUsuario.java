@@ -4,9 +4,13 @@ import com.pelayora.tarea3dwes.modelo.Credenciales;
 import com.pelayora.tarea3dwes.modelo.Cliente;
 import com.pelayora.tarea3dwes.modelo.Persona;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class DetallesUsuario implements UserDetails {
 	private static final long serialVersionUID = 1L;
@@ -36,8 +40,17 @@ public class DetallesUsuario implements UserDetails {
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        List<GrantedAuthority> roles = new ArrayList<>();
+        if ("admin".equalsIgnoreCase(credenciales.getUsuario())) {
+            roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } else if (getIdCliente() <= 0) {
+            roles.add(new SimpleGrantedAuthority("ROLE_PERSONAL"));
+        } else {
+            roles.add(new SimpleGrantedAuthority("ROLE_CLIENTE"));
+        }
+        return roles;
     }
+
 
     @Override
     public String getPassword() {

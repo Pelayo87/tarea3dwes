@@ -5,13 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,15 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.pelayora.tarea3dwes.modelo.Cliente;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.modelo.EstadoPedido;
+import com.pelayora.tarea3dwes.modelo.Mensaje;
 import com.pelayora.tarea3dwes.modelo.Pedido;
 import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
-import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPedido;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
@@ -50,6 +49,9 @@ public class ClienteController {
      private ServicioCliente S_cliente;
      
      @Autowired
+     private ServicioMensaje S_mensaje;
+     
+     @Autowired
      private ServicioPedido S_pedido;
 	
 	LocalDate Fechahoy = LocalDate.now();
@@ -68,6 +70,7 @@ public class ClienteController {
 	@GetMapping("/inicio-cliente")
     public String inicioViveroCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
                                       @ModelAttribute("id_Cliente") Long id_Cliente,
+                                      @ModelAttribute("UsuarioCliente") Cliente Usuario,
                                       Model model) {
         try {
             Optional<Cliente> clienteActual = S_cliente.buscarPorId(id_Cliente);
@@ -77,6 +80,7 @@ public class ClienteController {
                 List<Planta> plantasFavoritas = cliente.getPlantas();
 
                 model.addAttribute("UsuarioActual", nombreUsuario);
+                model.addAttribute("emailCliente", Usuario.getEmail());
                 model.addAttribute("plantasFavoritas", plantasFavoritas);
             } else {
                 model.addAttribute("plantasFavoritas", Collections.emptyList());
@@ -224,6 +228,9 @@ public class ClienteController {
 	    carrito.setEstado(EstadoPedido.REALIZADO);
 	    carrito.setFechaPedido(LocalDate.now());
 
+	    Date fechaHoraActual = new Date();
+	    Mensaje mensaje = new Mensaje();
+
 	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
 	        ejemplar.setDisponible(false);
 	        S_ejemplar.modificarEjemplar(ejemplar);
@@ -231,14 +238,25 @@ public class ClienteController {
 
 	    S_pedido.guardarPedido(carrito);
 	    Long idPedido = carrito.getId();
+	    
+		for (Ejemplar ejemplar : carrito.getEjemplares()) {
+			String mensajeTexto = "El cliente " + clienteActual.getNombre() + " compró el ejemplar "
+					+ ejemplar.getNombre() + " el día " + fechaHoraActual + " en el pedido " + idPedido;
+
+			mensaje.setFechahora(fechaHoraActual);
+			mensaje.setMensaje(mensajeTexto);
+			mensaje.setEjemplar(ejemplar);
+			
+			S_mensaje.guardarMensaje(mensaje);
+		}
 
 	    redirectAttributes.addAttribute("idPedido", idPedido);
-
 	    session.removeAttribute("carrito");
 
 	    redirectAttributes.addFlashAttribute("success", "Pedido realizado con éxito.");
 	    return "redirect:/factura";
 	}
+
 	
 	@GetMapping("/mispedidos")
     public String pedidosCliente(@RequestParam(value = "estado", required = false, defaultValue = "todos") String estado,

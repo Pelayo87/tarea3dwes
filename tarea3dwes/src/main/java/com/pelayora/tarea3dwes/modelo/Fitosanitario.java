@@ -1,5 +1,6 @@
 package com.pelayora.tarea3dwes.modelo;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -22,7 +23,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "fitosanitario")
-public class Fitosanitario {
+public class Fitosanitario implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

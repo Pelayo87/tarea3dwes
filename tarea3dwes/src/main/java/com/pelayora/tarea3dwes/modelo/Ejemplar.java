@@ -1,5 +1,6 @@
 package com.pelayora.tarea3dwes.modelo;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import jakarta.persistence.CascadeType;
@@ -23,7 +24,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ejemplares")
-public class Ejemplar {
+public class Ejemplar implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

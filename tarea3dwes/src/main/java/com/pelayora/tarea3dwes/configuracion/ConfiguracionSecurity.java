@@ -39,6 +39,13 @@ public class ConfiguracionSecurity {
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/", "/inicio", "/login", "/iniciosesion-registrarse", "/registro", "/css/**", "/js/**", "/img/**").permitAll()
+                .requestMatchers("/inicio-admin","/plantas-admin", "/plantas-adminAñadir", 
+                	              "/plantas-adminModificar", "/plantas-adminEliminar","/anadirpersonal")
+                .hasRole("ADMIN")
+                .requestMatchers("/inicio-personal", "/gestion-pedidos")
+                .hasRole("PERSONAL")
+                .requestMatchers("/inicio-cliente", "/mispedidos", "/carrito-compra", "/factura").hasRole("CLIENTE")
+                .requestMatchers("/gestion-ejemplares", "/gestion-fitosanitarios","gestion-mensajes").hasAnyRole("ADMIN", "PERSONAL")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -50,15 +57,13 @@ public class ConfiguracionSecurity {
                 .failureUrl("/login?error=true")
                 .permitAll()
             )
-            .sessionManagement(session -> session
-                .invalidSessionUrl("/inicio?logout=true")
-            )
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/inicio?logout=true")
             );
-        
+
         return http.build();
     }
+
 
 }

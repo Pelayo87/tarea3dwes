@@ -1,5 +1,6 @@
 package com.pelayora.tarea3dwes.modelo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +23,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "historial")
-public class Historial {
+public class Historial implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+    
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_historial;
