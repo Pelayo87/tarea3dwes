@@ -50,6 +50,9 @@ public class ConfiguracionSecurity {
                 .failureUrl("/login?error=true")
                 .permitAll()
             )
+            .sessionManagement(session -> session
+                .invalidSessionUrl("/inicio?logout=true")
+            )
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/inicio?logout=true")
@@ -57,4 +60,5 @@ public class ConfiguracionSecurity {
         
         return http.build();
     }
+
 }
