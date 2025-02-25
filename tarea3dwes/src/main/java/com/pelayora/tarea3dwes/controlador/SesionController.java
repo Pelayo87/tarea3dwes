@@ -42,10 +42,14 @@ public class SesionController {
 	     * @return Vista "iniciosesion-registrarse".
 	     */
 	    
+	    
+	    
 	    @GetMapping("/login")
         public String mostrarLogin() {
 	        return "iniciosesion-registrarse"; 
 	    }
+	    
+	    
 	    
 	    @GetMapping("/registro")
 	    public String mostrarRegistro(@ModelAttribute("cliente") Cliente cliente,

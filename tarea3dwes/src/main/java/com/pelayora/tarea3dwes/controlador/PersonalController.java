@@ -99,6 +99,9 @@ public class PersonalController {
         if (password == null || password.trim().isEmpty()) {
             model.addAttribute("passwordError", "La contraseña no puede estar vacía.");
             hayErrores = true;
+        } else if (password.contains(" ")) {
+            model.addAttribute("passwordError", "La contraseña no puede contener espacios.");
+            hayErrores = true;
         } else if (password.length() < 8) {
             model.addAttribute("passwordError", "La contraseña debe tener al menos 8 caracteres.");
             hayErrores = true;
@@ -106,6 +109,7 @@ public class PersonalController {
             model.addAttribute("passwordError", "La contraseña debe contener al menos un carácter especial.");
             hayErrores = true;
         }
+
 
         if (hayErrores) {
             return "añadirpersonal";
