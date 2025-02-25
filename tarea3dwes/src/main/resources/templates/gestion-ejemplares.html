@@ -144,6 +144,7 @@
                     <th th:text="#{mensajes.ejemplares.fechahora}">Fecha/Hora</th>
                     <th th:text="#{mensajes.ejemplares.mensaje}">Mensaje</th>
                     <th th:text="#{mensajes.ejemplares.ejemplar}">Ejemplar</th>
+                    <th th:text="#{mensajes.ejemplares.persona}">Persona</th>
                 </tr>
             </thead>
             <tbody>
@@ -151,6 +152,7 @@
                     <td th:text="${mensaje.fechahora}"></td>
                     <td th:text="${mensaje.mensaje}"></td>
                     <td th:text="${mensaje.ejemplar != null ? mensaje.ejemplar.nombre : 'No asignado'}"></td>
+                    <td th:text="${mensaje.persona.nombre}"></td>
                 </tr>
             </tbody>
          </table>

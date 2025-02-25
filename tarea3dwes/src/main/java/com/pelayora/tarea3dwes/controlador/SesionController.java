@@ -40,16 +40,11 @@ public class SesionController {
 	     * @param action Acción opcional para mostrar el formulario de registro.
 	     * @param model Modelo para la vista.
 	     * @return Vista "iniciosesion-registrarse".
-	     */
-	    
-	    
-	    
+	     */ 
 	    @GetMapping("/login")
         public String mostrarLogin() {
 	        return "iniciosesion-registrarse"; 
 	    }
-	    
-	    
 	    
 	    @GetMapping("/registro")
 	    public String mostrarRegistro(@ModelAttribute("cliente") Cliente cliente,

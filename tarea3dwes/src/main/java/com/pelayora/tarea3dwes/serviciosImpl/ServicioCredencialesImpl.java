@@ -39,6 +39,11 @@ public class ServicioCredencialesImpl implements ServicioCredenciales {
     public Optional<Credenciales> buscarPorUsuario(String usuario) {
         return credenciales_R.findByUsuario(usuario);
     }
+
+    @Override
+    public boolean existeNombreUsuario(String usuario) {
+        return credenciales_R.existeNombreUsuario(usuario);
+    }
     
     @PostConstruct
     public void crearAdminSiNoExiste() {

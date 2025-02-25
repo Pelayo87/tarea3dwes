@@ -3,7 +3,6 @@ package com.pelayora.tarea3dwes.controlador;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
 import com.pelayora.tarea3dwes.modelo.Planta;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
@@ -103,6 +101,9 @@ public class PlantaController {
         }
 
         try {
+            planta.setCodigo(codigo.toUpperCase());
+            planta.setNombreComun(nombreComun.toUpperCase());
+            planta.setNombreCientifico(nombreCientifico.toUpperCase());
         	planta.setPrecio(10);
             S_planta.guardarPlanta(planta);
             redirectAttributes.addFlashAttribute("mensaje", "Planta añadida con éxito.");
@@ -112,12 +113,12 @@ public class PlantaController {
 
         return "redirect:/plantas-admin";
     }
-
     @GetMapping("/plantas-adminModificar")
     public String PlantasAdminModificar(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         try {
             model.addAttribute("mensaje", "Modificar planta (Usuario administrador)");
             model.addAttribute("UsuarioActual", nombreUsuario);
+            model.addAttribute("plantas", S_planta.listarPlantas());
             
         } catch (Exception e) {
             model.addAttribute("error", "Error al obtener los datos de la planta: " + e.getMessage());
@@ -134,16 +135,16 @@ public class PlantaController {
      * @return Redirección a la vista de administración de plantas.
      */
     @PostMapping("/plantas-adminModificar")
-    public String modificarPlanta(@RequestParam("codigo") String codigo,
-            @ModelAttribute Planta planta, Model model) {
+    public String modificarPlanta(@RequestParam("planta") String codigoPlanta,
+                                  @ModelAttribute Planta planta, Model model) {
         String nombreComun = planta.getNombreComun();
         String nombreCientifico = planta.getNombreCientifico();
         try {
-            Optional<Planta> planta_codigo = S_planta.buscarPlantaPorId(codigo);
+            Optional<Planta> planta_codigo = S_planta.buscarPlantaPorId(codigoPlanta);
             model.addAttribute("planta_codigo", planta_codigo);
 
             if (!planta_codigo.isPresent()) {
-                model.addAttribute("error", "Planta con el código " + codigo + " no encontrada.");
+                model.addAttribute("error", "Planta con el código " + codigoPlanta + " no encontrada.");
                 System.err.println("Planta no encontrada.");
                 return "plantas-adminModificar";
             }

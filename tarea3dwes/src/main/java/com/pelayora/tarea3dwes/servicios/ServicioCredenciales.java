@@ -19,6 +19,7 @@ public interface ServicioCredenciales {
 	List<Credenciales> listarCredenciales();
     Optional<Credenciales> buscarPorId(long id);
     Optional<Credenciales> buscarPorUsuario(String usuario);
+    boolean existeNombreUsuario(String usuario);
     Credenciales guardarCredenciales(Credenciales credenciales);
     void eliminarCredenciales(long id);
     boolean autenticar(Credenciales credenciales);

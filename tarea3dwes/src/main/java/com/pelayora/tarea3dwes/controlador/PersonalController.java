@@ -63,8 +63,8 @@ public class PersonalController {
         if (persona.getNombre() == null || persona.getNombre().trim().isEmpty()) {
             model.addAttribute("nombreError", "El nombre no puede estar vacío.");
             hayErrores = true;
-        } else if (!persona.getNombre().matches("[a-zA-Z]+")) {
-            model.addAttribute("nombreError", "El nombre solo debe contener letras.");
+        } else if (!persona.getNombre().matches("[a-zA-Z ]+")) {
+            model.addAttribute("nombreError", "El nombre solo debe contener letras y espacios.");
             hayErrores = true;
         }
 
@@ -83,6 +83,9 @@ public class PersonalController {
         // Validación del nombre de usuario
         if (usuario == null || usuario.trim().isEmpty()) {
             model.addAttribute("usuarioError", "El nombre de usuario no puede estar vacío.");
+            hayErrores = true;
+        }else if (S_credenciales.existeNombreUsuario(usuario)) {
+            model.addAttribute("usuarioError", "El nombre de usuario ya está registrado.");
             hayErrores = true;
         } else if (usuario.length() < 4) {
             model.addAttribute("usuarioError", "El usuario debe tener al menos 4 caracteres.");

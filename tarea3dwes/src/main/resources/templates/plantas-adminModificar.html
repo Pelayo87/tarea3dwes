@@ -43,9 +43,10 @@
     <div class="form-container">
         <form th:action="@{/plantas-adminModificar}" th:object="${planta}" method="post" class="formulario">
             <div class="datos-plantas">
-                <label for="codigo" th:text="#{plantas.codigo}">Codigo:</label>
-                <input type="text" id="codigo" name="codigo" th:value="${codigo}" 
-                       th:placeholder="#{placeholder.plantas.codigo}" pattern="[A-Za-z0-9]+" required autocomplete="off">
+                <select id="selectAnadirEjemplar" name="planta" class="select" required>
+                    <option value="" th:text="#{ejemplarAnadir.seleccionar.planta}">Selecciona una planta</option>
+                    <option th:each="planta : ${plantas}" th:value="${planta.codigo}" th:text="${planta.nombreComun}"></option>
+                </select>
             </div>
 
             <div class="datos-plantas">
