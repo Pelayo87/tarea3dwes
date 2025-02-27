@@ -1,7 +1,9 @@
 package com.pelayora.tarea3dwes.controlador;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,33 +47,39 @@ public class EjemplarController {
      */
     @GetMapping("/gestion-ejemplares")
     public String EjemplaresAdmin(
-            @RequestParam(value = "nombreComun", required = false) String nombreComun,
-            @RequestParam(value = "nombre", required = false) String nombre,
+            @RequestParam(value = "nombreComun", required = false) List<String> nombresComunes,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
             Model model) {
 
         model.addAttribute("mensaje", "Gestión de ejemplares");
         model.addAttribute("UsuarioActual", nombreUsuario);
 
-        if (nombreComun != null && !nombreComun.isEmpty()) {
-            List<Ejemplar> ejemplaresFiltrados = S_ejemplar.obtenerEjemplarPorNombrePlanta(nombreComun);
-            model.addAttribute("ejemplares", ejemplaresFiltrados);
-            model.addAttribute("mensaje", "Filtrado por planta: " + nombreComun);
-        } else {
-            model.addAttribute("ejemplares", S_ejemplar.obtenerTodosLosEjemplares());
+        List<Ejemplar> ejemplares = (nombresComunes != null && !nombresComunes.isEmpty()) 
+                ? S_ejemplar.obtenerEjemplaresPorNombresPlantas(nombresComunes)
+                : S_ejemplar.obtenerTodosLosEjemplares();
+
+        model.addAttribute("ejemplares", ejemplares);
+
+        Map<Long, Integer> mensajesPorEjemplar = new HashMap<>();
+        Map<Long, String> ultimoMensajePorEjemplar = new HashMap<>();
+
+        for (Ejemplar ej : ejemplares) {
+            int numMensajes = S_mensaje.contarMensajes(ej.getId());
+            mensajesPorEjemplar.put(ej.getId(), numMensajes);
+
+            S_mensaje.obtenerUltimoMensaje(ej.getId()).ifPresent(ultimoMensaje -> 
+                ultimoMensajePorEjemplar.put(ej.getId(), ultimoMensaje.getFechahora().toString())
+            );
         }
 
-        if (nombre != null && !nombre.isEmpty()) {
-            List<Mensaje> mensajesFiltrados = S_mensaje.obtenerMensajePorNombreEjemplar(nombre);
-            model.addAttribute("mensajes", mensajesFiltrados);
-            model.addAttribute("mensaje", "Filtrado por ejemplar: " + nombre);
-        } else {
-            model.addAttribute("mensajes", S_mensaje.listarMensajes());
-        }
+        model.addAttribute("mensajesPorEjemplar", mensajesPorEjemplar);
+        model.addAttribute("ultimoMensajePorEjemplar", ultimoMensajePorEjemplar);
 
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "gestion-ejemplares";
     }
+
+
 
     /**
      * Agrega un nuevo ejemplar al sistema.

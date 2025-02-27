@@ -115,5 +115,13 @@ public class ServicioMensajeImpl implements ServicioMensaje {
 	public List<Mensaje> obtenerMensajePorTipoPlanta(String nombreComun) {
 		return mensajeRepository.findByTipoPlanta(nombreComun);
 	}
+	
+	public int contarMensajes(Long idEjemplar) {
+        return mensajeRepository.contarMensajesPorEjemplar(idEjemplar);
+    }
+
+    public Optional<Mensaje> obtenerUltimoMensaje(Long idEjemplar) {
+        return mensajeRepository.encontrarUltimoMensaje(idEjemplar);
+    }
 
 }

@@ -1,6 +1,8 @@
 package com.pelayora.tarea3dwes.repositorios;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +17,7 @@ import com.pelayora.tarea3dwes.modelo.Mensaje;
 
 @Repository
 public interface MensajeRepository extends JpaRepository<Mensaje, Long>{
+	
 	List<Mensaje> findByPersonaId(long personaId);
     List<Mensaje> findByEjemplarId(long ejemplarId);
     @Query("SELECT COUNT(m) FROM Mensaje m")
@@ -28,5 +31,11 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long>{
 
     @Query("SELECT m FROM Mensaje m WHERE m.ejemplar.planta.nombreComun = :nombreComun")
     List<Mensaje> findByTipoPlanta(@Param("nombreComun") String nombreComun);
+    
+    @Query("SELECT COUNT(m) FROM Mensaje m WHERE m.ejemplar.id = :idEjemplar")
+    int contarMensajesPorEjemplar(@Param("idEjemplar") Long idEjemplar);
+
+    @Query("SELECT m FROM Mensaje m WHERE m.ejemplar.id = :idEjemplar ORDER BY m.fechahora DESC LIMIT 1")
+    Optional<Mensaje> encontrarUltimoMensaje(@Param("idEjemplar") Long idEjemplar);
 
 }

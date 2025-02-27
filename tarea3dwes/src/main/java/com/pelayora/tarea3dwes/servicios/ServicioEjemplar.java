@@ -28,7 +28,7 @@ public interface ServicioEjemplar {
     List<Ejemplar> obtenerTodosLosEjemplares();
     void eliminarEjemplar(Long id);
     long contadorEjemplares();
-    List<Ejemplar> obtenerEjemplarPorNombrePlanta(String nombreComun);
+    List<Ejemplar> obtenerEjemplaresPorNombresPlantas(List<String> nombresComunes);
     int contarEjemplaresDisponibles(String codigoPlanta);
     List<Ejemplar> obtenerPrimerosEjemplaresDisponibles(String codigoPlanta, int cantidad);
     

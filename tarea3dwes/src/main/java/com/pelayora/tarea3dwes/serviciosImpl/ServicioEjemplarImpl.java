@@ -71,9 +71,10 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
         return ejemplar_R.findByPlanta_Codigo(codigoPlanta);
     }
     
-    public List<Ejemplar> obtenerEjemplarPorNombrePlanta(String nombreComun) {
-        return ejemplar_R.findByPlantaNombreComun(nombreComun);
+    public List<Ejemplar> obtenerEjemplaresPorNombresPlantas(List<String> nombresComunes) {
+        return ejemplar_R.findByPlantaNombreComunIn(nombresComunes);
     }
+
 
     public int contarEjemplaresDisponibles(String codigoPlanta) {
         return ejemplar_R.contarEjemplaresDisponibles(codigoPlanta);

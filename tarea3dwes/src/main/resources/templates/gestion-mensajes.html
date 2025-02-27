@@ -45,18 +45,23 @@
 	<h2 class="titulos" th:text="#{anotacion.realizar}">REALIZAR ANOTACION</h2>
     
         <form th:action="@{/gestion-mensajes}" method="post">
-            <img src="img/realizar-anotacion.png" alt="Realizar anotación">
+            <img id="realizar-anotacion" src="img/realizar-anotacion.png" alt="Realizar anotación">
+            <br/>
             <label for="selectRealizarAnotacion" th:text="#{mensajesRealizar.seleccionar.ejemplar}">Selecciona el ejemplar</label>
+            <br/>
             <select id="selectRealizarAnotacion" name="ejemplar" class="select" required>
                 <option value="" th:text="#{mensajesRealizar.seleccionar.ejemplar}">Selecciona el ejemplar</option>
                 <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
             </select>
             <span th:if="${ejemplarError}" th:text="${ejemplarError}" style="color: red;"></span>
-    
+            <br/>
+            <br/>
             <label for="mensaje" th:text="#{mensaje.anotacion}">Anotación/Mensaje:</label>
-            <input type="text" id="mensaje" name="mensaje" placeholder="Escribe la anotación" required autocomplete="off">
+            <br/>
+            <textarea id="mensaje" name="mensaje" placeholder="Escribe la anotación" required autocomplete="off"></textarea>
             <span th:if="${mensajeError}" th:text="${mensajeError}" style="color: red;"></span>
-    
+            <br/>
+            <br/>
             <button type="submit" class="boton" th:text="#{anotacion.realizar}">Realizar Anotación</button>
         </form>
 

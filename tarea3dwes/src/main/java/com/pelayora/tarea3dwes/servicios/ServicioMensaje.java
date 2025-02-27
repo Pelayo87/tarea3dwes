@@ -28,4 +28,6 @@ public interface ServicioMensaje {
 	List<Mensaje> obtenerMensajePorNombreEjemplar(String nombre);
 	List<Mensaje> obtenerMensajePorNombrePersona(String nombre);
 	List<Mensaje> obtenerMensajePorTipoPlanta(String nombreComun);
+	int contarMensajes(Long idEjemplar);
+	Optional<Mensaje> obtenerUltimoMensaje(Long idEjemplar);
 }

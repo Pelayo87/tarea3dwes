@@ -99,29 +99,33 @@
     </p>
 
 		<form method="GET" action="/gestion-ejemplares" class="filtro-formulario">
-			<label for="nombreComun" class="filtro-label" th:text="#{filtrar.planta}">Filtrar por planta (nombre común):</label> 
-				<select name="nombreComun" id="nombreComun" class="filtro-select">
-				<option value="" th:text="#{seleccionar.planta}">-- Seleccionar planta --</option>
+			<label for="nombreComun" class="filtro-label" th:text="#{filtrar.planta}"> Filtrar por planta (nombre común): </label> 
+			<select name="nombreComun" id="nombreComun" class="filtro-select" multiple>
+				<option value="" disabled th:text="#{seleccionar.planta}">-- Seleccionar planta --</option>
 				<option th:each="planta : ${plantas}" th:value="${planta.nombreComun}" th:text="${planta.nombreComun}"></option>
 			</select>
 			<button type="submit" class="filtro-button" th:text="#{filtrar}">Filtrar</button>
 		</form>
 
 		<table class="tabla-ejemplares">
-        <thead>
-            <tr>
-                <th th:text="#{ejemplares.planta}">Planta</th>
-                <th th:text="#{ejemplares.nombre}">Nombre Ejemplar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="ejemplar : ${ejemplares}">
-                <td th:text="${ejemplar.planta.nombreComun}"></td>
-                <td th:text="${ejemplar.nombre}"></td>
-            </tr>
-        </tbody>
-     </table>
-    </div>
+			<thead>
+				<tr>
+					<th th:text="#{ejemplares.planta}">Planta</th>
+					<th th:text="#{ejemplares.nombre}">Nombre Ejemplar</th>
+					<th>Numero de Mensajes</th>
+					<th>Ultimo Mensaje</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="ejemplar : ${ejemplares}">
+					<td th:text="${ejemplar.planta.nombreComun}"></td>
+					<td th:text="${ejemplar.nombre}"></td>
+					<td th:text="${mensajesPorEjemplar[ejemplar.id] ?: 0}"></td>
+					<td th:text="${ultimoMensajePorEjemplar[ejemplar.id] ?: 'Sin mensajes'}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
     <div class="contenedor-listado">
         <h2 class="titulos" th:text="#{listado.mensajesejemplares.titulo}">LISTADO DE MENSAJES DE EJEMPLARES</h2>
