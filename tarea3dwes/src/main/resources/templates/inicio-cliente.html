@@ -36,35 +36,34 @@
 	</header>
 
 	<div class="container">
-		<h1 th:text="'BIENVENIDO: ' + ${UsuarioActual} + ' al Vivero CIFP'"></h1>
+    <h1 th:text="#{inicio.bienvenida} + ': ' + ${UsuarioActual} + ' ' + #{vivero.nombre}"></h1>
 
-		<section class="destacados">
-			<h2 th:text="#{catalogo.plantas}">Catálogo de Plantas</h2>
-			<div class="grid-plantas">
-				<div class="planta-card" th:each="planta : ${plantas}">
-					<h3 th:text="${planta.nombreComun}">Nombre Común</h3>
-					<p th:text="${planta.nombreCientifico}">Nombre Científico</p>
+    <section class="destacados">
+        <h2 th:text="#{catalogo.plantas}">Catálogo de Plantas</h2>
+        <div class="grid-plantas">
+            <div class="planta-card" th:each="planta : ${plantas}">
+                <h3 th:text="${planta.nombreComun}">Nombre Común</h3>
+                <p th:text="${planta.nombreCientifico}">Nombre Científico</p>
 
-					<p>Disponibles: <span th:text="${disponibles[planta.codigo]}"></span></p>
+                <p th:text="#{plantas.disponibles} + ': ' + ${disponibles[planta.codigo]}"></p>
 
-					<form th:action="@{/carrito-compra}" method="post">
-						<input type="hidden" name="CodigoPlanta" th:value="${planta.codigo}" />
-						<div class="quantity-selector">
-							<button type="button" class="minus-btn">-</button>
-							<input type="number" class="quantity-input" name="cantidad"
-							value="1" min="1" th:attr="max=${disponibles[planta.codigo]}" />
-
-							<button type="button" class="plus-btn">+</button>
-						</div>
-						<button type="submit" class="add-cart-btn">AÑADIR AL CARRITO</button>
-					</form>
-					<form th:action="@{/plantas-favoritas}" method="post">
-						<input type="hidden" name="CodigoPlanta" th:value="${planta.codigo}" />
-						<button type="submit" th:text="#{plantas.anadirFavoritos}">Añadir a favoritos</button>
-					</form>
-				</div>
-			</div>
-		</section>
+                <form th:action="@{/carrito-compra}" method="post">
+                    <input type="hidden" name="CodigoPlanta" th:value="${planta.codigo}" />
+                    <div class="quantity-selector">
+                        <button type="button" class="minus-btn">-</button>
+                        <input type="number" class="quantity-input" name="cantidad"
+                               value="1" min="1" th:attr="max=${disponibles[planta.codigo]}" />
+                        <button type="button" class="plus-btn">+</button>
+                    </div>
+                    <button type="submit" class="add-cart-btn" th:text="#{plantas.anadirCarrito}">AÑADIR AL CARRITO</button>
+                </form>
+                <form th:action="@{/plantas-favoritas}" method="post">
+                    <input type="hidden" name="CodigoPlanta" th:value="${planta.codigo}" />
+                    <button type="submit" th:text="#{plantas.anadirFavoritos}">Añadir a favoritos</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
 		<section class="servicios">
 			<h2 th:text="#{servicios.titulo}">Nuestros Servicios</h2>

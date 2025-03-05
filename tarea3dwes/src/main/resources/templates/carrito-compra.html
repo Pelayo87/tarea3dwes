@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras</title>
-    <link rel="stylesheet" href="css/vivero.css">
-    <link rel="stylesheet" href="css/vivero-cliente.css">
-    <link rel="stylesheet" href="css/carrito-compra.css">
-    <link rel="stylesheet" href="css/footer.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrito de Compras</title>
+<link rel="stylesheet" href="css/vivero.css">
+<link rel="stylesheet" href="css/vivero-cliente.css">
+<link rel="stylesheet" href="css/carrito-compra.css">
+<link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
-    <header>
+	<header>
 		<img class="logo" src="img/logo-vivero.png" alt="Logo vivero">
 		<div th:text="#{header.logo}">VIVERO CIFP LA LABORAL</div>
 		<nav>
-			<a href="/inicio-cliente" th:text="#{nav.inicio}">INICIO</a> 
-			<a href="#" th:text="#{nav.contacto}">CONTACTO</a>
+			<a href="/inicio-cliente" th:text="#{nav.inicio}">INICIO</a>
 		</nav>
 		<nav>
-			<a href="?lang=es">Español</a>
-			<a href="?lang=en">English</a>
-			<a href="?lang=ast">Asturianu</a>
+			<a href="?lang=es">Español</a> 
+			<a href="?lang=en">English</a> 
+			<a href="?lang=ast">Asturianu</a> 
 			<a href="?lang=zh">Chino</a>
 		</nav>
 		<div class="cliente-desplegable">
 			<div class="circulo-perfil">
-				<img src="img/fotoperfil-invitado.png" alt="Foto de perfil del cliente">
+				<img src="img/fotoperfil-invitado.png"
+					alt="Foto de perfil del cliente">
 			</div>
 			<div class="cliente-desplegable-informacion">
-				<strong th:text="'Cliente : ' + ${UsuarioActual}"></strong> 
-				<a href="/logout" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
+				<strong th:text="'Cliente : ' + ${UsuarioActual}"></strong> <a
+					href="/logout" th:text="#{admin.dropdown.logout}">Cerrar sesion</a>
 			</div>
 		</div>
 	</header>
 
-    <div class="container">
-        <div class="cart">
-            <h2>Mi cesta</h2>
-            <div class="empty-cart" th:if="${carrito == null or #lists.isEmpty(carrito.ejemplares)}">
-                <img src="img/carrito.png" alt="Carrito vacío">
-                <p>Tu cesta de la compra está vacía</p>
-                <span>Continúa comprando y encuentra tus plantas favoritas.</span>
-                <a href="/inicio-cliente"><button class="btn">Volver</button></a>
-            </div>
+	<div class="container">
+		<div class="cart">
+			<h2 th:text="#{carrito.titulo}">Mi cesta</h2>
+			<div class="empty-cart"
+				th:if="${carrito == null or #lists.isEmpty(carrito.ejemplares)}">
+				<img src="img/carrito.png" alt="Carrito vacío">
+				<p th:text="#{carrito.vacio}">Tu cesta de la compra esta vacia</p>
+				<span th:text="#{carrito.continuarComprando}">Continua
+					comprando y encuentra tus plantas favoritas.</span> <a
+					href="/inicio-cliente"><button class="btn"
+						th:text="#{carrito.volver}">Volver</button></a>
+			</div>
 
-			<div th:if="${carrito != null and !#lists.isEmpty(carrito.ejemplares)}" class="carrito-container">
-				<h2 class="carrito-title">Ejemplares en tu carrito</h2>
+			<div
+				th:if="${carrito != null and !#lists.isEmpty(carrito.ejemplares)}"
+				class="carrito-container">
+				<h2 class="carrito-title" th:text="#{carrito.ejemplares}">Ejemplares
+					en tu carrito</h2>
 				<table class="carrito-table">
 					<thead>
 						<tr>
-							<th>Código de Planta</th>
-							<th>Nombre Ejemplar</th>
+							<th th:text="#{plantas.codigo}">Codigo de Planta</th>
+							<th th:text="#{ejemplares.nombre}">Nombre Ejemplar</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="ejemplar : ${carrito.ejemplares}">
-							<td th:text="${ejemplar.planta.codigo}">Código Planta</td>
+							<td th:text="${ejemplar.planta.codigo}">Codigo Planta</td>
 							<td th:text="${ejemplar.nombre}">Nombre Ejemplar</td>
 						</tr>
 					</tbody>
@@ -63,62 +69,82 @@
 			</div>
 
 			<div class="delivery-info">
-                <h3>Costes y fecha de entrega</h3>
-                <p>En el siguiente paso, elige un método de entrega para conocer el coste y la fecha de entrega.</p>
-            </div>
-        </div>
+				<h3 th:text="#{carrito.costesEntrega}">Costes y fecha de
+					entrega</h3>
+				<p th:text="#{carrito.metodoEntrega}">En el siguiente paso,
+					elige un metodo de entrega para conocer el coste y la fecha de
+					entrega.</p>
+			</div>
+		</div>
 
-        <div class="order-summary">
-            <h3>Resumen del pedido</h3>
-            <div class="order-details">
-                <p>Subtotal <span>0,00€</span></p>
-                <p>Envío <strong>GRATIS</strong></p>
-                <hr>
-                <p class="total">Total IVA incl. <span>0,00€</span></p>
+		<div class="order-summary">
+			<h3 th:text="#{pedido.resumen}">Resumen del pedido</h3>
+			<div class="order-details">
+				<p th:text="#{pedido.subtotal}">
+					Subtotal <span>0,00€</span>
+				</p>
+				<p th:text="#{pedido.envio}">
+					Envio <strong>GRATIS</strong>
+				</p>
+				<hr>
+				<p class="total" th:text="#{pedido.total}">
+					Total IVA incl. <span>0,00€</span>
+				</p>
 				<form th:action="@{/confirmar-pedido}" method="post">
-					<button class="btn" type="submit">Realizar pedido</button>
+					<button class="btn" type="submit" th:text="#{pedido.realizar}">Realizar
+						pedido</button>
 				</form>
 			</div>
 
-            <div class="promo-code">
-                <button class="accordion">Introducir un código promocional</button>
-            </div>
-
-            <div class="benefits">
-                <ul>
-                    <li>✅ <b>Envío gratis a domicilio</b> con cualquier planta del vivero</li>
-                    <li>✅ <b>Recogida en tiendas</b> con descuentos</li>
-                    <li>✅ <b>Acumula puntos</b> y obtén promociones para siguientes compras</li>
-                    <li>✅ <b>Pago</b> únicamente contrareembolso</li>
-                 </ul>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-			<div class="footer">
-				<div class="footer-info">
-					<p class="direccion" th:text="#{footer.direccion}">C. Luis Moya
-						Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
-					<p class="telefono" th:text="#{footer.telefono}">+34 634 23 36
-						87</p>
-					<p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
-				</div>
-				<div class="horario">
-					<h4 th:text="#{footer.horario.titulo}">Horario</h4>
-					<p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes:
-						9:00 - 20:00</p>
-					<p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
-				</div>
-				<div class="redes-sociales">
-					<a href="#"><img src="img/facebook.png"
-						th:alt="#{social.facebook}" alt="Facebook" /></a> <a href="#"><img
-						src="img/x.png" th:alt="#{social.x}" alt="X" /></a> <a href="#"><img
-						src="img/instagram.png" th:alt="#{social.instagram}"
-						alt="Instagram" /></a>
-				</div>
+			<div class="promo-code">
+				<button class="accordion" th:text="#{pedido.codigoPromocional}">Introducir
+					un codigo promocional</button>
 			</div>
-		</footer>
+
+			<div class="benefits">
+				<ul>
+					<li>✅ <b th:text="#{beneficios.envioGratis}">Envio gratis
+							a domicilio</b> con cualquier planta del vivero
+					</li>
+					<li>✅ <b th:text="#{beneficios.recogidaTiendas}">Recogida
+							en tiendas</b> con descuentos
+					</li>
+					<li>✅ <b th:text="#{beneficios.acumulaPuntos}">Acumula
+							puntos</b> y obten promociones para siguientes compras
+					</li>
+					<li>✅ <b th:text="#{beneficios.pagoContrareembolso}">Pago</b>
+						unicamente contrareembolso
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<footer>
+		<div class="footer">
+			<div class="footer-info">
+				<p class="direccion" th:text="#{footer.direccion}">C. Luis Moya
+					Blanco, Periurbano - Rural, 33203 Gijón, Asturias</p>
+				<p class="telefono" th:text="#{footer.telefono}">+34 634 23 36
+					87</p>
+				<p class="email" th:text="#{footer.email}">contacto@viverolaboral.com</p>
+			</div>
+			<div class="horario">
+				<h4 th:text="#{footer.horario.titulo}">Horario</h4>
+				<p th:text="#{footer.horario.lunesViernes}">Lunes a Viernes:
+					9:00 - 20:00</p>
+				<p th:text="#{footer.horario.sabados}">Sábados: 10:00 - 14:00</p>
+			</div>
+			<div class="redes-sociales">
+				<a href="#"><img src="img/facebook.png"
+					th:alt="#{social.facebook}" alt="Facebook" /></a> <a href="#"><img
+					src="img/x.png" th:alt="#{social.x}" alt="X" /></a> <a href="#"><img
+					src="img/instagram.png" th:alt="#{social.instagram}"
+					alt="Instagram" /></a>
+			</div>
+		</div>
+	</footer>
 
 </body>
 </html>
