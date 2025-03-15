@@ -55,4 +55,9 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 		    + "LIMIT :cantidad", nativeQuery = true)
 	List<Ejemplar> obtenerPrimerosEjemplaresDisponibles(@Param("codigoPlanta") String codigoPlanta,
 			                                            @Param("cantidad") int cantidad);
+	
+	@Query(value = "SELECT p.nombrecomun, COUNT(e.id_ejemplar), GROUP_CONCAT(e.nombrecomun SEPARATOR ' ') "
+			+ "FROM ejemplares e " + "JOIN plantas p ON e.codigo = p.codigo " + "WHERE e.disponible = 1 "
+			+ "GROUP BY p.nombrecomun", nativeQuery = true)
+	List<Object[]> obtenerStockEjemplares();
 }

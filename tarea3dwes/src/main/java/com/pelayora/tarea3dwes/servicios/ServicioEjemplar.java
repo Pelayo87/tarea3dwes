@@ -1,6 +1,7 @@
 package com.pelayora.tarea3dwes.servicios;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.pelayora.tarea3dwes.modelo.Ejemplar;
@@ -31,5 +32,6 @@ public interface ServicioEjemplar {
     List<Ejemplar> obtenerEjemplaresPorNombresPlantas(List<String> nombresComunes);
     int contarEjemplaresDisponibles(String codigoPlanta);
     List<Ejemplar> obtenerPrimerosEjemplaresDisponibles(String codigoPlanta, int cantidad);
+    List<Map<String, Object>> obtenerStockEjemplares();
     
 }

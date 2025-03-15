@@ -88,9 +88,27 @@
                 </div>
             </form>
         </div>
-    </div>    
+    </div>
 
 	<div class="contenedor-listado">
+	<h2 class="titulos">STOCK DE EJEMPLARES DISPONIBLES</h2>
+	<table class="tabla-ejemplares">
+		<thead>
+			<tr>
+				<th th:text="#{ejemplares.planta}">Planta</th>
+				<th>Ejemplares Disponibles</th>
+				<th th:text="#{ejemplares.nombre}">Nombres Ejemplares</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="stock : ${stockEjemplares}">
+				<td th:text="${stock.tipoPlanta}"></td>
+				<td th:text="${stock.ejemplaresDisponibles}"></td>
+				<td th:text="${stock.nombresEjemplares}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
     <h2 class="titulos" th:text="#{listado.ejemplares.titulo}">LISTADO DE EJEMPLARES</h2>
     <p th:text="#{listado.ejemplares.descripcion}">
         Gestiona y visualiza todos los ejemplares disponibles en nuestro vivero. Cada ejemplar es único y

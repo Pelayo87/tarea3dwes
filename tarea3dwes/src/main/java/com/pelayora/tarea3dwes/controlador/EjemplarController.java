@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ public class EjemplarController {
     @GetMapping("/gestion-ejemplares")
     public String EjemplaresAdmin(
             @RequestParam(value = "nombreComun", required = false) List<String> nombresComunes,
+            @RequestParam(value = "nombre", required = false) String nombre,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
             Model model) {
 
@@ -59,6 +61,7 @@ public class EjemplarController {
                 : S_ejemplar.obtenerTodosLosEjemplares();
 
         model.addAttribute("ejemplares", ejemplares);
+        model.addAttribute("stockEjemplares", S_ejemplar.obtenerStockEjemplares());
 
         Map<Long, Integer> mensajesPorEjemplar = new HashMap<>();
         Map<Long, String> ultimoMensajePorEjemplar = new HashMap<>();
@@ -74,12 +77,18 @@ public class EjemplarController {
 
         model.addAttribute("mensajesPorEjemplar", mensajesPorEjemplar);
         model.addAttribute("ultimoMensajePorEjemplar", ultimoMensajePorEjemplar);
+        
+        if (nombre != null && !nombre.isEmpty()) {
+            List<Mensaje> mensajesFiltrados = S_mensaje.obtenerMensajePorNombreEjemplar(nombre);
+            model.addAttribute("mensajes", mensajesFiltrados);
+            model.addAttribute("mensaje", "Filtrado por ejemplar: " + nombre);
+        } else {
+            model.addAttribute("mensajes", S_mensaje.listarMensajes());
+        }
 
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "gestion-ejemplares";
     }
-
-
 
     /**
      * Agrega un nuevo ejemplar al sistema.

@@ -1,7 +1,11 @@
 package com.pelayora.tarea3dwes.serviciosImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,4 +87,16 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
     public List<Ejemplar> obtenerPrimerosEjemplaresDisponibles(String codigoPlanta, int cantidad) {
         return ejemplar_R.obtenerPrimerosEjemplaresDisponibles(codigoPlanta, cantidad);
     } 
+    
+    public List<Map<String, Object>> obtenerStockEjemplares() {
+        List<Object[]> resultados = ejemplar_R.obtenerStockEjemplares();
+
+        return resultados.stream().map(obj -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("tipoPlanta", obj[0]);
+            map.put("ejemplaresDisponibles", obj[1]);
+            map.put("nombresEjemplares", obj[2]);
+            return map;
+        }).collect(Collectors.toList());
+    }
 }
