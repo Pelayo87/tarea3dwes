@@ -56,7 +56,6 @@ public class PlantaController {
      */
     @GetMapping("/plantas-adminAnadir")
     public String PlantasAdminAnadir(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
-        model.addAttribute("mensaje", "Añadir planta (Usuario administrador)");
         model.addAttribute("UsuarioActual", nombreUsuario);
         model.addAttribute("planta", new Planta());
         return "plantas-adminAñadir";
@@ -70,11 +69,12 @@ public class PlantaController {
      * @return Redirección a la vista de administración de plantas.
      */
     @PostMapping("/plantas-adminAnadir")
-    public String guardarPlanta(@ModelAttribute Planta planta, BindingResult resultado, RedirectAttributes redirectAttributes) {
+    public String guardarPlanta(@ModelAttribute Planta planta, BindingResult resultado, Model model) {
         String codigo = planta.getCodigo();
         String nombreComun = planta.getNombreComun();
         String nombreCientifico = planta.getNombreCientifico();
 
+        // Validaciones
         if (codigo == null || !codigo.matches("^[A-Za-z]+$")) {
             resultado.rejectValue("codigo", "codigo.invalid", "El código no debe contener espacios, dígitos ni caracteres especiales.");
         }
@@ -104,15 +104,16 @@ public class PlantaController {
             planta.setCodigo(codigo.toUpperCase());
             planta.setNombreComun(nombreComun.toUpperCase());
             planta.setNombreCientifico(nombreCientifico.toUpperCase());
-        	planta.setPrecio(10);
+            planta.setPrecio(10);
             S_planta.guardarPlanta(planta);
-            redirectAttributes.addFlashAttribute("mensaje", "Planta añadida con éxito.");
+            model.addAttribute("mensaje", "✅ Planta añadida con éxito.");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al añadir la planta: " + e.getMessage());
+            model.addAttribute("error", "❌ Error al añadir la planta: " + e.getMessage());
         }
 
-        return "redirect:/plantas-admin";
+        return "plantas-adminAñadir";
     }
+    
     @GetMapping("/plantas-adminModificar")
     public String PlantasAdminModificar(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         try {
@@ -164,9 +165,9 @@ public class PlantaController {
         } catch (Exception e) {
             model.addAttribute("error", "Error al modificar la planta: " + e.getMessage());
         }
-        return "redirect:/plantas-admin";
+        return "redirect:/plantas-adminModificar";
     }
-    
+
     @GetMapping("/plantas-adminEliminar")
     public String PlantasAdminEliminar(@ModelAttribute("nombreUsuario") String nombreUsuario, 
                                        Model model) {
@@ -212,7 +213,7 @@ public class PlantaController {
         } catch (Exception e) {
             model.addAttribute("error", "Error al eliminar la planta: " + e.getMessage());
             System.err.println("Error al eliminar la planta: " + e.getMessage());
-            return "plantas-adminEliminar";
+            return "redirect:/plantas-adminEliminar";
         }
     }
 }

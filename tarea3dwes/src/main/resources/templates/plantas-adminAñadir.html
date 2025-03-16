@@ -38,35 +38,52 @@
         </div>
     </header>
 
-    <div class="container">
-    <h1 class="titulo-form" th:text="#{admin.anadirPlanta}">ANADIR PLANTA</h1>
-    <div class="form-container">
-        <form th:action="@{/plantas-adminAnadir}" th:object="${planta}" method="post" class="formulario">
-            <div class="datos-plantas">
-                <label for="codigo" th:text="#{plantas.codigo}">Codigo:</label>
-                <input type="text" id="codigo" name="codigo" th:field="*{codigo}" th:placeholder="#{placeholder.plantas.codigo}" required autocomplete="off">
-                <span th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" style="color: red;"></span>
-            </div>
-            <div class="datos-plantas">
-                <label for="nombreComun" th:text="#{plantas.nombreComun}">Nombre Comun:</label>
-                <input type="text" id="nombreComun" name="nombreComun" th:field="*{nombreComun}" th:placeholder="#{placeholder.plantas.nombreComun}" required autocomplete="off">
-                <span th:if="${#fields.hasErrors('nombreComun')}" th:errors="*{nombreComun}" style="color: red;"></span>
-            </div>
-            <div class="datos-plantas">
-                <label for="nombreCientifico" th:text="#{plantas.nombreCientifico}">Nombre Cientifico:</label>
-                <input type="text" id="nombreCientifico" name="nombreCientifico" th:field="*{nombreCientifico}" th:placeholder="#{placeholder.plantas.nombreCientifico}" required autocomplete="off">
-                <span th:if="${#fields.hasErrors('nombreCientifico')}" th:errors="*{nombreCientifico}" style="color: red;"></span>
-            </div>
-            <button type="submit" class="btn-submit" th:text="#{admin.anadirPlanta}">ANADIR PLANTA</button>
-        </form>            
-    </div>
-</div>
+	<div class="container">
+		<h1 class="titulo-form" th:text="#{admin.anadirPlanta}">ANADIR
+			PLANTA</h1>
+		<div class="form-container">
+			<form th:action="@{/plantas-adminAnadir}" th:object="${planta}"
+				method="post" class="formulario">
+				<div class="datos-plantas">
+					<label for="codigo" th:text="#{plantas.codigo}">Codigo:</label> <input
+						type="text" id="codigo" name="codigo" th:field="*{codigo}"
+						th:placeholder="#{placeholder.plantas.codigo}" required
+						autocomplete="off"> <span
+						th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
+						style="color: red;"></span>
+				</div>
+				<div class="datos-plantas">
+					<label for="nombreComun" th:text="#{plantas.nombreComun}">Nombre
+						Comun:</label> <input type="text" id="nombreComun" name="nombreComun"
+						th:field="*{nombreComun}"
+						th:placeholder="#{placeholder.plantas.nombreComun}" required
+						autocomplete="off"> <span
+						th:if="${#fields.hasErrors('nombreComun')}"
+						th:errors="*{nombreComun}" style="color: red;"></span>
+				</div>
+				<div class="datos-plantas">
+					<label for="nombreCientifico" th:text="#{plantas.nombreCientifico}">Nombre
+						Cientifico:</label> <input type="text" id="nombreCientifico"
+						name="nombreCientifico" th:field="*{nombreCientifico}"
+						th:placeholder="#{placeholder.plantas.nombreCientifico}" required
+						autocomplete="off"> <span
+						th:if="${#fields.hasErrors('nombreCientifico')}"
+						th:errors="*{nombreCientifico}" style="color: red;"></span>
+				</div>
+
+				<div th:if="${mensaje}" class="alert alert-success"
+					th:text="${mensaje}" style="margin-bottom: 10px;"></div>
+				<div th:if="${error}" class="alert alert-danger" th:text="${error}"
+					style="margin-bottom: 10px;"></div>
+
+				<button type="submit" class="btn-submit"
+					th:text="#{admin.anadirPlanta}">ANADIR PLANTA</button>
+			</form>
+		</div>
+	</div>
 
 
-    <div id="error" th:text="${error}" style="display: none;"></div>
-    <div id="mensaje" th:text="${success}" style="display: none;"></div>
-
-    <footer>
+	<footer>
         <div class="footer">
           <div class="footer-info">
               <p class="direccion" th:text="#{footer.direccion}">
