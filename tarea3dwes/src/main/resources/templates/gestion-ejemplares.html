@@ -56,38 +56,6 @@
                 </div>
             </form>
         </div>
-    
-        <div class="card">
-            <form th:action="@{/gestion-ejemplares/modificar}" method="post">
-                <img src="img/modificar-ejemplar.png" alt="Modificar ejemplar">
-                <h2 class="titulos" th:text="#{admin.modificarEjemplar}">MODIFICAR EJEMPLAR</h2>
-                <div class="ejemplar">
-                    <select id="selectModificarEjemplar" name="id_ejemplar" class="select" required>
-                        <option value="" th:text="#{ejemplarModificar.seleccionar.ejemplar}">Selecciona el ejemplar a modificar</option>
-                        <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
-                    </select>
-                    <select id="selectNuevaPlantaEjemplar" name="planta" class="select" required>
-                        <option value="" th:text="#{ejemplarModificar.seleccionar.planta}">Selecciona la nueva planta del ejemplar</option>
-                        <option th:each="planta : ${plantas}" th:value="${planta.codigo}" th:text="${planta.nombreComun}"></option>
-                    </select>
-                    <button type="submit" class="boton" th:text="#{admin.modificarEjemplar}">Modificar Ejemplar</button>
-                </div>
-            </form>
-        </div>
-    
-        <div class="card">
-            <form th:action="@{/gestion-ejemplares/eliminar}" method="post">
-                <img src="img/eliminar-ejemplar.png" alt="Eliminar ejemplar">
-                <h2 class="titulos" th:text="#{admin.eliminarEjemplar}">ELIMINAR EJEMPLAR</h2>
-                <div class="ejemplar">
-                    <select id="selectEliminarEjemplar" name="id_ejemplar" class="select" required>
-                        <option value="" th:text="#{ejemplarEliminar.seleccionar.ejemplar}">Selecciona un ejemplar</option>
-                        <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.nombre}"></option>
-                    </select>
-                    <button type="submit" class="boton" th:text="#{admin.eliminarEjemplar}">Eliminar Ejemplar</button>
-                </div>
-            </form>
-        </div>
     </div>
 
 	<div class="contenedor-listado">
