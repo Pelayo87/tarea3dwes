@@ -55,14 +55,22 @@
 				<table class="carrito-table">
 					<thead>
 						<tr>
-							<th th:text="#{plantas.codigo}">Codigo de Planta</th>
+							<th th:text="#{plantas.codigo}">Código de Planta</th>
 							<th th:text="#{ejemplares.nombre}">Nombre Ejemplar</th>
+							<th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="ejemplar : ${carrito.ejemplares}">
-							<td th:text="${ejemplar.planta.codigo}">Codigo Planta</td>
+							<td th:text="${ejemplar.planta.codigo}">Código Planta</td>
 							<td th:text="${ejemplar.nombre}">Nombre Ejemplar</td>
+							<td>
+								<form th:action="@{/eliminar-ejemplar}" method="post">
+									<input type="hidden" name="idEjemplar"
+										th:value="${ejemplar.id}" />
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
 						</tr>
 					</tbody>
 				</table>

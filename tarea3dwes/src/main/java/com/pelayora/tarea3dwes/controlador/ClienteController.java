@@ -199,14 +199,13 @@ public class ClienteController {
 	        carrito.setFechaPedido(LocalDate.now());
 	        carrito.setEjemplares(new ArrayList<>());
 
-	        // 🔴 Buscar el cliente antes de asignarlo al pedido
-	        Optional<Cliente> clienteOpt = S_cliente.buscarPorId(id_Cliente);
-	        if (!clienteOpt.isPresent()) {
+	        Optional<Cliente> clienteCarrito = S_cliente.buscarPorId(id_Cliente);
+	        if (!clienteCarrito.isPresent()) {
 	            redirectAttributes.addFlashAttribute("error", "Cliente no encontrado.");
 	            return "redirect:/inicio-cliente";
 	        }
 
-	        Cliente cliente = clienteOpt.get();
+	        Cliente cliente = clienteCarrito.get();
 	        carrito.setCliente(cliente);
 
 	        carrito = S_pedido.guardarPedido(carrito);
@@ -229,7 +228,38 @@ public class ClienteController {
 
 	    return "redirect:/carrito-compra";
 	}
+	
+	@PostMapping("/eliminar-ejemplar")
+	public String eliminarEjemplarDelCarrito(@RequestParam("idEjemplar") Long idEjemplar,
+	                                          HttpSession session,
+	                                          RedirectAttributes redirectAttributes) {
 
+	    Pedido carrito = (Pedido) session.getAttribute("carrito");
+	    if (carrito == null) {
+	        redirectAttributes.addFlashAttribute("error", "No hay carrito activo.");
+	        return "redirect:/carrito-compra";
+	    }
+
+	    // Buscar el ejemplar por su id
+	    Optional<Ejemplar> ejemplarOpt = S_ejemplar.obtenerEjemplarPorId(idEjemplar);
+	    if (!ejemplarOpt.isPresent()) {
+	        redirectAttributes.addFlashAttribute("error", "Ejemplar no encontrado.");
+	        return "redirect:/carrito-compra";
+	    }
+
+	    Ejemplar ejemplar = ejemplarOpt.get();
+
+	    carrito.getEjemplares().removeIf(e -> e.getId().equals(idEjemplar));
+
+	    ejemplar.setDisponible(true);
+	    ejemplar.setPedido(null);
+	    S_ejemplar.modificarEjemplar(ejemplar);
+
+	    session.setAttribute("carrito", carrito);
+	    redirectAttributes.addFlashAttribute("mensaje", "Ejemplar eliminado correctamente.");
+
+	    return "redirect:/carrito-compra";
+	}
 
 
 	@PostMapping("/confirmar-pedido")
