@@ -24,40 +24,41 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ejemplares")
-public class Ejemplar implements Serializable{
+public class Ejemplar implements Serializable {
 
     private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_ejemplar;
-	
-	@Column(name = "nombrecomun", length = 50)
-	private String nombre;
-	
-	@Column(name = "disponible")
-	private boolean disponible=true;
-	
-	@ManyToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "codigo")
-	private Planta planta;
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="id_ejemplar")
-	private List<Mensaje> mensajes = new LinkedList<Mensaje>();
-	
-	@ManyToMany(mappedBy = "ejemplares")
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_ejemplar;
+
+    @Column(name = "nombrecomun", length = 50)
+    private String nombre;
+
+    @Column(name = "disponible")
+    private boolean disponible = true;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "codigo")
+    private Planta planta;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_ejemplar")
+    private List<Mensaje> mensajes = new LinkedList<>();
+
+    @ManyToMany(mappedBy = "ejemplares")
     private List<Fitosanitario> fitosanitarios;
-	
-	@OneToOne(mappedBy = "ejemplar", cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "ejemplar", cascade = CascadeType.ALL)
     private Historial historial;
-	
-	@OneToOne
-    @JoinColumn(name = "id_localizacion", unique=true)
+
+    @OneToOne
+    @JoinColumn(name = "id_localizacion", unique = true)
     private Localizacion localizacion;
-	
-	@ManyToMany(mappedBy = "ejemplares")
-    private List<Pedido> pedidos;
+
+    @ManyToOne
+    @JoinColumn(name = "pedido_id")
+    private Pedido pedido;
 
 	public Ejemplar() {
 		super();
@@ -84,7 +85,7 @@ public class Ejemplar implements Serializable{
 	}
 
 	public Ejemplar(Long id_ejemplar, String nombre, Planta planta, List<Mensaje> mensajes,
-			List<Fitosanitario> fitosanitarios, Historial historial, Localizacion localizacion, List<Pedido> pedidos) {
+			List<Fitosanitario> fitosanitarios, Historial historial, Localizacion localizacion, Pedido pedido) {
 		super();
 		this.id_ejemplar = id_ejemplar;
 		this.nombre = nombre;
@@ -93,11 +94,13 @@ public class Ejemplar implements Serializable{
 		this.fitosanitarios = fitosanitarios;
 		this.historial = historial;
 		this.localizacion = localizacion;
-		this.pedidos = pedidos;
+		this.pedido = pedido;
 	}
 
+	
+
 	public Ejemplar(Long id_ejemplar, String nombre, boolean disponible, Planta planta, List<Mensaje> mensajes,
-			List<Fitosanitario> fitosanitarios, Historial historial, Localizacion localizacion, List<Pedido> pedidos) {
+			List<Fitosanitario> fitosanitarios, Historial historial, Localizacion localizacion, Pedido pedido) {
 		super();
 		this.id_ejemplar = id_ejemplar;
 		this.nombre = nombre;
@@ -107,7 +110,7 @@ public class Ejemplar implements Serializable{
 		this.fitosanitarios = fitosanitarios;
 		this.historial = historial;
 		this.localizacion = localizacion;
-		this.pedidos = pedidos;
+		this.pedido = pedido;
 	}
 
 	public Long getId() {
@@ -182,12 +185,12 @@ public class Ejemplar implements Serializable{
 		this.localizacion = localizacion;
 	}
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
+	public Pedido getPedido() {
+		return pedido;
 	}
 
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 
 	@Override

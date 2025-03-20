@@ -169,43 +169,69 @@ public class ClienteController {
 	    model.addAttribute("mensaje", "Factura del cliente");
 	    model.addAttribute("UsuarioActual", nombreUsuario);
 	    model.addAttribute("id_Cliente", id_Cliente);
-	    
+
 	    Pedido carrito = (Pedido) session.getAttribute("carrito");
 	    model.addAttribute("carrito", carrito);
-	    
+
 	    return "carrito-compra";
 	}
 
-	
 	@PostMapping("/carrito-compra")
 	public String anadirAlCarrito(@RequestParam("CodigoPlanta") String codigoPlanta,
 	                              @RequestParam("cantidad") int cantidad,
+	                              @ModelAttribute("id_Cliente") Long id_Cliente,
 	                              HttpSession session,
-	                              Model model) {
-		
+	                              Model model,
+	                              RedirectAttributes redirectAttributes) {
+
 	    int disponibles = S_ejemplar.contarEjemplaresDisponibles(codigoPlanta);
 	    if (cantidad > disponibles) {
-	        model.addAttribute("error", "No hay suficientes ejemplares disponibles para esa planta.");
+	        redirectAttributes.addFlashAttribute("error", "No hay suficientes ejemplares disponibles para esa planta.");
 	        return "redirect:/inicio-cliente";
 	    }
-	    
+
 	    List<Ejemplar> ejemplaresSeleccionados = S_ejemplar.obtenerPrimerosEjemplaresDisponibles(codigoPlanta, cantidad);
-	    
+
 	    Pedido carrito = (Pedido) session.getAttribute("carrito");
-	    if (carrito == null) {
+
+	    if (carrito == null || carrito.getId() == 0) {
 	        carrito = new Pedido();
 	        carrito.setFechaPedido(LocalDate.now());
 	        carrito.setEjemplares(new ArrayList<>());
+
+	        // 🔴 Buscar el cliente antes de asignarlo al pedido
+	        Optional<Cliente> clienteOpt = S_cliente.buscarPorId(id_Cliente);
+	        if (!clienteOpt.isPresent()) {
+	            redirectAttributes.addFlashAttribute("error", "Cliente no encontrado.");
+	            return "redirect:/inicio-cliente";
+	        }
+
+	        Cliente cliente = clienteOpt.get();
+	        carrito.setCliente(cliente);
+
+	        carrito = S_pedido.guardarPedido(carrito);
+
+	        if (carrito.getId() == 0) {
+	            redirectAttributes.addFlashAttribute("error", "Error al guardar el pedido.");
+	            return "redirect:/inicio-cliente";
+	        }
+
 	        session.setAttribute("carrito", carrito);
 	    }
 
+	    for (Ejemplar ejemplar : ejemplaresSeleccionados) {
+	        ejemplar.setPedido(carrito);
+	        S_ejemplar.modificarEjemplar(ejemplar);
+	    }
+
 	    carrito.getEjemplares().addAll(ejemplaresSeleccionados);
-	    
 	    session.setAttribute("carrito", carrito);
-	    
+
 	    return "redirect:/carrito-compra";
 	}
-	
+
+
+
 	@PostMapping("/confirmar-pedido")
 	public String confirmarPedido(HttpSession session, 
 	                              @ModelAttribute("id_Cliente") Long id_Cliente,
@@ -229,26 +255,27 @@ public class ClienteController {
 	    carrito.setFechaPedido(LocalDate.now());
 
 	    Date fechaHoraActual = new Date();
-	    Mensaje mensaje = new Mensaje();
-
+	    
 	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
 	        ejemplar.setDisponible(false);
+	        ejemplar.setPedido(carrito);
 	        S_ejemplar.modificarEjemplar(ejemplar);
 	    }
 
 	    S_pedido.guardarPedido(carrito);
 	    Long idPedido = carrito.getId();
-	    
-		for (Ejemplar ejemplar : carrito.getEjemplares()) {
-			String mensajeTexto = "El cliente " + clienteActual.getNombre() + " compró el ejemplar "
-					+ ejemplar.getNombre() + " el día " + fechaHoraActual + " en el pedido " + idPedido;
 
-			mensaje.setFechahora(fechaHoraActual);
-			mensaje.setMensaje(mensajeTexto);
-			mensaje.setEjemplar(ejemplar);
-			
-			S_mensaje.guardarMensaje(mensaje);
-		}
+	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
+	        String mensajeTexto = "El cliente " + clienteActual.getNombre() + " compró el ejemplar "
+	                + ejemplar.getNombre() + " el día " + fechaHoraActual + " en el pedido " + idPedido;
+
+	        Mensaje mensaje = new Mensaje();
+	        mensaje.setFechahora(fechaHoraActual);
+	        mensaje.setMensaje(mensajeTexto);
+	        mensaje.setEjemplar(ejemplar);
+	        
+	        S_mensaje.guardarMensaje(mensaje);
+	    }
 
 	    redirectAttributes.addAttribute("idPedido", idPedido);
 	    session.removeAttribute("carrito");
@@ -257,7 +284,6 @@ public class ClienteController {
 	    return "redirect:/factura";
 	}
 
-	
 	@GetMapping("/mispedidos")
     public String pedidosCliente(@RequestParam(value = "estado", required = false, defaultValue = "todos") String estado,
     		                     @ModelAttribute("nombreUsuario") String nombreUsuario,
