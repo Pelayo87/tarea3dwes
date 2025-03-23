@@ -136,13 +136,12 @@ public class ClienteController {
 	                                   @ModelAttribute("UsuarioCliente") Cliente Usuario,
 	                                   Model model) {
 
-	    Optional<Pedido> pedido = S_pedido.buscarPedidoPorId(idPedido);
-	    if (!pedido.isPresent()) {
-	        model.addAttribute("error", "Pedido no encontrado.");
+	    List<Ejemplar> ejemplares = S_ejemplar.obtenerEjemplaresPorPedido(idPedido);
+
+	    if (ejemplares.isEmpty()) {
+	        model.addAttribute("error", "No se encontraron ejemplares para este pedido.");
 	        return "redirect:/inicio-cliente";
 	    }
-
-	    List<Ejemplar> ejemplares = pedido.get().getEjemplares();
 
 	    Map<Planta, Long> plantasConCantidad = ejemplares.stream()
 	            .collect(Collectors.groupingBy(Ejemplar::getPlanta, Collectors.counting()));
@@ -160,6 +159,7 @@ public class ClienteController {
 
 	    return "factura";
 	}
+
 	
 	@GetMapping("/carrito-compra")
 	public String carritoCompraCliente(@ModelAttribute("nombreUsuario") String nombreUsuario,
@@ -179,53 +179,29 @@ public class ClienteController {
 	@PostMapping("/carrito-compra")
 	public String anadirAlCarrito(@RequestParam("CodigoPlanta") String codigoPlanta,
 	                              @RequestParam("cantidad") int cantidad,
-	                              @ModelAttribute("id_Cliente") Long id_Cliente,
 	                              HttpSession session,
-	                              Model model,
-	                              RedirectAttributes redirectAttributes) {
-
+	                              Model model) {
+		
 	    int disponibles = S_ejemplar.contarEjemplaresDisponibles(codigoPlanta);
 	    if (cantidad > disponibles) {
-	        redirectAttributes.addFlashAttribute("error", "No hay suficientes ejemplares disponibles para esa planta.");
+	        model.addAttribute("error", "No hay suficientes ejemplares disponibles para esa planta.");
 	        return "redirect:/inicio-cliente";
 	    }
-
+	    
 	    List<Ejemplar> ejemplaresSeleccionados = S_ejemplar.obtenerPrimerosEjemplaresDisponibles(codigoPlanta, cantidad);
-
+	    
 	    Pedido carrito = (Pedido) session.getAttribute("carrito");
-
-	    if (carrito == null || carrito.getId() == 0) {
+	    if (carrito == null) {
 	        carrito = new Pedido();
 	        carrito.setFechaPedido(LocalDate.now());
 	        carrito.setEjemplares(new ArrayList<>());
-
-	        Optional<Cliente> clienteCarrito = S_cliente.buscarPorId(id_Cliente);
-	        if (!clienteCarrito.isPresent()) {
-	            redirectAttributes.addFlashAttribute("error", "Cliente no encontrado.");
-	            return "redirect:/inicio-cliente";
-	        }
-
-	        Cliente cliente = clienteCarrito.get();
-	        carrito.setCliente(cliente);
-
-	        carrito = S_pedido.guardarPedido(carrito);
-
-	        if (carrito.getId() == 0) {
-	            redirectAttributes.addFlashAttribute("error", "Error al guardar el pedido.");
-	            return "redirect:/inicio-cliente";
-	        }
-
 	        session.setAttribute("carrito", carrito);
 	    }
 
-	    for (Ejemplar ejemplar : ejemplaresSeleccionados) {
-	        ejemplar.setPedido(carrito);
-	        S_ejemplar.modificarEjemplar(ejemplar);
-	    }
-
 	    carrito.getEjemplares().addAll(ejemplaresSeleccionados);
+	    
 	    session.setAttribute("carrito", carrito);
-
+	    
 	    return "redirect:/carrito-compra";
 	}
 	
@@ -285,27 +261,31 @@ public class ClienteController {
 	    carrito.setFechaPedido(LocalDate.now());
 
 	    Date fechaHoraActual = new Date();
+	    Mensaje mensaje = new Mensaje();
+	    
+	    Pedido pedidoCliente = new Pedido();
+	    pedidoCliente.setCliente(clienteActual);
+	    pedidoCliente.setEstado(EstadoPedido.REALIZADO);
+	    pedidoCliente.setFechaPedido(LocalDate.now());
+	    S_pedido.guardarPedido(pedidoCliente);
 	    
 	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
-	        ejemplar.setDisponible(false);
-	        ejemplar.setPedido(carrito);
-	        S_ejemplar.modificarEjemplar(ejemplar);
+	    	ejemplar.setDisponible(false);
+	    	ejemplar.setPedido(pedidoCliente);
+	    	S_ejemplar.modificarEjemplar(ejemplar);
 	    }
+	    Long idPedido = pedidoCliente.getId();
+	    
+		for (Ejemplar ejemplar : carrito.getEjemplares()) {
+			String mensajeTexto = "El cliente " + clienteActual.getNombre() + " compró el ejemplar "
+					+ ejemplar.getNombre() + " el día " + fechaHoraActual + " en el pedido " + idPedido;
 
-	    S_pedido.guardarPedido(carrito);
-	    Long idPedido = carrito.getId();
-
-	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
-	        String mensajeTexto = "El cliente " + clienteActual.getNombre() + " compró el ejemplar "
-	                + ejemplar.getNombre() + " el día " + fechaHoraActual + " en el pedido " + idPedido;
-
-	        Mensaje mensaje = new Mensaje();
-	        mensaje.setFechahora(fechaHoraActual);
-	        mensaje.setMensaje(mensajeTexto);
-	        mensaje.setEjemplar(ejemplar);
-	        
-	        S_mensaje.guardarMensaje(mensaje);
-	    }
+			mensaje.setFechahora(fechaHoraActual);
+			mensaje.setMensaje(mensajeTexto);
+			mensaje.setEjemplar(ejemplar);
+			
+			S_mensaje.guardarMensaje(mensaje);
+		}
 
 	    redirectAttributes.addAttribute("idPedido", idPedido);
 	    session.removeAttribute("carrito");

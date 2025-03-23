@@ -99,4 +99,9 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
             return map;
         }).collect(Collectors.toList());
     }
+
+	@Override
+	public List<Ejemplar> obtenerEjemplaresPorPedido(Long idPedido) {
+		return ejemplar_R.obtenerEjemplaresPorPedido(idPedido);
+	}
 }

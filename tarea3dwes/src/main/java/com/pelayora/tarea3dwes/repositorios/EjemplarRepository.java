@@ -60,4 +60,8 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 			+ "FROM ejemplares e " + "JOIN plantas p ON e.codigo = p.codigo " + "WHERE e.disponible = 1 "
 			+ "GROUP BY p.nombrecomun", nativeQuery = true)
 	List<Object[]> obtenerStockEjemplares();
+	
+	@Query("SELECT e FROM Ejemplar e WHERE e.pedido.id = :idPedido")
+	List<Ejemplar> obtenerEjemplaresPorPedido(@Param("idPedido") Long idPedido);
+
 }
