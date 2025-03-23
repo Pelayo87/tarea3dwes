@@ -31,4 +31,5 @@ public interface ServicioCliente {
     void eliminarCliente(Long id);
     List<Planta> findPlantasByClienteId(Long id_Cliente);
     boolean existClientePorEmail(String email);
+    boolean existClientePorNifNie(String nif_nie);
 }

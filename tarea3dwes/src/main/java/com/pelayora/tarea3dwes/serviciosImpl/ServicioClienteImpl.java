@@ -52,4 +52,9 @@ public class ServicioClienteImpl implements ServicioCliente{
 	public boolean existClientePorEmail(String email) {
 		return cliente_R.existeClientePorEmail(email);
 	}
+
+	@Override
+	public boolean existClientePorNifNie(String nif_nie) {
+		return cliente_R.existeClientePorNifNie(nif_nie);
+	}
 }
