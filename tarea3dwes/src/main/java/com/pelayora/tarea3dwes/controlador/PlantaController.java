@@ -54,12 +54,17 @@ public class PlantaController {
      * @param model Modelo de la vista.
      * @return Vista para añadir plantas.
      */
-    @GetMapping("/plantas-adminAnadir")
-    public String PlantasAdminAnadir(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
-        model.addAttribute("UsuarioActual", nombreUsuario);
-        model.addAttribute("planta", new Planta());
-        return "plantas-adminAñadir";
-    }
+	@GetMapping("/plantas-adminAnadir")
+	public String PlantasAdminAnadir(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
+		try {
+			model.addAttribute("UsuarioActual", nombreUsuario);
+			model.addAttribute("planta", new Planta());
+		} catch (Exception e) {
+			model.addAttribute("error", "Error al obtener los datos de la planta: " + e.getMessage());
+			return "redirect:/plantas-admin";
+		}
+		return "plantas-adminAñadir";
+	}
 
     /**
      * Guarda una nueva planta en la base de datos.
@@ -117,56 +122,59 @@ public class PlantaController {
     @GetMapping("/plantas-adminModificar")
     public String PlantasAdminModificar(@ModelAttribute("nombreUsuario") String nombreUsuario, Model model) {
         try {
-            model.addAttribute("mensaje", "Modificar planta (Usuario administrador)");
             model.addAttribute("UsuarioActual", nombreUsuario);
             model.addAttribute("plantas", S_planta.listarPlantas());
-            
+            model.addAttribute("planta", new Planta());
         } catch (Exception e) {
             model.addAttribute("error", "Error al obtener los datos de la planta: " + e.getMessage());
-            System.err.println("Error al obtener los datos de la planta: " + e.getMessage());
             return "redirect:/plantas-admin";
         }
         return "plantas-adminModificar";
     }
 
-    /**
-     * Modifica los datos de una planta de la base de datos.
-     * @param codigo Código de la planta a modificar.
-     * @param model Modelo de la vista.
-     * @return Redirección a la vista de administración de plantas.
-     */
-    @PostMapping("/plantas-adminModificar")
-    public String modificarPlanta(@RequestParam("planta") String codigoPlanta,
-                                  @ModelAttribute Planta planta, Model model) {
-        String nombreComun = planta.getNombreComun();
-        String nombreCientifico = planta.getNombreCientifico();
-        try {
-            Optional<Planta> planta_codigo = S_planta.buscarPlantaPorId(codigoPlanta);
-            model.addAttribute("planta_codigo", planta_codigo);
+	@PostMapping("/plantas-adminModificar")
+	public String modificarPlanta(@RequestParam("planta") String codigoPlanta, @ModelAttribute Planta planta,
+			                      BindingResult resultado, Model model) {
+		
+		String nombreComun = planta.getNombreComun();
+		String nombreCientifico = planta.getNombreCientifico();
+		model.addAttribute("plantas", S_planta.listarPlantas());
 
-            if (!planta_codigo.isPresent()) {
-                model.addAttribute("error", "Planta con el código " + codigoPlanta + " no encontrada.");
-                System.err.println("Planta no encontrada.");
-                return "plantas-adminModificar";
-            }
-            if (nombreComun == null || !nombreComun.matches("^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$")) {
-                model.addAttribute("error", "El nombre común solo puede contener letras y espacios.");
-                return "plantas-adminModificar";
-            }
+		Optional<Planta> plantaExistente = S_planta.buscarPlantaPorId(codigoPlanta);
 
-            if (nombreCientifico == null || !nombreCientifico.matches("^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$")) {
-                model.addAttribute("error", "El nombre científico solo puede contener letras y espacios.");
-                return "plantas-adminModificar";
-            }
+		// Validaciones
+		if (!plantaExistente.isPresent()) {
+			resultado.rejectValue("codigo", "codigo.invalid", "Planta con el código " + codigoPlanta + " no encontrada.");
+		}
 
-            S_planta.modificarPlanta(planta);
-            model.addAttribute("mensaje", "Planta modificada con éxito.");
-            System.out.println("Planta modificada con éxito.");
-        } catch (Exception e) {
-            model.addAttribute("error", "Error al modificar la planta: " + e.getMessage());
-        }
-        return "redirect:/plantas-adminModificar";
-    }
+		if (nombreComun == null || !nombreComun.matches("^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$")) {
+			resultado.rejectValue("nombreComun", "nombreComun.invalid", "El nombre común solo puede contener letras y espacios.");
+		}
+
+		if (nombreCientifico == null || !nombreCientifico.matches("^[A-Za-záéíóúÁÉÍÓÚñÑ\\s]+$")) {
+			resultado.rejectValue("nombreCientifico", "nombreCientifico.invalid", "El nombre científico solo puede contener letras y espacios.");
+		}
+
+		if (resultado.hasErrors()) {
+			return "plantas-adminModificar";
+		}
+		
+		try {
+
+			Planta plantaModificada = plantaExistente.get();
+			plantaModificada.setNombreComun(nombreComun.toUpperCase());
+			plantaModificada.setNombreCientifico(nombreCientifico.toUpperCase());
+
+			S_planta.modificarPlanta(plantaModificada);
+			model.addAttribute("mensaje", "✅ Planta modificada con éxito.");
+
+		} catch (Exception e) {
+			model.addAttribute("error", "❌ Error al modificar la planta: " + e.getMessage());
+		}
+		
+		return "plantas-adminModificar";
+	}
+
 
     @GetMapping("/plantas-adminEliminar")
     public String PlantasAdminEliminar(@ModelAttribute("nombreUsuario") String nombreUsuario, 

@@ -48,4 +48,9 @@ public class ServicioClienteImpl implements ServicioCliente{
 		return cliente_R.findPlantasByClienteId(id_Cliente);
 	}
 
+	@Override
+	public boolean existClientePorEmail(String email) {
+		return cliente_R.existeClientePorEmail(email);
+	}
+
 }

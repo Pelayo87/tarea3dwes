@@ -39,32 +39,35 @@
     </header>
 
 	<div class="container">
-		<h1 th:text="#{anadirpersonal.titulo}">ANADIR PERSONAL</h1>
-		<img src="img/añadirpersonal.png" alt="Foto de perfil del admin" class="anadir-personal">
+    <h1 th:text="#{anadirpersonal.titulo}">AÑADIR PERSONAL</h1>
+    <img src="img/añadirpersonal.png" alt="Foto de perfil del admin" class="anadir-personal">
 
-		<div class="formulario"> 
+    <div class="formulario">
         <form th:action="@{/anadirpersonal}" method="post">
-        <label for="name" th:text="#{personal.nombre}">Nombre:</label> 
-        <input type="text" id="name" name="nombre" th:placeholder="#{placeholder.personal.nombre}" autocomplete="off">
-        <span th:if="${nombreError}" th:text="${nombreError}" style="color: red;"></span> 
-        
-        <label for="email" th:text="#{personal.email}">Correo electronico:</label> 
-        <input type="email" id="email" name="email" th:placeholder="#{placeholder.personal.email}" autocomplete="off"> 
-        <span th:if="${emailError}" th:text="${emailError}" style="color: red;"></span>
-        
-        <label for="username" th:text="#{personal.usuario}">Nombre de usuario:</label> 
-        <input type="text" id="username" name="username" th:placeholder="#{placeholder.personal.usuario}" autocomplete="off"> 
-        <span th:if="${usuarioError}" th:text="${usuarioError}" style="color: red;"></span> 
-        
-        <label for="password" th:text="#{personal.contrasena}">Contrasena:</label> 
-        <input type="password" id="password" name="password" th:placeholder="#{placeholder.personal.contrasena}">
-        <span th:if="${passwordError}" th:text="${passwordError}" style="color: red;"></span>
-        
-        <button type="submit" th:text="#{boton.registrar}">REGISTRAR</button>
+            <label for="name" th:text="#{personal.nombre}">Nombre:</label>
+            <input type="text" id="name" name="nombre" th:placeholder="#{placeholder.personal.nombre}" autocomplete="off">
+            <span th:if="${nombreError}" th:text="${nombreError}" style="color: red;"></span>
+
+            <label for="email" th:text="#{personal.email}">Correo electrónico:</label>
+            <input type="email" id="email" name="email" th:placeholder="#{placeholder.personal.email}" autocomplete="off">
+            <span th:if="${emailError}" th:text="${emailError}" style="color: red;"></span>
+
+            <label for="username" th:text="#{personal.usuario}">Nombre de usuario:</label>
+            <input type="text" id="username" name="username" th:placeholder="#{placeholder.personal.usuario}" autocomplete="off">
+            <span th:if="${usuarioError}" th:text="${usuarioError}" style="color: red;"></span>
+
+            <label for="password" th:text="#{personal.contrasena}">Contraseña:</label>
+            <input type="password" id="password" name="password" th:placeholder="#{placeholder.personal.contrasena}">
+            <span th:if="${passwordError}" th:text="${passwordError}" style="color: red;"></span>
+            
+            <div th:if="${success}" class="alert alert-success" th:text="${success}" style="margin-bottom: 10px;"></div>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}" style="margin-bottom: 10px;"></div>
+
+            <button type="submit" th:text="#{boton.registrar}">REGISTRAR</button>
         </form>
     </div>
+   </div>
 
-	</div>
 
 	<footer>
         <div class="footer">

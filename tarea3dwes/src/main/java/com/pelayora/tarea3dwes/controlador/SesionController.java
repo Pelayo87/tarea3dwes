@@ -101,17 +101,35 @@ public class SesionController {
 	        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
 	            model.addAttribute("emailError", "El email no tiene un formato válido.");
 	            hayErrores = true;
-	        }
+	        }else if (S_cliente.existClientePorEmail(cliente.getEmail())) {
+		        model.addAttribute("emailError", "El correo electrónico ya está registrado.");
+		        hayErrores = true;
+		    }
 
-	        if (usuario.length() < 4 || !usuario.matches("^[a-zA-Z0-9]+$")) {
+	        if (usuario == null || usuario.trim().isEmpty()) {
+		        model.addAttribute("usuarioError", "El nombre de usuario no puede estar vacío.");
+		        hayErrores = true;
+		    }else if (usuario.length() < 4 || !usuario.matches("^[a-zA-Z0-9]+$")) {
 	            model.addAttribute("usuarioError", "El usuario debe tener al menos 4 caracteres, letras y números.");
 	            hayErrores = true;
-	        }
+	        } else if (S_credenciales.existeNombreUsuario(usuario)) {
+		        model.addAttribute("usuarioError", "El nombre de usuario ya está registrado.");
+		        hayErrores = true;
+	        }else if (!usuario.matches(".*[a-zA-Z].*") || !usuario.matches(".*[0-9].*")) {
+		        model.addAttribute("usuarioError", "El usuario debe contener al menos una letra y un número.");
+		        hayErrores = true;
+		    }
 
-	        if (contrasena.length() < 8 || !contrasena.matches(".*[!@#$%^&*()].*")) {
+	        if (contrasena == null || contrasena.trim().isEmpty()) {
+		        model.addAttribute("passwordError", "La contraseña no puede estar vacía.");
+		        hayErrores = true;
+	        }else if (contrasena.length() < 8 || !contrasena.matches(".*[!@#$%^&*()].*")) {
 	            model.addAttribute("passwordError", "La contraseña debe tener al menos 8 caracteres y un símbolo.");
 	            hayErrores = true;
-	        }
+	        }else if (contrasena.contains(" ")) {
+		        model.addAttribute("passwordError", "La contraseña no puede contener espacios.");
+		        hayErrores = true;
+		    }
 
 	        if (hayErrores) {
 	            model.addAttribute("mostrarRegistro", true);

@@ -30,5 +30,6 @@ public interface ServicioCliente {
     Cliente guardarPlantasFavoritasCliente(Cliente cliente);
     void eliminarCliente(Long id);
     List<Planta> findPlantasByClienteId(Long id_Cliente);
+    boolean existClientePorEmail(String email);
 
 }

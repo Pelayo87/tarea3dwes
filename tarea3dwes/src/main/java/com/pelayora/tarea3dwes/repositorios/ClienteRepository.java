@@ -16,4 +16,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	
 	@Query("SELECT c.plantas FROM Cliente c WHERE c.id_cliente = :idCliente")
 	List<Planta> findPlantasByClienteId(@Param("idCliente") Long idCliente);
+	
+	@Query("SELECT COUNT(c) > 0 FROM Cliente c WHERE c.email = :email")
+    boolean existeClientePorEmail(@Param("email") String email);	
 }
