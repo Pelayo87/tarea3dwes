@@ -1,4 +1,4 @@
-# 🌱 Tarea 3 DWES - Vivero
+# 🌱 Tarea 7 DWES - Vivero
 
 Proyecto para la Tarea 3 de Desarrollo Web en Entorno Servidor (DWES).  
 En esta práctica, se implementa un sistema de gestión para un vivero, aplicando arquitectura en capas y buenas prácticas de desarrollo en Spring Web.
