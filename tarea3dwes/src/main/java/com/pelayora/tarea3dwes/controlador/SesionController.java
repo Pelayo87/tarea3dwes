@@ -1,5 +1,6 @@
 package com.pelayora.tarea3dwes.controlador;
 
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -93,6 +94,7 @@ public class SesionController {
 	            hayErrores = true;
 	        }
 
+
 	        if (!telefono.matches("^[0-9]{9,15}$")) {
 	            model.addAttribute("telefonoError", "El teléfono debe tener entre 9 y 15 dígitos numéricos.");
 	            hayErrores = true;
@@ -135,6 +137,8 @@ public class SesionController {
 	            model.addAttribute("mostrarRegistro", true);
 	            return "iniciosesion-registrarse";
 	        }
+	        
+	        cliente.setFechaRegistro(LocalDate.now());
 
 	        Cliente clienteGuardado = S_cliente.guardarCliente(cliente);
 	        if (clienteGuardado == null || clienteGuardado.getId_cliente() <= 0) {
@@ -144,7 +148,7 @@ public class SesionController {
 
 	        credenciales.setUsuario(usuario);
 	        credenciales.setPassword(contrasena);
-	        credenciales.setCliente(clienteGuardado);        
+	        credenciales.setCliente(clienteGuardado);    
 	        Credenciales credencialesGuardadas = S_credenciales.guardarCredenciales(credenciales);
 	        if (credencialesGuardadas == null || credencialesGuardadas.getId() <= 0) {
 	            model.addAttribute("error", "Error al registrar las credenciales.");

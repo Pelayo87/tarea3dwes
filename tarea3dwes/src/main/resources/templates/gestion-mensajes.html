@@ -106,16 +106,16 @@
                 <tr>
                     <th th:text="#{mensajes.fechahora}">Fecha/Hora</th>
                     <th th:text="#{mensajes.mensaje}">Mensaje</th>
-                    <th th:text="#{mensajes.persona}">Persona</th>
                     <th th:text="#{mensajes.planta}">Planta</th>
+                    <th th:text="#{mensajes.persona}">Persona</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="mensaje : ${mensajes}">
                     <td th:text="${mensaje.fechahora}"></td>
                     <td th:text="${mensaje.mensaje}"></td>
-                    <td th:text="${mensaje.persona.nombre}"></td>
                     <td th:text="${mensaje.ejemplar != null && mensaje.ejemplar.planta != null ? mensaje.ejemplar.planta.nombreComun : 'No asignado'}"></td>
+                    <td></td>
                 </tr>
             </tbody>
          </table>

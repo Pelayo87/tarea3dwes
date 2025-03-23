@@ -52,5 +52,4 @@ public class ServicioClienteImpl implements ServicioCliente{
 	public boolean existClientePorEmail(String email) {
 		return cliente_R.existeClientePorEmail(email);
 	}
-
 }
