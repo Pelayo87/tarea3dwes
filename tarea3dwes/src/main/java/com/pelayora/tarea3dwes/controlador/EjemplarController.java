@@ -56,9 +56,12 @@ public class EjemplarController {
         model.addAttribute("mensaje", "Gestión de ejemplares");
         model.addAttribute("UsuarioActual", nombreUsuario);
 
+        List<Ejemplar> todosLosEjemplares = S_ejemplar.obtenerTodosLosEjemplares();
+        model.addAttribute("todosLosEjemplares", todosLosEjemplares);
+
         List<Ejemplar> ejemplares = (nombresComunes != null && !nombresComunes.isEmpty()) 
                 ? S_ejemplar.obtenerEjemplaresPorNombresPlantas(nombresComunes)
-                : S_ejemplar.obtenerTodosLosEjemplares();
+                : todosLosEjemplares;
 
         model.addAttribute("ejemplares", ejemplares);
         model.addAttribute("stockEjemplares", S_ejemplar.obtenerStockEjemplares());
@@ -89,6 +92,7 @@ public class EjemplarController {
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "gestion-ejemplares";
     }
+
 
     /**
      * Agrega un nuevo ejemplar al sistema.

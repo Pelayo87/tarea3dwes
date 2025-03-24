@@ -119,16 +119,17 @@
             Los usuarios pueden consultar sobre ejemplares en especifico.
         </p>
 
-            <form method="GET" action="/gestion-ejemplares" class="filtro-formulario">
-                <label for="nombre" class="filtro-label" th:text="#{filtrar.ejemplar}">Filtrar por ejemplar (nombre):</label> 
-                    <select name="nombre" id="nombre" class="filtro-select">
-                    <option value="" th:text="#{seleccionar.ejemplar}">-- Seleccionar ejemplar --</option>
-                    <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.nombre}" th:text="${ejemplar.nombre}"></option>
-                </select>
-                <button type="submit" class="filtro-button" th:text="#{filtrar}">Filtrar</button>
-            </form>
+		<form method="GET" action="/gestion-ejemplares" class="filtro-formulario">
+			<label for="nombre" class="filtro-label" th:text="#{filtrar.ejemplar}">Filtrar por ejemplar (nombre):</label>
+			<select name="nombre" id="nombre" class="filtro-select">
+				<option value="" th:text="#{seleccionar.ejemplar}">-- Seleccionar ejemplar --</option>
+				<option th:each="ejemplar : ${todosLosEjemplares}" th:value="${ejemplar.nombre}" th:text="${ejemplar.nombre}"></option>
+			</select>
+			<button type="submit" class="filtro-button" th:text="#{filtrar}">Filtrar</button>
+		</form>
 
-            <table class="tabla-mensajesejemplares">
+
+		<table class="tabla-mensajesejemplares">
             <thead>
                 <tr>
                     <th th:text="#{mensajes.ejemplares.fechahora}">Fecha/Hora</th>
