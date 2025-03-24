@@ -6,11 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.pelayora.tarea3dwes.servicios.ServicioCliente;
 import com.pelayora.tarea3dwes.servicios.ServicioEjemplar;
 import com.pelayora.tarea3dwes.servicios.ServicioFitosanitario;
 import com.pelayora.tarea3dwes.servicios.ServicioMensaje;
 import com.pelayora.tarea3dwes.servicios.ServicioPlanta;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 
 /**
@@ -96,6 +100,11 @@ public class ViveroController {
         model.addAttribute("totalMensajes", totalMensajes);
         model.addAttribute("plantas", S_planta.listarPlantas());
         return "inicio-personal";
+    }
+	
+	@GetMapping("/error")
+    public String error(Model model) {
+        return "error";
     }
 }
 

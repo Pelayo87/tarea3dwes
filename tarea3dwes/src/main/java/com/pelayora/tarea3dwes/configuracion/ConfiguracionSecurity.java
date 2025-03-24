@@ -60,7 +60,8 @@ public class ConfiguracionSecurity {
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/inicio?logout=true")
-            );
+            )
+            .exceptionHandling(ex -> ex.accessDeniedPage("/error-403"));
 
         return http.build();
     }
