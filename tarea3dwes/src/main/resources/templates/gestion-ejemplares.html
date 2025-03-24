@@ -72,7 +72,7 @@
 			<tr th:each="stock : ${stockEjemplares}">
 				<td th:text="${stock.tipoPlanta}"></td>
 				<td th:text="${stock.ejemplaresDisponibles}"></td>
-				<td th:text="${stock.nombresEjemplares}"></td>
+				<td th:utext="${#strings.replace(stock.nombresEjemplares, ', ', '<br>')}"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -142,7 +142,7 @@
                     <td th:text="${mensaje.fechahora}"></td>
                     <td th:text="${mensaje.mensaje}"></td>
                     <td th:text="${mensaje.ejemplar != null ? mensaje.ejemplar.nombre : 'No asignado'}"></td>
-                    <td th:text="${mensaje.persona.nombre}"></td>
+                    <td th:text="${mensaje.persona?.nombre != null ? mensaje.persona.nombre : 'Usuario Cliente'}"></td>
                 </tr>
             </tbody>
          </table>

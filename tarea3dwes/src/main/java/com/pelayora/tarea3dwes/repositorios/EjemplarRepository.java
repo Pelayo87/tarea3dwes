@@ -56,10 +56,17 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 	List<Ejemplar> obtenerPrimerosEjemplaresDisponibles(@Param("codigoPlanta") String codigoPlanta,
 			                                            @Param("cantidad") int cantidad);
 	
-	@Query(value = "SELECT p.nombrecomun, COUNT(e.id_ejemplar), GROUP_CONCAT(e.nombrecomun SEPARATOR ' ') "
-			+ "FROM ejemplares e " + "JOIN plantas p ON e.codigo = p.codigo " + "WHERE e.disponible = 1 "
-			+ "GROUP BY p.nombrecomun", nativeQuery = true)
-	List<Object[]> obtenerStockEjemplares();
+	@Query(value = """
+		    SELECT p.nombrecomun AS tipoPlanta, 
+		           COUNT(CASE WHEN e.disponible = 1 THEN 1 END) AS ejemplaresDisponibles, 
+		           GROUP_CONCAT(CONCAT(e.nombrecomun, ' = ', 
+		           CASE WHEN e.disponible = 1 THEN 'Disponible' ELSE 'No Disponible' END) SEPARATOR ', ') 
+		    FROM ejemplares e 
+		    JOIN plantas p ON e.codigo = p.codigo 
+		    GROUP BY p.nombrecomun
+		    """, nativeQuery = true)
+		List<Object[]> obtenerStockEjemplares();
+
 	
 	@Query("SELECT e FROM Ejemplar e WHERE e.pedido.id = :idPedido")
 	List<Ejemplar> obtenerEjemplaresPorPedido(@Param("idPedido") Long idPedido);
