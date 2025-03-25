@@ -104,4 +104,8 @@ public class ServicioEjemplarImpl implements ServicioEjemplar{
 	public List<Ejemplar> obtenerEjemplaresPorPedido(Long idPedido) {
 		return ejemplar_R.obtenerEjemplaresPorPedido(idPedido);
 	}
+
+	public int countByPlantaCodigo(String codigoPlanta) {
+        return ejemplar_R.countByPlantaCodigo(codigoPlanta);
+    }
 }

@@ -102,7 +102,7 @@ public class EjemplarController {
      * @param model Modelo para la vista.
      * @return Redirección a la página de ejemplares.
      */
-    @PostMapping("/gestion-ejemplares")
+    @PostMapping("/gestion-ejemplares") 
     public String añadirEjemplar(@RequestParam("planta") String codigoPlanta,
             @ModelAttribute("nombreUsuario") String nombreUsuario,
             @ModelAttribute("id_Persona") long id_persona,
@@ -115,15 +115,21 @@ public class EjemplarController {
         }
 
         Planta planta = plantaOpt.get();
+
+        int cantidadEjemplares = S_ejemplar.countByPlantaCodigo(planta.getCodigo());
+
+        // Crear un nuevo ejemplar
         Ejemplar nuevoEjemplar = new Ejemplar();
         nuevoEjemplar.setPlanta(planta);
         nuevoEjemplar.setDisponible(true);
         nuevoEjemplar = S_ejemplar.guardarEjemplar(nuevoEjemplar);
 
-        String nombreEjemplar = planta.getCodigo() + "_" + nuevoEjemplar.getId();
+        // Asignar un nombre secuencial basado en la cantidad existente
+        String nombreEjemplar = planta.getCodigo() + "_" + (cantidadEjemplares + 1);
         nuevoEjemplar.setNombre(nombreEjemplar);
         S_ejemplar.modificarEjemplar(nuevoEjemplar);
         
+        // Registrar mensaje
         Mensaje mensajeInicial = new Mensaje();
         mensajeInicial.setFechahora(new Date());
         mensajeInicial.setMensaje("Registro realizado por " + nombreUsuario + " el " + new Date());
@@ -133,11 +139,11 @@ public class EjemplarController {
         personaActual.setId(id_persona);
         mensajeInicial.setPersona(personaActual);
 
-        // Guardo el mensaje
         S_mensaje.guardarMensaje(mensajeInicial);
 
         return "redirect:/gestion-ejemplares";
     }
+
 
     /**
      * Filtra los ejemplares por tipo de planta.
