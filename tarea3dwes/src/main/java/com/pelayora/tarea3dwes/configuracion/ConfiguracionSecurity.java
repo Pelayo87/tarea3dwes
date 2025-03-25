@@ -45,7 +45,7 @@ public class ConfiguracionSecurity {
                 .requestMatchers("/inicio-personal", "/gestion-pedidos")
                 .hasRole("PERSONAL")
                 .requestMatchers("/inicio-cliente", "/mispedidos", "/carrito-compra", "/factura").hasRole("CLIENTE")
-                .requestMatchers("/gestion-ejemplares", "/gestion-fitosanitarios","gestion-mensajes").hasAnyRole("ADMIN", "PERSONAL")
+                .requestMatchers("/gestion-ejemplares", "/gestion-fitosanitarios","/gestion-mensajes").hasAnyRole("ADMIN", "PERSONAL")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

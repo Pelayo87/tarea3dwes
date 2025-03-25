@@ -92,10 +92,13 @@ public class SesionController {
 	        if (nif_nie == null || nif_nie.trim().isEmpty()) {
 	            model.addAttribute("nifNieError", "El NIF/NIE no puede estar vacío.");
 	            hayErrores = true;
-	        }else if (S_cliente.existClientePorNifNie(cliente.getNif_nie())) {
-		        model.addAttribute("nifNieError", "El NIF/NIE ya está registrado.");
-		        hayErrores = true;
-		    }
+	        } else if (!nif_nie.matches("^[XYZ]?[0-9]{7,8}[A-Z]$")) {
+	            model.addAttribute("nifNieError", "El formato del NIF/NIE es incorrecto.");
+	            hayErrores = true;
+	        } else if (S_cliente.existClientePorNifNie(cliente.getNif_nie())) {
+	            model.addAttribute("nifNieError", "El NIF/NIE ya está registrado.");
+	            hayErrores = true;
+	        }
 
 
 	        if (!telefono.matches("^[0-9]{9,15}$")) {
