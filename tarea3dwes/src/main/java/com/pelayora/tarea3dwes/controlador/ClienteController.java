@@ -255,7 +255,14 @@ public class ClienteController {
 	        return "redirect:/carrito-compra";
 	    }
 
-	    Cliente clienteActual = cliente.get(); 
+	   	Cliente clienteActual = cliente.get();
+
+		List<Ejemplar> ejemplaresConfirmados = new ArrayList<>();
+		for (Ejemplar ejemplar : carrito.getEjemplares()) {
+			if (ejemplar.isDisponible()) {
+				ejemplaresConfirmados.add(ejemplar);
+			}
+		}
 	    carrito.setCliente(clienteActual); 
 	    carrito.setEstado(EstadoPedido.REALIZADO);
 	    carrito.setFechaPedido(LocalDate.now());
@@ -269,14 +276,14 @@ public class ClienteController {
 	    pedidoCliente.setFechaPedido(LocalDate.now());
 	    S_pedido.guardarPedido(pedidoCliente);
 	    
-	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
+	    for (Ejemplar ejemplar : ejemplaresConfirmados) {
 	    	ejemplar.setDisponible(false);
 	    	ejemplar.setPedido(pedidoCliente);
 	    	S_ejemplar.modificarEjemplar(ejemplar);
 	    }
 	    Long idPedido = pedidoCliente.getId();
 	    
-		for (Ejemplar ejemplar : carrito.getEjemplares()) {
+		for (Ejemplar ejemplar : ejemplaresConfirmados) {
 			String mensajeTexto = "El cliente " + clienteActual.getNombre() + " compró el ejemplar "
 					+ ejemplar.getNombre() + " el día " + fechaHoraActual + " en el pedido " + idPedido;
 
