@@ -58,7 +58,7 @@ public class ConfiguracionSecurity {
                 .usernameParameter("usuario")
                 .passwordParameter("contrasena")
                 .successHandler((request, response, authentication) -> {
-                    S_session.eliminarSesionesPrevias(authentication.getName());
+                    //S_session.eliminarSesionesPrevias(authentication.getName());
                     redireccionautenticaionExitosa.onAuthenticationSuccess(request, response, authentication);
                 })
                 .failureUrl("/login?error=true")
