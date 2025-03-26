@@ -330,21 +330,32 @@ public class ClienteController {
         return "mispedidos";
     }
 
-	@PostMapping("/cancelar-pedido")
+	@PostMapping("/cancelar-pedido") 
 	public String cancelarPedido(@RequestParam("pedidoId") Long pedidoId, Model model) {
-		Optional<Pedido> pedido = S_pedido.buscarPedidoPorId(pedidoId);
-		Pedido pedidoCliente = pedido.get();
+	    Optional<Pedido> pedido = S_pedido.buscarPedidoPorId(pedidoId);
+	    
+	    if (pedido.isPresent()) {
+	        Pedido pedidoCliente = pedido.get();
 
-		if (!pedidoCliente.getEstado().equals(EstadoPedido.ENTREGADO)
-			&& !pedidoCliente.getEstado().equals(EstadoPedido.COMPLETADO)) {
+	        if (!pedidoCliente.getEstado().equals(EstadoPedido.ENTREGADO)
+	            && !pedidoCliente.getEstado().equals(EstadoPedido.COMPLETADO)) {
 
-			pedidoCliente.setEstado(EstadoPedido.CANCELADO);
+	            pedidoCliente.setEstado(EstadoPedido.CANCELADO);
 
-			S_pedido.guardarPedido(pedidoCliente);
-		}
+	            List<Ejemplar> ejemplares = pedidoCliente.getEjemplares();
+	            for (Ejemplar ejemplar : ejemplares) {
+	                ejemplar.setDisponible(true);
+	                ejemplar.setPedido(null);
+	                S_ejemplar.modificarEjemplar(ejemplar);
+	            }
 
-		return "redirect:/mispedidos";
+	            S_pedido.guardarPedido(pedidoCliente);
+	        }
+	    }
+
+	    return "redirect:/mispedidos";
 	}
+
 
 
 }
