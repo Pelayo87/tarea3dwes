@@ -181,7 +181,7 @@ public class ClienteController {
 	                              @RequestParam("cantidad") int cantidad,
 	                              HttpSession session,
 	                              Model model) {
-		
+	    
 	    int disponibles = S_ejemplar.contarEjemplaresDisponibles(codigoPlanta);
 	    if (cantidad > disponibles) {
 	        model.addAttribute("error", "No hay suficientes ejemplares disponibles para esa planta.");
@@ -198,12 +198,24 @@ public class ClienteController {
 	        session.setAttribute("carrito", carrito);
 	    }
 
-	    carrito.getEjemplares().addAll(ejemplaresSeleccionados);
-	    
+	    List<Ejemplar> ejemplaresCarrito = carrito.getEjemplares();
+	    for (Ejemplar ejemplar : ejemplaresSeleccionados) {
+	        boolean yaExiste = ejemplaresCarrito.stream()
+	            .anyMatch(e -> e.getId_ejemplar().equals(ejemplar.getId_ejemplar()));
+
+	        if (!yaExiste) {
+	            ejemplaresCarrito.add(ejemplar);
+	            System.out.println("El ejemplar: " + ejemplar + " insertado al carrito");
+	        } else {
+	            System.out.println("El ejemplar: " + ejemplar + " ya se encuentra en el carrito");
+	        }
+	    }
+
 	    session.setAttribute("carrito", carrito);
 	    
 	    return "redirect:/carrito-compra";
 	}
+
 	
 	@PostMapping("/eliminar-ejemplar")
 	public String eliminarEjemplarDelCarrito(@RequestParam("idEjemplar") Long idEjemplar,
@@ -259,7 +271,7 @@ public class ClienteController {
 
 		List<Ejemplar> ejemplaresConfirmados = new ArrayList<>();
 		for (Ejemplar ejemplar : carrito.getEjemplares()) {
-			if (ejemplar.isDisponible()) {
+			if (ejemplar.getPedido()==null) {
 				ejemplaresConfirmados.add(ejemplar);
 			}
 		}
