@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
@@ -19,6 +20,9 @@ public class ConfiguracionSecurity {
     @Autowired
     private RedireccionUsuarioAutenticacionExitosa redireccionautenticaionExitosa;
     
+    @Autowired
+    private ServicioSession S_session;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -53,7 +57,10 @@ public class ConfiguracionSecurity {
                 .loginProcessingUrl("/login")
                 .usernameParameter("usuario")
                 .passwordParameter("contrasena")
-                .successHandler(redireccionautenticaionExitosa)
+                .successHandler((request, response, authentication) -> {
+                    S_session.eliminarSesionesPrevias(authentication.getName());
+                    redireccionautenticaionExitosa.onAuthenticationSuccess(request, response, authentication);
+                })
                 .failureUrl("/login?error=true")
                 .permitAll()
             )
@@ -61,8 +68,20 @@ public class ConfiguracionSecurity {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/inicio?logout=true")
             )
-            .exceptionHandling(ex -> ex.accessDeniedPage("/error-403"));
+            .exceptionHandling(ex -> ex.accessDeniedPage("/error-403"))
+            .sessionManagement(session -> session
+                .maximumSessions(1)
+                .expiredSessionStrategy(event -> {
+                    System.out.println("Sesión anterior eliminada: " + event.getSessionInformation().getSessionId());
+                })
+            );
 
         return http.build();
+    }
+
+    // Maneja eventos de sesión HTTP
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 }
