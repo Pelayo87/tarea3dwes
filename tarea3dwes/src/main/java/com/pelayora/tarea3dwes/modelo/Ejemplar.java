@@ -195,6 +195,9 @@ public class Ejemplar implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Ejemplar [id_ejemplar=" + id_ejemplar + ", nombre=" + nombre + ", planta=" + planta;
+		return "Ejemplar [id_ejemplar=" + id_ejemplar 
+				+ ", nombre=" + nombre + ", planta=" 
+				+ planta + ", disponible=" + disponible 
+				+ ", pedido=" + pedido + "]";
 	}
 }

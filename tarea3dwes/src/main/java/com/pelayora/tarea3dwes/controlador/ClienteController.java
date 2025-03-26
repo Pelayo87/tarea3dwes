@@ -166,6 +166,8 @@ public class ClienteController {
 	                                   @ModelAttribute("id_Cliente") Long id_Cliente,
 	                                   HttpSession session,
 	                                   Model model) {
+	    limpiarCarrito(session);
+	    
 	    model.addAttribute("mensaje", "Factura del cliente");
 	    model.addAttribute("UsuarioActual", nombreUsuario);
 	    model.addAttribute("id_Cliente", id_Cliente);
@@ -175,6 +177,7 @@ public class ClienteController {
 
 	    return "carrito-compra";
 	}
+
 
 	@PostMapping("/carrito-compra")
 	public String anadirAlCarrito(@RequestParam("CodigoPlanta") String codigoPlanta,
@@ -205,9 +208,9 @@ public class ClienteController {
 
 	        if (!yaExiste) {
 	            ejemplaresCarrito.add(ejemplar);
-	            System.out.println("El ejemplar: " + ejemplar + " insertado al carrito");
+	            System.out.println("El ejemplar " + ejemplar.getNombre() + " insertado al carrito");
 	        } else {
-	            System.out.println("El ejemplar: " + ejemplar + " ya se encuentra en el carrito");
+	            System.out.println("El ejemplar " + ejemplar.getNombre() + " ya se encuentra en el carrito");
 	        }
 	    }
 
@@ -271,8 +274,13 @@ public class ClienteController {
 
 		List<Ejemplar> ejemplaresConfirmados = new ArrayList<>();
 		for (Ejemplar ejemplar : carrito.getEjemplares()) {
-			if (ejemplar.getPedido()==null) {
+			if (ejemplar.getPedido()==null && ejemplar.isDisponible()==true) {
 				ejemplaresConfirmados.add(ejemplar);
+				System.out.println("Ejemplar " + ejemplar.getNombre() + " sigue disponible para realizar el pedido");
+			}else {
+				System.out.println("Ejemplar " + ejemplar.getNombre() + " no sigue disponible para realizar el pedido, se encuentra en el pedido: " 
+				+ ejemplar.getPedido());
+				return "redirect:/carrito-compra";
 			}
 		}
 	    carrito.setCliente(clienteActual); 
@@ -286,6 +294,9 @@ public class ClienteController {
 	    pedidoCliente.setCliente(clienteActual);
 	    pedidoCliente.setEstado(EstadoPedido.REALIZADO);
 	    pedidoCliente.setFechaPedido(LocalDate.now());
+	    for (Ejemplar ejemplar : carrito.getEjemplares()) {
+	    	System.out.println(ejemplar.isDisponible());
+		}
 	    S_pedido.guardarPedido(pedidoCliente);
 	    
 	    for (Ejemplar ejemplar : ejemplaresConfirmados) {
@@ -355,7 +366,28 @@ public class ClienteController {
 
 	    return "redirect:/mispedidos";
 	}
+	
+	/**
+	 * Elimina del carrito los ejemplares que ya no están disponibles en la base de datos.
+	 * Se ejecuta cada vez que se carga el carrito para evitar conflictos con otros pedidos.
+	 * 
+	 * @param session Sesión del usuario donde se almacena el carrito.
+	 */
+	private void limpiarCarrito(HttpSession session) {
+	    Pedido carrito = (Pedido) session.getAttribute("carrito");
+	    if (carrito != null && carrito.getEjemplares() != null) {
+	        List<Ejemplar> ejemplaresCarrito = carrito.getEjemplares();
 
+	        List<Ejemplar> ejemplaresActualizados = ejemplaresCarrito.stream()
+	            .filter(e -> {
+	                Optional<Ejemplar> ejemplarBD = S_ejemplar.obtenerEjemplarPorId(e.getId_ejemplar());
+	                return ejemplarBD.isPresent() && ejemplarBD.get().isDisponible();
+	            })
+	            .collect(Collectors.toList());
 
+	        carrito.setEjemplares(ejemplaresActualizados);
+	        session.setAttribute("carrito", carrito);
+	    }
+	}
 
 }
