@@ -115,7 +115,7 @@
                     <td th:text="${mensaje.fechahora}"></td>
                     <td th:text="${mensaje.mensaje}"></td>
                     <td th:text="${mensaje.ejemplar != null && mensaje.ejemplar.planta != null ? mensaje.ejemplar.planta.nombreComun : 'No asignado'}"></td>
-                    <td></td>
+                    <td th:text="${mensaje.persona?.nombre != null ? mensaje.persona.nombre : 'Usuario Cliente'}"></td>
                 </tr>
             </tbody>
          </table>
